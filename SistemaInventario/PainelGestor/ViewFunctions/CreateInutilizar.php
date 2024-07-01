@@ -78,6 +78,18 @@ function datasSaoValidas($dataInutilizar) {
 $conn->begin_transaction();
 
 try {
+
+    
+    // Verificar se há reservas para o produto
+    $sqlVerificaReserva = "SELECT RESERVADO FROM ESTOQUE WHERE IDPRODUTO = ?";
+    $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
+    $stmtVerificaReserva->bind_param("i", $idProduto);
+    $stmtVerificaReserva->execute();
+    $stmtVerificaReserva->bind_result($reservado);
+    $stmtVerificaReserva->fetch();
+    $stmtVerificaReserva->close();
+    
+    $temReserva = $reservado > 0;
     // Consulta para obter a quantidade atual no estoque
     $sqlSelectEstoque = "SELECT QUANTIDADE FROM ESTOQUE WHERE IDPRODUTO = ?";
     

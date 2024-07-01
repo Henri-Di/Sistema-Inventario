@@ -8,7 +8,7 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 // Verificar se os dados do usuário estão disponíveis na sessão
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
     header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
-    exit(); // Termina a execução do script após redirecionamento("Erro: Usuário não autenticado.");
+    exit(); // Termina a execução do script após redirecionamento
 }
 
 // Obter os dados do formulário
@@ -49,22 +49,22 @@ if ($quantidadeDevolver <= 0) {
     exit(); // Termina a execução do script após redirecionamento
 }
 
-// Função para validar se as datas de recebimento e cadastro são válidas
-function datasSaoValidas($datadevolucao) {
+// Função para validar se a data de devolução é válida
+function dataDevolucaoValida($datadevolucao) {
     try {
         // Definir a zona de tempo para as datas recebidas e a data atual do servidor
         $timeZone = new DateTimeZone('America/Sao_Paulo'); // Substitua pela sua zona de tempo
 
         // Converter as datas para objetos DateTime com a zona de tempo definida
-        $dataCadastroObj = DateTime::createFromFormat('Y-m-d', $datadevolucao, $timeZone);
+        $dataDevolucaoObj = DateTime::createFromFormat('Y-m-d', $datadevolucao, $timeZone);
         $currentDateObj = new DateTime('now', $timeZone); // Data atual do servidor
 
         // Comparar apenas a parte da data (sem considerar horas, minutos, segundos)
-        $dataCadastroFormatada = $dataCadastroObj->format('Y-m-d');
+        $dataDevolucaoFormatada = $dataDevolucaoObj->format('Y-m-d');
         $currentDate = $currentDateObj->format('Y-m-d');
 
         // Verificar se as datas recebidas são iguais à data atual do servidor
-        if ($dataCadastroFormatada !== $currentDate) {
+        if ($dataDevolucaoFormatada !== $currentDate) {
             return false;
         }
 
@@ -74,11 +74,11 @@ function datasSaoValidas($datadevolucao) {
         return false;
     }
 }
+
 // Iniciar transação para garantir consistência
 $conn->begin_transaction();
 
 try {
-
     // Verificar se há reservas para o produto
     $sqlVerificaReserva = "SELECT RESERVADO FROM ESTOQUE WHERE IDPRODUTO = ?";
     $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
@@ -89,6 +89,13 @@ try {
     $stmtVerificaReserva->close();
     
     $temReserva = $reservado > 0;
+
+    // Verificar se a data de devolução é válida
+    if (!dataDevolucaoValida($datadevolucao)) {
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido ");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
     // Inserir dados na tabela DEVOLVER usando prepared statement
     $sqlInsertDevolucao = "INSERT INTO DEVOLVER (NUMWO, QUANTIDADE, DATADEVOLUCAO, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -101,39 +108,32 @@ try {
         exit(); // Termina a execução do script após redirecionamento
     }
 
-    // Atualizar a tabela ESTOQUE subtraindo a quantidade devolvida
+    // Atualizar a tabela ESTOQUE adicionando a quantidade devolvida
     $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ? WHERE IDPRODUTO = ?";
     
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
     $stmtUpdate->bind_param("ii", $quantidadeDevolver, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreaAtualizaEstoque.php?erro=Não foi possivel atualizar o estoque do produto ");
-        exit();
+        header("Location: ../ViewFail/FailCreaAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto ");
+        exit(); // Termina a execução do script após redirecionamento
     }
-
-    // Verificar se a data de recebimento e data de cadastro são válidas
-    if (!datasSaoValidas($datadevolucao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido ");
-        exit();
-    }
-
 
     // Commit da transação se todas as operações foram bem-sucedidas
     $conn->commit();
 
-    // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateDevolucao.php");
+    if ($temReserva) {
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php");
+    } else {
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php");
+    }
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação
     $conn->rollback();
 
-    // Exibir mensagem de erro
-    echo "Erro: " . $e->getMessage();
-
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateDevolucao.php?erro=  Não foi possivel realizar a devolução do produto");
+    header("Location: ../ViewFail/FailCreateDevolucao.php?erro=Não foi possível realizar a devolução do produto. Erro: " . $e->getMessage());
     exit(); // Termina a execução do script após redirecionamento
 } finally {
     // Fechar os statements

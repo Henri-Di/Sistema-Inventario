@@ -368,7 +368,7 @@
     
 
 
-   O Cadastro foi realizado com sucesso <i class='fa fa-check-circle'></i>
+   O cadastro foi realizado com sucesso <i class='fa fa-check-circle'></i>
     
 
 
