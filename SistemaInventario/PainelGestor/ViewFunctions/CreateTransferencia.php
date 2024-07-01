@@ -4,18 +4,18 @@ session_start();
 // Verifica se o usuário está autenticado
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
     header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
-    exit(); // Termina a execução do script após redirecionamento
+    exit();
 }
 
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
 // Inicializa variáveis com os dados do formulário
-$idProdutoOrigem = $_POST['id'] ?? '';
-$quantidadeTransferencia = $_POST['QuantidadeTransferencia'] ?? '';
-$dataTransferencia = $_POST['DataTransferencia'] ?? '';
-$idDataCenterDestino = $_POST['DataCenter'] ?? '';
-$observacao = $_POST['Observacao'] ?? '';
+$idProdutoOrigem = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+$quantidadeTransferencia = filter_input(INPUT_POST, 'QuantidadeTransferencia', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+$dataTransferencia = filter_input(INPUT_POST, 'DataTransferencia', FILTER_SANITIZE_STRING);
+$idDataCenterDestino = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_STRING);
+$observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING);
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
@@ -26,24 +26,19 @@ $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 $operacao = "Transferência";
 $situacao = "Pendente"; // A transferência começa como "Pendente"
 
-// Realiza escape para evitar SQL Injection
-$idProdutoOrigem = $conn->real_escape_string($idProdutoOrigem);
-$quantidadeTransferencia = $conn->real_escape_string($quantidadeTransferencia);
-$dataTransferencia = $conn->real_escape_string($dataTransferencia);
-$idDataCenterDestino = $conn->real_escape_string($idDataCenterDestino);
-$observacao = $conn->real_escape_string($observacao);
-
-// Validações dos dados recebidos do formulário
+// Verifica se há campos vazios
 if (empty($idProdutoOrigem) || empty($quantidadeTransferencia) || empty($dataTransferencia) || empty($idDataCenterDestino) || empty($observacao)) {
     header("Location: ../ViewFail/FailCreateTransferenciaErroDados.php?erro=Existem campos vazios no formulário. Verifique e tente novamente");
     exit();
 }
 
+// Verifica se a quantidade é válida
 if (!is_numeric($quantidadeTransferencia) || $quantidadeTransferencia <= 0) {
     header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
     exit();
 }
 
+// Função para validar se as datas são válidas
 function datasSaoValidas($dataTransferencia) {
     try {
         $timeZone = new DateTimeZone('America/Sao_Paulo');
@@ -51,10 +46,7 @@ function datasSaoValidas($dataTransferencia) {
         $currentDateObj = new DateTime('now', $timeZone);
         $dataCadastroFormatada = $dataCadastroObj->format('Y-m-d');
         $currentDate = $currentDateObj->format('Y-m-d');
-        if ($dataCadastroFormatada !== $currentDate) {
-            return false;
-        }
-        return true;
+        return $dataCadastroFormatada === $currentDate;
     } catch (Exception $e) {
         return false;
     }
@@ -76,8 +68,8 @@ try {
     $stmtProdutoOrigem->close();
 
     if ($quantidadeAtualOrigem < $quantidadeTransferencia) {
-       header("Location: ../ViewFail/FailCreateEstoqueInsuficiente.php?erro=A transferência não pode ser realizada. O estoque do produto é insuficiente");
-       exit();
+        header("Location: ../ViewFail/FailCreateEstoqueInsuficiente.php?erro=A transferência não pode ser realizada. O estoque do produto é insuficiente");
+        exit();
     }
 
     // Obter ID do data center de destino
@@ -95,8 +87,7 @@ try {
     }
 
     if ($idDataCenterOrigem == $idDatacenterDestino) {
-        header("Location: ../ViewFail/FailCreateProdutoOrigemDestino.php?erro=O produto de destino não pode ser igual ao produto de origem");
-        exit();
+        throw new Exception('O produto de destino não pode ser igual ao produto de origem');
     }
 
     // Verificar se existe um produto de destino compatível no datacenter de destino
@@ -114,6 +105,7 @@ try {
     if ($numRows == 0) {
         header("Location: ../ViewFail/FailCreateProdutoDestinoNaoEncontrado.php?erro=O produto de destino não foi encontrado no datacenter destino");
         exit();
+
     }
 
     // Obter ID do produto de destino
@@ -137,7 +129,7 @@ try {
                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sqlInsertTransferencia);
     $stmtInsert->bind_param("isssssiiiss", $quantidadeTransferencia, $dataTransferencia, $idDatacenterDestino, $observacao, $operacao, $situacao, $idProdutoOrigem, $idProdutoDestino, $idUsuario, $nomeUsuario, $codigoPUsuario);
-    
+
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosTransferencia.php?erro=Não foi possível inserir os dados na tabela TRANSFERENCIA");
         exit();
@@ -172,11 +164,11 @@ try {
     // Redirecionar para a página de sucesso
     header("Location: ../ViewSucess/SucessCreateTransferencia.php");
     exit();
-    
+
 } catch (Exception $e) {
     // Rollback da transação em caso de erro
     $conn->rollback();
-    header("Location: ../ViewFail/FailCreateTransferencia.php?erro=Não foi possível criar a transferência do produto");
+    header("Location: ../ViewFail/FailCreateTransferencia.php?erro=" . urlencode($e->getMessage()));
     exit();
 } finally {
     // Fechar statements e conexão

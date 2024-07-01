@@ -538,7 +538,7 @@ WHERE
     <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Transferência</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
     <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['OBSERVACAO'] . "</div></td>" ?> 
     <?php echo "</tr>";?> 
-    <?php echo "</table>";?>        
+    <?php echo "</table>";?>           
 
     
 
@@ -551,10 +551,8 @@ WHERE
 
 
     </div>
-        
 
     
-
     <!-- Título da seção de cadastros auxiliares -->
     <div id="blue-line-title-btn-painel">
     
@@ -1966,11 +1964,11 @@ WHERE
 
 
 
-    <option value="2">Analista</option>
+    <option value="3">Analista</option>
 
 
 
-    <option value="3">Técnico</option>
+    <option value="4">Técnico</option>
 
 
 

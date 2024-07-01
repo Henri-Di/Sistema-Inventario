@@ -538,7 +538,7 @@ WHERE
 
 
     <!-- Start form search material -->
-    <form class="example"  method="POST" action="SearchNotaFiscal.php">
+    <form class="example"  method="POST" action="../ViewRelatorio/SearchNotaFiscal.php">
     
 
 

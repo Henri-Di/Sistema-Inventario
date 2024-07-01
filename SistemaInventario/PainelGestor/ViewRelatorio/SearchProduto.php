@@ -539,7 +539,7 @@ WHERE
 
 
     <!-- Start form search material -->
-    <form class="example"  method="POST" action="SearchProduto.php">
+    <form class="example"  method="POST" action="../ViewRelatorio/SearchProduto.php">
     
 
 

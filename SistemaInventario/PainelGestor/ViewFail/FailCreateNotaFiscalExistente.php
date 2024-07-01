@@ -542,7 +542,7 @@ WHERE
     <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Transferência</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
     <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['OBSERVACAO'] . "</div></td>" ?> 
     <?php echo "</tr>";?> 
-    <?php echo "</table>";?>        
+    <?php echo "</table>";?>           
 
     
 
@@ -556,194 +556,7 @@ WHERE
 
     </div>
 
-
-
-    <style>
     
-
-
-    .alerts {
-    
-
-
-    padding: 5px;
-    
-
-
-    background-color: transparent;
-
-
-
-
-    color: #f0f0f0;
-    
-
-
-    }
-
-    .closebtns {
-    
-
-
-    margin-left: 15px;
-    
-
-
-    color: #ff6600;    
-    
-
-
-    font-weight: bold;
-    
-
-
-    float: right;
-    
-
-
-    font-size: 22px;
-    
-
-
-    line-height: 20px;
-    
-
-
-    cursor: pointer;
-    
-
-
-    transition: 0.3s;
-    
-
-
-    }
-
-    .closebtns:hover {
-     
-
-
-    color: black;
-    
-
-
-    }
-    
-
-
-    </style>
-    
-
-  
-    <div class="alerts" style="display: none;" id="transferAlert">
-
-
-
-    <?php 
-
-
-
-    // Conexão e consulta ao banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
-
-    $sql = "SELECT 
-
-    T.*, 
-
-    DC.NOME AS NOME_DATACENTER_DESTINO
-
-FROM 
-
-    TRANSFERENCIA T
-
-JOIN 
-
-    PRODUTO P ON T.IDPRODUTO_DESTINO = P.IDPRODUTO
-JOIN 
-
-    DATACENTER DC ON P.IDDATACENTER = DC.IDDATACENTER
-
-WHERE 
-
-    T.SITUACAO = 'Pendente'";
-
-    
-
-    $result = $conn->query($sql);
-
-
-
-    if ($result->num_rows > 0) { 
-    
-
-
-    echo "<script>document.getElementById('transferAlert').style.display = 'block';</script>";
-    
-
-
-    while ($row = $result->fetch_assoc()) { ?>
-        
-
-    <!-- Start código PHP para conversão da data, para modelo brasileiro -->
-    <?php 
-   
-
-
-    $date = strtotime($row['DATA_TRANSFERENCIA']);
-    // $data agora é uma inteiro timestamp
-
-
-
-    $dateformated = date("d/m/Y", $date);
-    // date() formatou o $date para d/m/Y
-   
-
-
-    ?>
-    <!-- End código PHP para conversão da data, para modelo brasileiro -->
-    <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span> 
-    
-
-
-    <!-- Título da seção de cadastros auxiliares -->
-    <div id="blue-line-title-btn-painel-alert">
-    
-
-
-    <p id="blue-title-btn-painel-alert">Transferência Pendente  <i class="fa fa-warning" id="blue-icon-btn-painel"></i></p>
-    
-
-
-    </div>
-    
-
-    <?php echo "<table class='table table-bordered' id='blue-table-cadastro-auxiliar' style='margin-top:1%;'>";?>
-    <?php echo "<tr id='line-blue-table-alert'>";?>       
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Código Saída</div>  <div id='blue-input-cdst-alert'>"   . $row['ID'] . "</div></td>" ?>
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto Origem</div> <div id='blue-input-cdst-alert'>" . $row['IDPRODUTO_ORIGEM'] . "</div></td>" ?> 
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto Destino</div> <div id='blue-input-cdst-alert'>" . $row['IDPRODUTO_DESTINO'] . "</div></td>" ?> 
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Transferida</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE'] . "</div></td>" ?>
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>DataCenter Destino</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER_DESTINO'] . "</div></td>" ?>  
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Transferência</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
-    <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['OBSERVACAO'] . "</div></td>" ?> 
-    <?php echo "</tr>";?> 
-    <?php echo "</table>";?>        
-
-    
-
-    <?php } ?>
-
-
-
-    <?php } ?>
-
-
-
-    </div>
-
-
-    
-
     <!-- Título da seção de cadastros auxiliares -->
     <div id="blue-line-title-btn-painel">
     
@@ -2155,11 +1968,11 @@ WHERE
 
 
 
-    <option value="2">Analista</option>
+    <option value="3">Analista</option>
 
 
 
-    <option value="3">Técnico</option>
+    <option value="4">Técnico</option>
 
 
 

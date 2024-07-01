@@ -12,35 +12,17 @@ if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset
 }
 
 // Obter os dados do formulário
-$idProduto = $_POST['id'] ?? '';
-$numwo = $_POST['NumWo'] ?? '';
-$quantidadeDevolver = $_POST['Devolvida'] ?? '';
-$datadevolucao = $_POST['DataDevolucao'] ?? '';
-$observacao = $_POST['Observacao'] ?? '';
+$idProduto = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+$numwo = filter_input(INPUT_POST, 'NumWo', FILTER_SANITIZE_STRING);
+$quantidadeDevolver = filter_input(INPUT_POST, 'Devolvida', FILTER_SANITIZE_NUMBER_INT);
+$datadevolucao = filter_input(INPUT_POST, 'DataDevolucao', FILTER_SANITIZE_STRING);
+$observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING);
 
-// Obter os dados do usuário da sessão
-$idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = $_SESSION['usuarioNome'];
-$codigoPUsuario = $_SESSION['usuarioCodigoP'];
-
-// Definir valores fixos
-$operacao = "Devolução";
-$situacao = "Devolvido";
-
-// Verificar a conexão com o banco de dados
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+// Verificar se os dados obrigatórios estão preenchidos
+if (!$idProduto || !$numwo || !$quantidadeDevolver || !$datadevolucao) {
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Dados do formulário incompletos");
+    exit(); // Termina a execução do script após redirecionamento
 }
-
-// Sanitizar os dados de entrada para evitar injeção de SQL
-$idProduto = $conn->real_escape_string($idProduto);
-$numwo = $conn->real_escape_string($numwo);
-$quantidadeDevolver = $conn->real_escape_string($quantidadeDevolver);
-$datadevolucao = $conn->real_escape_string($datadevolucao);
-$observacao = $conn->real_escape_string($observacao);
-$idUsuario = $conn->real_escape_string($idUsuario);
-$nomeUsuario = $conn->real_escape_string($nomeUsuario);
-$codigoPUsuario = $conn->real_escape_string($codigoPUsuario);
 
 // Verificar se a quantidade é positiva
 if ($quantidadeDevolver <= 0) {
@@ -52,25 +34,15 @@ if ($quantidadeDevolver <= 0) {
 // Função para validar se a data de devolução é válida
 function dataDevolucaoValida($datadevolucao) {
     try {
-        // Definir a zona de tempo para as datas recebidas e a data atual do servidor
         $timeZone = new DateTimeZone('America/Sao_Paulo'); // Substitua pela sua zona de tempo
-
-        // Converter as datas para objetos DateTime com a zona de tempo definida
         $dataDevolucaoObj = DateTime::createFromFormat('Y-m-d', $datadevolucao, $timeZone);
         $currentDateObj = new DateTime('now', $timeZone); // Data atual do servidor
 
-        // Comparar apenas a parte da data (sem considerar horas, minutos, segundos)
         $dataDevolucaoFormatada = $dataDevolucaoObj->format('Y-m-d');
         $currentDate = $currentDateObj->format('Y-m-d');
 
-        // Verificar se as datas recebidas são iguais à data atual do servidor
-        if ($dataDevolucaoFormatada !== $currentDate) {
-            return false;
-        }
-
-        return true;
+        return $dataDevolucaoFormatada === $currentDate;
     } catch (Exception $e) {
-        // Tratar exceção de conversão de datas
         return false;
     }
 }
@@ -92,7 +64,7 @@ try {
 
     // Verificar se a data de devolução é válida
     if (!dataDevolucaoValida($datadevolucao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido ");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -101,11 +73,10 @@ try {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmtInsert = $conn->prepare($sqlInsertDevolucao);
-    $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeDevolver, $datadevolucao, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
+    $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeDevolver, $datadevolucao, $observacao, $operacao, $situacao, $idProduto, $_SESSION['usuarioId'], $_SESSION['usuarioNome'], $_SESSION['usuarioCodigoP']);
     
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosDevolver.php?erro=Não foi possível inserir os dados na tabela DEVOLVER");
-        exit(); // Termina a execução do script após redirecionamento
+        throw new Exception("Não foi possível inserir os dados na tabela DEVOLVER");
     }
 
     // Atualizar a tabela ESTOQUE adicionando a quantidade devolvida
@@ -115,8 +86,7 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeDevolver, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreaAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto ");
-        exit(); // Termina a execução do script após redirecionamento
+        throw new Exception("Não foi possível atualizar o estoque do produto");
     }
 
     // Commit da transação se todas as operações foram bem-sucedidas

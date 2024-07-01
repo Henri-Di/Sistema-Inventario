@@ -1871,11 +1871,11 @@ WHERE
 
 
 
-    <option value="2">Analista</option>
+    <option value="3">Analista</option>
 
 
 
-    <option value="3">Técnico</option>
+    <option value="4">Técnico</option>
 
 
 
@@ -1973,3 +1973,5 @@ WHERE
 
     </html>
     <!-- Fim do HTML page -->
+
+

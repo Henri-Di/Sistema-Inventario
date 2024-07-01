@@ -17,7 +17,11 @@ function redirecionarPorNivelAcesso($nivelAcesso) {
         header("Location: ../PainelGestor/ViewForms/PainelAdministrativo.php");
         exit();
     } elseif ($nivelAcesso == 2) {
-        header("Location: ../ViewForms/PainelPresposto.php");
+        header("Location: ../PainelPreposto/ViewForms/PainelPreposto.php");
+        exit();
+    }elseif ($nivelAcesso == 3) {
+        header("Location: ../PainelAnalista/ViewForms/PainelAnalista.php");
+        exit();
     }
     exit(); // Termina a execução do script após o redirecionamento
 }

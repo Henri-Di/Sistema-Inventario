@@ -557,8 +557,6 @@ WHERE
     </div>
 
     
-   
-   
     <!-- Título da seção de cadastros auxiliares -->
     <div id="blue-line-title-btn-painel">
     
@@ -1970,11 +1968,11 @@ WHERE
 
 
 
-    <option value="2">Analista</option>
+    <option value="3">Analista</option>
 
 
 
-    <option value="3">Técnico</option>
+    <option value="4">Técnico</option>
 
 
 

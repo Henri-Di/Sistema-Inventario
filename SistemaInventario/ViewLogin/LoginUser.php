@@ -9,8 +9,13 @@ require_once("../ViewConnection/ConnectionInventario.php");
 function redirecionarPorNivelAcesso($nivelAcesso) {
     if ($nivelAcesso == 1) {
         header("Location: ../PainelGestor/ViewForms/PainelAdministrativo.php");
+        exit();
     } elseif ($nivelAcesso == 2) {
-        header("Location: ");
+        header("Location: ../PainelPreposto/ViewForms/PainelPresposto.php");
+        exit();
+    } elseif ($nivelAcesso == 3) {
+        header("Location: ../PainelAnalista/ViewForms/PainelAnalista.php");
+        exit();
     }
     exit(); // Termina a execução do script após o redirecionamento
 }

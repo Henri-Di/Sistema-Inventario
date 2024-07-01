@@ -2,20 +2,51 @@
 // Iniciar sessão se necessário
 session_start();
 
-// Conexão e consulta ao banco de dados
-require_once('../../ViewConnection/ConnectionInventario.php');
-
 // Verificar se os dados do usuário estão disponíveis na sessão
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
     header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
     exit(); // Termina a execução do script após redirecionamento
 }
 
-// Obter os dados do formulário
+// Conexão e consulta ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
+
+// Função para validar quantidade
+function validarQuantidade($quantidade) {
+    return is_numeric($quantidade) && $quantidade >= 0;
+}
+
+// Função para validar data
+function validarData($data) {
+    $format = 'Y-m-d';
+    $d = DateTime::createFromFormat($format, $data);
+    return $d && $d->format($format) === $data;
+}
+
+// Função para validar se a data é a data atual
+function datasSaoValidas($dataSobrepor) {
+    try {
+        $timeZone = new DateTimeZone('America/Sao_Paulo');
+        $dataCadastroObj = DateTime::createFromFormat('Y-m-d', $dataSobrepor, $timeZone);
+        $currentDateObj = new DateTime('now', $timeZone);
+        $dataCadastroFormatada = $dataCadastroObj->format('Y-m-d');
+        $currentDate = $currentDateObj->format('Y-m-d');
+        return $dataCadastroFormatada === $currentDate;
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+// Obter e validar os dados do formulário
 $idProduto = $_POST['id'] ?? '';
 $quantidadeSobrepor = $_POST['Sobrepor'] ?? '';
 $dataSobrepor = $_POST['DataSobrepor'] ?? '';
 $observacao = $_POST['Observacao'] ?? '';
+
+if (empty($idProduto) || !validarQuantidade($quantidadeSobrepor) || !validarData($dataSobrepor) || !datasSaoValidas($dataSobrepor)) {
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos");
+    exit();
+}
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
@@ -29,54 +60,6 @@ $situacao = "Alteração";
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
-}
-
-// Sanitizar os dados de entrada para evitar injeção de SQL
-$idProduto = $conn->real_escape_string($idProduto);
-$quantidadeSobrepor = $conn->real_escape_string($quantidadeSobrepor);
-$dataSobrepor = $conn->real_escape_string($dataSobrepor);
-$observacao = $conn->real_escape_string($observacao);
-$idUsuario = $conn->real_escape_string($idUsuario);
-$nomeUsuario = $conn->real_escape_string($nomeUsuario);
-$codigoPUsuario = $conn->real_escape_string($codigoPUsuario);
-
-// Verificar se a quantidade é negativa
-if ($quantidadeSobrepor < 0) {
-    // Se a quantidade for negativa, redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
-    exit(); // Termina a execução do script após redirecionamento
-}
-
-// Função para validar se as datas de recebimento e cadastro são válidas
-function datasSaoValidas($dataSobrepor) {
-    try {
-        // Definir a zona de tempo para as datas recebidas e a data atual do servidor
-        $timeZone = new DateTimeZone('America/Sao_Paulo'); // Substitua pela sua zona de tempo
-
-        // Converter as datas para objetos DateTime com a zona de tempo definida
-        $dataCadastroObj = DateTime::createFromFormat('Y-m-d', $dataSobrepor, $timeZone);
-        $currentDateObj = new DateTime('now', $timeZone); // Data atual do servidor
-
-        // Comparar apenas a parte da data (sem considerar horas, minutos, segundos)
-        $dataCadastroFormatada = $dataCadastroObj->format('Y-m-d');
-        $currentDate = $currentDateObj->format('Y-m-d');
-
-        // Verificar se as datas recebidas são iguais à data atual do servidor
-        if ($dataCadastroFormatada !== $currentDate) {
-            return false;
-        }
-
-        return true;
-    } catch (Exception $e) {
-        // Tratar exceção de conversão de datas
-        return false;
-    }
-}
-
-// Verificar se a data de recebimento e data de cadastro são válidas
-if (!datasSaoValidas($dataSobrepor)) {
-    header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido");
-    exit();
 }
 
 // Iniciar transação para garantir consistência
@@ -93,15 +76,16 @@ try {
     $stmtVerificaReserva->close();
     
     $temReserva = $reservado > 0;
-        
-    // Inserir dados na tabela SOBREPOR
+
+    // Inserir dados na tabela SOBREPOR usando prepared statement
     $sqlInsertSobrepor = "INSERT INTO SOBREPOR (QUANTIDADE, DATASOBREPOR, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sqlInsertSobrepor);
     $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
-        throw new Exception("Não foi possível inserir os dados na tabela SOBREPOR");
+        header("Location: ../ViewFail/FailCreateInserirDadosSobrepor.php?erro=" . $e->getMessage());
+        exit(); // Termina a execução do script após redirecionamento
     }
 
     // Atualizar a tabela ESTOQUE com a quantidade sobreposta
@@ -110,7 +94,8 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeSobrepor, $idProduto);
 
     if (!$stmtUpdate->execute()) {
-        throw new Exception("Não foi possível atualizar o estoque do produto");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . $e->getMessage());
+        exit(); // Termina a execução do script após redirecionamento
     }
 
     // Commit da transação se todas as operações foram bem-sucedidas
@@ -127,19 +112,20 @@ try {
     // Em caso de erro, fazer rollback da transação
     $conn->rollback();
 
-    // Redirecionar para a página de falha com a mensagem de erro
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . $e->getMessage());
+    // Registrar o erro
+    error_log("Erro: " . $e->getMessage());
+
+    // Redirecionar para a página de falha com uma mensagem de erro
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode($e->getMessage()));
     exit(); // Termina a execução do script após redirecionamento
 } finally {
-    // Fechar os statements
+    // Fechar os statements e a conexão
     if (isset($stmtInsert)) {
         $stmtInsert->close();
     }
     if (isset($stmtUpdate)) {
         $stmtUpdate->close();
     }
-    
-    // Fechar a conexão
     $conn->close();
 }
 ?>

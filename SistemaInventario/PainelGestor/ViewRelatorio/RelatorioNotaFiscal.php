@@ -703,7 +703,7 @@ WHERE
 
 
 
-    <p id="blue-title-listar-exibicao">Data Recebimento</p> 
+    <p id="blue-title-listar-exibicao">Data Entrada</p> 
 
 
 
@@ -754,7 +754,7 @@ WHERE
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='ModificarNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto"></i></div> 
 
 
 
@@ -770,7 +770,7 @@ WHERE
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='DeleteNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
 
 
 
@@ -786,7 +786,7 @@ WHERE
     
 
 
-    <a id="blue-optios-config-dados" href='CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'><i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;" ></i></a>
+    <a id="blue-optios-config-dados" href='../ViewForms/CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'><i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;" ></i></a>
 
     
 
