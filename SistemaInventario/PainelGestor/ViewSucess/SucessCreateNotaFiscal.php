@@ -368,7 +368,7 @@
     
 
 
-    A nota fiscal foi cadastrada com sucesso. O estoque do produto iniciado ou alterado  <i class='fa fa-check-circle'></i>
+    A nota fiscal foi cadastrada com sucesso. O estoque do produto foi iniciado ou alterado  <i class='fa fa-check-circle'></i>
     
 
 

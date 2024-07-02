@@ -39,7 +39,7 @@ try {
     $conn->begin_transaction();
 
     // Obter dados da transferência para verificar e realizar operações
-    $sqlSelectTransferencia = "SELECT QUANTIDADE, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO, SITUACAO FROM TRANSFERENCIA WHERE ID = ?";
+    $sqlSelectTransferencia = "SELECT QUANTIDADE, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO, SITUACAO, IDUSUARIO FROM TRANSFERENCIA WHERE ID = ?";
     $stmtSelect = $conn->prepare($sqlSelectTransferencia);
     $stmtSelect->bind_param("i", $idTransferencia);
     $stmtSelect->execute();
@@ -52,12 +52,18 @@ try {
     }
 
     // Bind results
-    $stmtSelect->bind_result($quantidadeTransferida, $idProdutoOrigem, $idProdutoDestino, $situacaoTransferencia);
+    $stmtSelect->bind_result($quantidadeTransferida, $idProdutoOrigem, $idProdutoDestino, $situacaoTransferencia, $idUsuarioTransferencia);
     $stmtSelect->fetch();
 
     // Verificar se a transferência já foi aceita ou recusada anteriormente
     if ($situacaoTransferencia !== 'Pendente') {
         header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=Essa transferência já foi processada");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
+    // Verificar se o usuário que está tentando aceitar ou recusar é o mesmo que criou a transferência
+    if ($idUsuario === $idUsuarioTransferencia) {
+        header("Location: ../ViewFail/FailCreateUsuarioAceitaTransferencia.php?erro=Você não pode aceitar ou recusar uma transferência criada por você mesmo");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -71,7 +77,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdate->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecebida.php?erro=Erro ao atualizar a situação da transferência para Recebido");
+            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecebida.php?erro=Não foi possível atualizar a situação da transferência para Recebido");
             exit(); // Termina a execução do script após redirecionamento
         }
         $stmtUpdate->close();
@@ -137,7 +143,7 @@ try {
         $stmtCountPendentes->fetch();
         $stmtCountPendentes->close();
 
-        // Se não houver outras transferências pendentes, definir o reservado como 0
+    // Se não houver outras transferências pendentes, definir o reservado como 0
         if ($countPendentes == 0) {
             $sqlResetReservado = "UPDATE ESTOQUE SET RESERVADO = 0 WHERE IDPRODUTO = ?";
             $stmtResetReservado = $conn->prepare($sqlResetReservado);
