@@ -25,21 +25,51 @@ if (!isset($_POST['idTransferencia'])) {
 // Obter o ID da transferência a partir dos dados recebidos
 $idTransferencia = $_POST['idTransferencia'];
 
-// Verificar se a ação (aceitar ou recusar) foi enviada via POST
-if (!isset($_POST['Acao']) || ($_POST['Acao'] !== 'Aceitar' && $_POST['Acao'] !== 'Recusar')) {
-    header("Location: ../ViewFail/FailAcaoInvalida.php?erro=Ação inválida especificada");
-    exit(); // Termina a execução do script após redirecionamento
-}
-
-// Obter a ação (aceitar ou recusar)
-$acao = $_POST['Acao'];
-
 try {
     // Iniciar transação para garantir consistência
     $conn->begin_transaction();
 
-    // Obter dados da transferência para verificar e realizar operações
-    $sqlSelectTransferencia = "SELECT QUANTIDADE, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO, SITUACAO FROM TRANSFERENCIA WHERE ID = ?";
+    // Verificar se o usuário é o criador da transferência
+    $sqlVerificaCriador = "SELECT IDUSUARIO, SITUACAO FROM TRANSFERENCIA WHERE ID = ?";
+    $stmtVerificaCriador = $conn->prepare($sqlVerificaCriador);
+    $stmtVerificaCriador->bind_param("i", $idTransferencia);
+    $stmtVerificaCriador->execute();
+    $stmtVerificaCriador->store_result();
+
+    // Verificar se a transferência existe
+    if ($stmtVerificaCriador->num_rows == 0) {
+        header("Location: ../ViewFail/FailCreateLocalizaTransferencia.php?erro=A transferência de produtos indicada não foi encontrada");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
+    // Bind results
+    $stmtVerificaCriador->bind_result($idUsuarioOrigem, $situacaoTransferencia);
+    $stmtVerificaCriador->fetch();
+    $stmtVerificaCriador->close();
+
+    // Verificar se o usuário atual é o criador da transferência
+    if ($idUsuario === $idUsuarioOrigem) {
+        header("Location: ../ViewFail/FailCreateUsuarioAceitaTransferencia.php?erro=Você não pode aceitar ou recusar a transferência que você criou");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
+    // Verificar se a transferência já foi aceita ou recusada anteriormente
+    if ($situacaoTransferencia !== 'Pendente') {
+        header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=Essa transferência já foi processada");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
+    // Verificar se a ação (aceitar ou recusar) foi enviada via POST
+    if (!isset($_POST['Acao']) || ($_POST['Acao'] !== 'Aceitar' && $_POST['Acao'] !== 'Recusar')) {
+        header("Location: ../ViewFail/FailAcaoInvalida.php?erro=Ação inválida especificada");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
+    // Obter a ação (aceitar ou recusar)
+    $acao = $_POST['Acao'];
+
+    // Obter dados da transferência para realizar operações
+    $sqlSelectTransferencia = "SELECT QUANTIDADE, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO FROM TRANSFERENCIA WHERE ID = ?";
     $stmtSelect = $conn->prepare($sqlSelectTransferencia);
     $stmtSelect->bind_param("i", $idTransferencia);
     $stmtSelect->execute();
@@ -52,14 +82,9 @@ try {
     }
 
     // Bind results
-    $stmtSelect->bind_result($quantidadeTransferida, $idProdutoOrigem, $idProdutoDestino, $situacaoTransferencia);
+    $stmtSelect->bind_result($quantidadeTransferida, $idProdutoOrigem, $idProdutoDestino);
     $stmtSelect->fetch();
-
-    // Verificar se a transferência já foi aceita ou recusada anteriormente
-    if ($situacaoTransferencia !== 'Pendente') {
-        header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=Essa transferência já foi processada");
-        exit(); // Termina a execução do script após redirecionamento
-    }
+    $stmtSelect->close();
 
     // Realizar ação com base na escolha do usuário
     if ($acao === 'Aceitar') {
@@ -123,62 +148,23 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdateOrigem->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateQuantidadeEstoqueReservado.php?erro=Erro ao atualizar a quantidade reservada do produto de origem ");
+            header("Location: ../ViewFail/FailCreateAtualizaEstoqueOrigemTransferencia.php?erro=Erro ao remover a reserva do estoque do produto origem");
             exit(); // Termina a execução do script após redirecionamento
         }
         $stmtUpdateOrigem->close();
-
-        // Verificar se há outras transferências pendentes para o produto de origem
-        $sqlCountPendentes = "SELECT COUNT(*) FROM TRANSFERENCIA WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'Pendente'";
-        $stmtCountPendentes = $conn->prepare($sqlCountPendentes);
-        $stmtCountPendentes->bind_param("i", $idProdutoOrigem);
-        $stmtCountPendentes->execute();
-        $stmtCountPendentes->bind_result($countPendentes);
-        $stmtCountPendentes->fetch();
-        $stmtCountPendentes->close();
-
-        // Se não houver outras transferências pendentes, definir o reservado como 0
-        if ($countPendentes == 0) {
-            $sqlResetReservado = "UPDATE ESTOQUE SET RESERVADO = 0 WHERE IDPRODUTO = ?";
-            $stmtResetReservado = $conn->prepare($sqlResetReservado);
-            $stmtResetReservado->bind_param("i", $idProdutoOrigem);
-            $stmtResetReservado->execute();
-            $stmtResetReservado->close();
-        }
     }
 
-    // Inserir registro no log de transferência
-    $acaoLog = $acao === 'Aceitar' ? 'Recebido' : 'Recusado';
-    $sqlInsertLog = "INSERT INTO TRANSFERENCIA_LOG (IDTRANSFERENCIA, IDUSUARIO, NOME, CODIGOP, ACAO, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmtInsertLog = $conn->prepare($sqlInsertLog);
-    $stmtInsertLog->bind_param("issssii", $idTransferencia, $idUsuario, $nomeUsuario, $codigoPUsuario, $acaoLog, $idProdutoOrigem, $idProdutoDestino);
-    $stmtInsertLog->execute();
-    $stmtInsertLog->close();
-
-    // Commit da transação se todas as operações foram bem-sucedidas
+    // Commit para finalizar a transação
     $conn->commit();
-
-    // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateAcaoTransferencia.php");
+    header("Location: ../ViewSuccess/SuccessAceitaTransferencia.php?sucesso=A transferência foi processada com sucesso");
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
-    // Em caso de erro, fazer rollback da transação
+    // Rollback em caso de erro
     $conn->rollback();
-
-    // Exibir mensagem de erro
-    echo "Erro: " . $e->getMessage();
-
-    // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateAcaoTransferencia.php?erro=Não foi possível processar a transferência de produtos");
+    header("Location: ../ViewFail/FailProcessaTransferencia.php?erro=Erro ao processar a transferência: " . $e->getMessage());
     exit(); // Termina a execução do script após redirecionamento
 } finally {
-    // Fechar o statement de seleção
-    if (isset($stmtSelect)) {
-        $stmtSelect->close();
-    }
-
-    // Fechar a conexão
+    // Fechar conexão ao banco de dados
     $conn->close();
 }
 ?>

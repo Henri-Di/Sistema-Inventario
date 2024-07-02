@@ -71,7 +71,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdate->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecebida.php?erro=Erro ao atualizar a situação da transferência para Recebido");
+            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecebida.php?erro=Não foi possível atualizar a situação da transferência para Recebido");
             exit(); // Termina a execução do script após redirecionamento
         }
         $stmtUpdate->close();

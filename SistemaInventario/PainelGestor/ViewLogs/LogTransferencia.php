@@ -1104,7 +1104,9 @@ $sql = "SELECT
                         case 'Recusado':
                             $color = '#ff0000';
                             break;
-
+                        case 'Cancelada':
+                            $color = '#ff0000';
+                            break;
     }  
         
     ?>
