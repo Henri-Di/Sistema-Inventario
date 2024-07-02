@@ -218,7 +218,7 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
@@ -275,6 +275,203 @@
 
     <br>
 
+
+    <style>
+    
+
+
+    .alerts {
+    
+
+
+    padding: 5px;
+    
+
+
+    background-color: transparent;
+
+
+
+
+    color: #f0f0f0;
+    
+
+
+    }
+
+    .closebtns {
+    
+
+
+    margin-left: 15px;
+    
+
+
+    color: #ff6600;    
+    
+
+
+    font-weight: bold;
+    
+
+
+    float: right;
+    
+
+
+    font-size: 22px;
+    
+
+
+    line-height: 20px;
+    
+
+
+    cursor: pointer;
+    
+
+
+    transition: 0.3s;
+    
+
+
+    }
+
+    .closebtns:hover {
+     
+
+
+    color: black;
+    
+
+
+    }
+    
+
+
+    </style>
+    
+
+  
+    <div class="alerts" style="display: none;" id="transferAlert">
+
+
+
+<?php 
+
+
+
+// Conexão e consulta ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
+
+$sql = "SELECT 
+            T.*, 
+            DC_DESTINO.NOME AS NOME_DATACENTER_DESTINO,
+            DC_ORIGEM.NOME AS NOME_DATACENTER_ORIGEM,
+            MAT_ORIGEM.MATERIAL AS NOME_MATERIAL_ORIGEM,
+            MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
+            MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
+            MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO,
+            U.NOME AS NOME_USUARIO
+        FROM 
+            TRANSFERENCIA T
+        JOIN 
+            PRODUTO P_ORIGEM ON T.IDPRODUTO_ORIGEM = P_ORIGEM.IDPRODUTO
+        JOIN 
+            PRODUTO P_DESTINO ON T.IDPRODUTO_DESTINO = P_DESTINO.IDPRODUTO
+        JOIN 
+            MATERIAL MAT_ORIGEM ON P_ORIGEM.IDMATERIAL = MAT_ORIGEM.IDMATERIAL
+        JOIN 
+            METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
+        JOIN 
+            MATERIAL MAT_DESTINO ON P_DESTINO.IDMATERIAL = MAT_DESTINO.IDMATERIAL
+        JOIN 
+            METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
+        JOIN 
+            DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
+        JOIN 
+            DATACENTER DC_ORIGEM ON P_ORIGEM.IDDATACENTER = DC_ORIGEM.IDDATACENTER
+        JOIN 
+            USUARIO U ON T.IDUSUARIO = U.IDUSUARIO
+        WHERE 
+            T.SITUACAO = 'Pendente'";
+
+
+
+$result = $conn->query($sql);
+
+
+
+if ($result->num_rows > 0) { 
+
+
+
+echo "<script>document.getElementById('transferAlert').style.display = 'block';</script>";
+
+
+
+while ($row = $result->fetch_assoc()) { ?>
+    
+
+<!-- Start código PHP para conversão da data, para modelo brasileiro -->
+<?php 
+
+
+
+$date = strtotime($row['DATA_TRANSFERENCIA']);
+// $data agora é uma inteiro timestamp
+
+
+
+$dateformated = date("d/m/Y", $date);
+// date() formatou o $date para d/m/Y
+
+
+
+?>
+<!-- End código PHP para conversão da data, para modelo brasileiro -->
+<span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span> 
+
+
+
+<!-- Título da seção de cadastros auxiliares -->
+<div id="blue-line-title-btn-painel-alert">
+
+
+
+<p id="blue-title-btn-painel-alert">Transferência Pendente  <i class="fa fa-warning" id="blue-icon-btn-painel"></i></p>
+
+
+
+</div>
+
+
+<?php echo "<table class='table table-bordered' id='blue-table-cadastro-auxiliar' style='margin-top:1%;'>";?>
+<?php echo "<tr id='line-blue-table-alert'>";?>       
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Código Saída</div>  <div id='blue-input-cdst-alert'>"   . $row['ID'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto Origem</div> <div id='blue-input-cdst-alert'>" . $row['NOME_MATERIAL_ORIGEM'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto Destino</div> <div id='blue-input-cdst-alert'>" . $row['NOME_MATERIAL_DESTINO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Metragem</div> <div id='blue-input-cdst-alert'>" . $row['METRAGEM_PRODUTO_DESTINO'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Transferida</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Site Origem</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER_ORIGEM'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Site Destino</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER_DESTINO'] . "</div></td>" ?>  
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Transferência</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['OBSERVACAO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Analista</div> <div id='blue-input-cdst-alert'>" . $row['NOME_USUARIO'] . "</div></td>" ?> 
+<?php echo "</tr>";?> 
+<?php echo "</table>";?>        
+
+
+
+<?php } ?>
+
+
+
+<?php } ?>
+
+
+
+</div>
 
 
     <div id="blue-line-title-btn-painel">

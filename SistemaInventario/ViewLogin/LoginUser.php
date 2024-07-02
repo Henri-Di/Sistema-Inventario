@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['CodigoP']) && isset($_
     $senha = $_POST['Senha'];
 
     // Preparar a consulta SQL usando prepared statements para evitar SQL Injection
-    $stmt = $conn->prepare("SELECT IDUSUARIO, NOME, CODIGOP, NIVEL_ACESSO, SENHA, PRIMEIRO_LOGIN FROM USUARIO WHERE CODIGOP = ? LIMIT 1");
+    $stmt = $conn->prepare("SELECT IDUSUARIO, NOME, CODIGOP, DATACENTER, NIVEL_ACESSO, SENHA, PRIMEIRO_LOGIN FROM USUARIO WHERE CODIGOP = ? LIMIT 1");
     if ($stmt) {
         $stmt->bind_param('s', $codigoP);
         $stmt->execute();
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['CodigoP']) && isset($_
         
         // Verificar se encontrou exatamente um usuário
         if ($stmt->num_rows == 1) {
-            $stmt->bind_result($idUsuario, $nome, $codigoP, $nivelAcesso, $hashSenha, $primeiroLogin);
+            $stmt->bind_result($idUsuario, $nome, $codigoP, $datacenter, $nivelAcesso, $hashSenha, $primeiroLogin);
             $stmt->fetch();
             
             // Verificar se a senha está correta
@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['CodigoP']) && isset($_
                 $_SESSION['usuarioId'] = $idUsuario;
                 $_SESSION['usuarioNome'] = $nome;
                 $_SESSION['usuarioCodigoP'] = $codigoP;
+                $_SESSION['usuarioDatacenter'] = $datacenter;
                 $_SESSION['usuarioNivelAcesso'] = $nivelAcesso;
                 $_SESSION['usuarioPrimeiroLogin'] = $primeiroLogin;
 
