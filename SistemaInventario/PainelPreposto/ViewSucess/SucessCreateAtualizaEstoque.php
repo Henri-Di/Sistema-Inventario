@@ -367,7 +367,7 @@
     
 
 
-    O Estoque do produto foi atualizado com sucesso <i class='fa fa-check-circle'></i>
+    O estoque do produto foi atualizado com sucesso <i class='fa fa-check-circle'></i>
     
 
 

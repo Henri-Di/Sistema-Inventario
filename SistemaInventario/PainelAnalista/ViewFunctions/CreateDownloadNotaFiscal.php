@@ -26,12 +26,12 @@ if (isset($_GET['file']) && !empty($_GET['file'])) {
         exit;
     } else {
         // Redireciona para uma página de erro se o arquivo não existir
-        header("Location: ../ViewFail/FailDownloadNotaFiscal.php?erro=Não foi possível fazer o download do arquivo");
+        header("Location: ../ViewFail/FailCreateDownloadNotaFiscal.php?erro=Não foi possível fazer o download do arquivo");
         exit();
     }
 } else {
     // Redireciona para uma página de erro se o nome do arquivo não for fornecido
-    header("Location: ../ViewFail/FailDownloadNotaFiscal.php?erro=Não foi possível fazer o download do arquivo");
+    header("Location: ../ViewFail/FailCreateDownloadNotaFiscal.php?erro=Não foi possível fazer o download do arquivo");
     exit();
 }
 ?>

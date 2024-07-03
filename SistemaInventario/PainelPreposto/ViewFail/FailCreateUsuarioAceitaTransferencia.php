@@ -571,347 +571,484 @@ $dateformated = date("d/m/Y", $date);
 </div>
 
 
-    <!-- Start container search material -->
-    <div class="container" id="blue-search">
+    <!-- Título da seção de cadastros auxiliares -->
+    <div id="blue-line-title-btn-painel">
     
 
 
-    <!-- Start form search material -->
-    <form class="example"  method="POST" action="SearchProduto.php">
+    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></p>
     
-
-
-    <input type="text" id="input-blue-search" name="search" autocomplete="off" placeholder="Pesquisar">
-
-
-
-    <button type="submit" id="icon-search-blue"><i class="fa fa-search"></i></button>
-
-
-
-    </form>
-    <!-- End form search material -->
-
 
 
     </div>
-    <!-- End container search material -->
 
 
     <br>
 
 
+    <!-- Tabela de cadastro auxiliar -->
+    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
+    
+
+
+    <tr id="line-blue-table">
+
+
+
+    <!-- Formulário para cadastrar Material -->
+    <form method="POST" action="../ViewFunctions/CreateMaterial.php">
+    
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Material
+
+    
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Material" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
+
+    <!-- Formulário para cadastrar Conector -->
+    <form method="POST" action="../ViewFunctions/CreateConector.php">
+    
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Conector
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Conector" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
+
+    <!-- Formulário para cadastrar Metragem -->
+    <form method="POST" action="../ViewFunctions/CreateMetragem.php">
+    
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Metragem
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Metragem" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+    <!-- Formulário para cadastrar Modelo -->
+    <form method="POST" action="../ViewFunctions/CreateModelo.php">
+    
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Modelo
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Modelo" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
+
+    <!-- Formulário para cadastrar Fornecedor -->
+    <form method="POST" action="../ViewFunctions/CreateFornecedor.php">
+    
+    
+    
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Fornecedor
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Fornecedor" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
+
+    </tr>
+    
+
+
+    </table>
+
+
+
+    <!-- Título da seção de cadastro de produto -->
     <div id="blue-line-title-btn-painel">
+    
 
 
-
-    <p id="blue-title-btn-painel">Relatório Produto <i class="fa fa-cube" id="blue-icon-btn-painel"></i></p>
-
+    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"></i></p>
+    
 
 
     </div>
 
+
+
+    <br>
+
+
     
-    <div class="container-fluid" style="width:100%;height:87%;overflow-y:auto">
-   
-
+    <!-- Tabela para formulário de cadastro -->
+    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
     
-   <br>
+
+
+    <form method="POST" action="../ViewFunctions/CreateProduto.php" enctype="multipart/form-data">
+    
+
+
+    <!-- Linha da tabela -->
+    <tr id="line-blue-table">
 
 
 
-   <?php
+    <!-- Coluna 3: Material -->
+    <td id="colun-blue-table">
+    
 
+
+    <div id="blue-title-listar">
+    
+
+
+    Material
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Material">
+    
+
+
+    <?php
     // Conexão e consulta ao banco de dados
     require_once('../../ViewConnection/ConnectionInventario.php');
+    
 
 
-    $consulta = "SELECT p.IDPRODUTO, m.MATERIAL, c.CONECTOR, met.METRAGEM, mdo.MODELO, f.FORNECEDOR, p.DATACADASTRO, d.NOME AS NOME_DATACENTER, e.QUANTIDADE
-             FROM PRODUTO p
-             INNER JOIN MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
-             INNER JOIN CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
-             INNER JOIN METRAGEM met ON p.IDMETRAGEM = met.IDMETRAGEM
-             INNER JOIN MODELO mdo ON p.IDMODELO = mdo.IDMODELO
-             INNER JOIN FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
-             INNER JOIN ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
-             INNER JOIN DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
-             ORDER BY p.IDPRODUTO";
+    $consulta = "SELECT * FROM MATERIAL ORDER BY IDMATERIAL";
+    
 
-    $resultado = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    
+
+
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['MATERIAL'] . '">' . $dado['MATERIAL'] . '</option>';
+    
+
+
+    }
+    
+
+
     ?>
-
-    <!-- Start código PHP para repetição de listagem -->
-    <?php while($dado = mysqli_fetch_array($resultado)) { ?>
-
-
-
-    <table  class="table table-bordered" id="blue-table-cadastro-auxiliar">
-
-
-
-    <tr id="line-blue-table-hover">
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Código</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['IDPRODUTO']; ?></p>   
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Material</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['MATERIAL']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Metragem</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['METRAGEM']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Conector</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['CONECTOR']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Modelo</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['MODELO']; ?></p>
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Quantidade</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['QUANTIDADE']; ?></p>
-
-
-
-    </td>
     
 
 
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">DataCenter</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['NOME_DATACENTER']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Detalhar</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DetalharProduto.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-eye" id="blue-icon-relatorio-produto"></i></div> 
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Modificar</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Remover</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Acrescentar</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-level-up" id="blue-icon-relatorio-produto"></i></div> 
-
+    </select>
     
 
+
     </td>
 
 
 
+    <!-- Coluna 4: Conector -->
     <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Diminuir</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/SubtracaoProduto.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-level-down" id="blue-icon-relatorio-produto"></i></div> 
-
     
 
-    </td>
 
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Sobrepor</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-refresh" id="blue-icon-relatorio-produto"></i></div> 
-
+    <div id="blue-title-listar">
     
 
+    
+    Conector
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Conector">
+
+
+
+    <?php
+    
+
+
+
+    // Consulta ao banco de dados para listagem de conectores
+    $consulta = "SELECT * FROM CONECTOR ORDER BY IDCONECTOR";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['CONECTOR'] . '">' . $dado['CONECTOR'] . '</option>';
+    
+
+
+    }
+    ?>
+    
+
+
+    </select>
+    
+
+
     </td>
 
 
 
+    <!-- Coluna 5: Metragem -->
     <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Metragem
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Metragem">
+    
+
+
+    <?php
+    
+
+
+    // Consulta ao banco de dados para listagem de metragens
+    $consulta = "SELECT * FROM METRAGEM ORDER BY IDMETRAGEM";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
 
 
 
-    <p id="blue-title-listar-exibicao">Reservar</p> 
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
 
 
+    echo '<option id="select-option-form" value="' . $dado['METRAGEM'] . '">' . $dado['METRAGEM'] . '</option>';
+    
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ReservaProduto.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-star" id="blue-icon-relatorio-produto"></i></div> 
 
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
 
 
     </td>
 
 
+
+    <!-- Coluna 6: Modelo -->
     <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
 
 
 
-    <p id="blue-title-listar-exibicao">Devolver</p> 
+    Modelo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Modelo">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM MODELO ORDER BY IDMODELO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DevolverProduto.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-exchange" id="blue-icon-relatorio-produto"></i></div> 
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
 
 
-
-    </td>
-
-
-    <td id="colun-blue-table">
+    echo '<option id="select-option-form" value="' . $dado['MODELO'] . '">' . $dado['MODELO'] . '</option>';
+    
 
 
-
-    <p id="blue-title-listar-exibicao">Inutilizar</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/InutilizarProduto.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-warning" id="blue-icon-relatorio-produto"></i></div> 
+    }
+    
 
 
-    </td>
+    ?>
+    
 
 
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Transferir</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/TransferenciaProduto.php?id=<?php echo $dado['IDPRODUTO'];?>';"><i class="fa fa-retweet" id="blue-icon-relatorio-produto"></i></div> 
-
+    </select>
+    
 
 
     </td>
@@ -922,71 +1059,1028 @@ $dateformated = date("d/m/Y", $date);
 
 
 
+    <!-- Segunda linha da tabela -->
+    <tr id="line-blue-table">
+
+
+    <!-- Coluna 8: Fornecedor -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Fornecedor
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Fornecedor">
+    
+
+
+    <?php
+    
+
+
+    // Consulta ao banco de dados para listagem de fornecedores
+    $consulta = "SELECT * FROM FORNECEDOR ORDER BY FORNECEDOR";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['FORNECEDOR'] . '">' . $dado['FORNECEDOR'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+    <!-- Coluna 7: Quantidade -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Quantidade
+
+
+
+    </div>
+    
+
+
+    <input type="number" id="blue-input-cdst" name="Quantidade" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 10: Data Cadastro -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Data Cadastro
+    
+
+
+    </div>
+    
+
+
+    <input type="date" id="blue-input-cdst" name="DataCadastro" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 11: Data Center -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Data Center
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="DataCenter">
+    
+
+
+    <option id="select-option-form" value="CTC">CTC</option>
+    
+
+
+    <option id="select-option-form" value="DTC">DTC</option>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+    
+    </tr>
+    
+
+
     </table>
 
 
 
-    <?php } ?>
-
-
-
-    </div>    
-
-
-    <!-- Start container footer-page -->
-    <div class="container" id="footer-page">
+    <!-- Botão de submit -->
+    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"></i></button>
     
 
 
-    <!-- Start container text footer-page -->
+    </form>
+
+
+
+    <!-- Título da seção de cadastro de produto -->
+    <div id="blue-line-title-btn-painel">
+    
+
+
+    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></p>
+    
+
+
+    </div>
+
+
+
+    <br>
+
+
+    
+    <!-- Tabela para formulário de cadastro -->
+    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
+    
+
+
+    <form method="POST" action="../ViewFunctions/CreateNotaFiscal.php" enctype="multipart/form-data">
+    
+
+
+    <!-- Linha da tabela -->
+    <tr id="line-blue-table">
+    
+
+
+    <!-- Coluna 1 -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Nº Nota Fiscal
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="NumNotaFiscal" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 2 -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Valor Nota Fiscal
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="ValorNotaFiscal" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 3: Material -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Material
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Material">
+    
+
+
+    <?php
+    // Conexão e consulta ao banco de dados
+    require_once('../../ViewConnection/ConnectionInventario.php');
+    
+
+
+    $consulta = "SELECT * FROM MATERIAL ORDER BY IDMATERIAL";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    
+
+
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['MATERIAL'] . '">' . $dado['MATERIAL'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 4: Conector -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+    
+    Conector
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Conector">
+
+
+
+    <?php
+    
+
+
+
+    // Consulta ao banco de dados para listagem de conectores
+    $consulta = "SELECT * FROM CONECTOR ORDER BY IDCONECTOR";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['CONECTOR'] . '">' . $dado['CONECTOR'] . '</option>';
+    
+
+
+    }
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 5: Metragem -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Metragem
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Metragem">
+    
+
+
+    <?php
+    
+
+
+    // Consulta ao banco de dados para listagem de metragens
+    $consulta = "SELECT * FROM METRAGEM ORDER BY IDMETRAGEM";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['METRAGEM'] . '">' . $dado['METRAGEM'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 6: Modelo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Modelo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Modelo">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM MODELO ORDER BY IDMODELO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['MODELO'] . '">' . $dado['MODELO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+    
+
+
+    </tr>
+
+
+
+    <!-- Segunda linha da tabela -->
+    <tr id="line-blue-table">
+
+
+
+    <!-- Coluna 7: Quantidade -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Quantidade
+
+
+
+    </div>
+    
+
+
+    <input type="number" id="blue-input-cdst" name="Quantidade" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 8: Fornecedor -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Fornecedor
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Fornecedor">
+    
+
+
+    <?php
+    
+
+
+    // Consulta ao banco de dados para listagem de fornecedores
+    $consulta = "SELECT * FROM FORNECEDOR ORDER BY IDFORNECEDOR";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['FORNECEDOR'] . '">' . $dado['FORNECEDOR'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 9: Data Recebimento -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Data Recebimento
+    
+
+
+    </div>
+    
+
+
+    <input type="date" id="blue-input-cdst" name="DataRecebimento" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 10: Data Cadastro -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Data Cadastro
+    
+
+
+    </div>
+    
+
+
+    <input type="date" id="blue-input-cdst" name="DataCadastro" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 11: Data Center -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Data Center
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="DataCenter">
+    
+
+
+    <option id="select-option-form" value="CTC">CTC</option>
+    
+
+
+    <option id="select-option-form" value="DTC">DTC</option>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 12: Arquivo Nota Fiscal -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Upload
+    
+
+
+    </div>
+    
+
+
+    <div class="container-fluid" id="blue-icon-upload">
+    
+
+
+    <label for="blue-input-file" class="custom-file-upload">
+    
+
+
+    <span><i class="fa fa-cloud-upload"></i></span>
+    
+
+
+    <input type="file" id="blue-input-file" name="NotaFiscalFile" accept=".pdf,.jpg,.jpeg,.png" required />
+    
+
+
+    </label>
+    
+
+
+    </div>
+    
+
+
+    </td>
+    
+
+
+    </tr>
+    
+
+
+    </table>
+
+
+
+    <!-- Botão de submit -->
+    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Nota Fiscal <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </form>
+
+
+    <!-- Título da seção de cadastro de produto -->
+    <div id="blue-line-title-btn-painel">
+    
+
+
+    <p id="blue-title-btn-painel">Cadastro de Usuário  <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
+    
+
+
+    </div>
+
+
+
+    <br>
+
+
+    
+    <!-- Tabela para formulário de cadastro -->
+    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
+    
+
+
+    <form method="POST" action="../ViewFunctions/CreateNovoUsuario.php">
+    
+
+
+    <!-- Linha da tabela -->
+    <tr id="line-blue-table">
+    
+
+
+    <!-- Coluna 1 -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Nome Usuário
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="NomeUsuario" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+
+    <!-- Coluna 2 -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Código Usuário
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoUsuario" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 3: Material -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Senha
+    
+
+
+    </div>
+    
+
+
+    <input type="password" id="blue-input-cdst" name="SenhaUsuario" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 4: Conector -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+    
+    E-mail 
+    
+
+
+    </div>
+    
+
+    <input type="text" id="blue-input-cdst" name="EmailUsuario" value="" autocomplete="off" required />
+    
+    
+
+
+    </td>
+
+
+    <!-- Coluna 5: Metragem -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+   DataCenter
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="DataCenter">
+    
+
+
+    <option value="CTC">CTC</option>
+
+
+
+    <option value="DTC">DTC</option>
+
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 5: Metragem -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Nivel de Acesso
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="NiveldeAcesso">
+    
+
+
+    <option value="1">Gestor</option>
+
+
+
+    <option value="2">Preposto</option>
+
+
+
+    <option value="3">Analista</option>
+
+
+
+    <option value="4">Técnico</option>
+
+
+
+    </select>
+    
+
+
+    </td>
+    
+
+
+    </td>
+    
+
+
+    </tr>
+
+
+
+    </table>
+
+
+
+    <!-- Botão de submit -->
+    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </form>
+
+
+
+    <!-- Início do container footer-page -->
+    <div class="container-fluid" id="footer-page">
+    
+    
+
+    <!-- Início do container text footer-page -->
     <div id="group-text-footer">
     
 
 
-    <p>Caixa Econômica Federal - Centralizadora de Suporte de Tecnologia da Informação CESTI <i class="	fa fa-gears" id="group-icon-footer"></i></p>
+    <p>Caixa Econômica Federal - Centralizadora de Suporte de Tecnologia da Informação CESTI <i class="fa fa-gears" id="group-icon-footer"></i></p>
+
+    
+
+    </div>
+    <!-- Fim do container text footer-page -->
+
+    
+
+    </div>
+    <!-- Fim do container footer-page -->
+
+    
+    </div>
+    <!-- Fim do container principal -->
+
+
+
+    </div>
+    <!-- Fim do container well -->
+
+    
+
+    </div>
+    <!-- Fim do container animate-bottom -->
     
 
 
     </div>
-    <!-- End container text footer-page -->    
-
-
-    </div>
-    <!-- End container footer-page -->
+    <!-- Fim da coluna de tamanho médio (9/12) -->
 
 
 
     </div>
-    <!-- End container well -->
-	
+    <!-- Fim da linha de conteúdo -->
     
 
-    </div>
-    <!-- End container col-sm-9 -->
-
-
 
     </div>
-    <!-- End container animate-bottom -->
+    <!-- Fim do container-fluid -->
 
 
 
-    </div>
-    <!-- End container row content -->
-
-
-
-    </div>
-    <!-- End container-fluid -->  
-
-
+    <!-- Script opcional ou links para scripts -->
+    <!-- ... -->
+   
+    
 
     </body>
-    <!-- End body page -->
+    <!-- Fim do body page -->
 
 
-    
+
     </html>
-    <!-- End html page -->
-
-    
+    <!-- Fim do HTML page -->

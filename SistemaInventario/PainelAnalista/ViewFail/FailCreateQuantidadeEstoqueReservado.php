@@ -218,7 +218,7 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
@@ -358,7 +358,7 @@
     
 
 
-    Erro ao atualizar a quantidade reservada do produto de origem <i class='fa fa-times-circle'></i>
+   Não foi possível atualizar a quantidade reservada do produto de origem. Refaça a operação e tente novamente <i class='fa fa-times-circle'></i>
     
 
     

@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verificar se o statement foi preparado com sucesso
         if (!$stmtUpdate) {
-            header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=  Não foi possivel realizar a alteração no cadastro do produto");
+            header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=Não foi possivel realizar a alteração no cadastro do produto");
             exit();
         }
 
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($types) && count($params) > 0) {
             $stmtUpdate->bind_param($types, ...$params);
         } else {
-            header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=  Não foi possivel realizar a alteração no cadastro do produto");
+            header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=Não foi possivel realizar a alteração no cadastro do produto");
             exit();
         }
 
@@ -106,10 +106,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmtUpdate->execute()) {
             // Commit da transação se a atualização for bem-sucedida
             $conn->commit();
-            header("Location: ../ViewSucess/SucessCreateModificaProduto.php?id=$idModificado");
+            header("Location: ../ViewSucess/SucessCreateModificaProduto.php?sucesso=Os dados do produto foi alterado com sucesso");
             exit();
         } else {
-            throw new Exception("Erro ao executar a atualização do produto");
+            header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=Não foi possivel realizar a alteração no cadastro do produto");
+            exit();
         }
 
         // Fechar o statement de atualização
@@ -117,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } catch (Exception $e) {
         // Rollback da transação em caso de erro
         $conn->rollback();
-        header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=  Não foi possivel realizar a alteração no cadastro do produto");
+        header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=Não foi possivel realizar a alteração no cadastro do produto");
         exit();
     } finally {
         // Fechar a conexão
@@ -125,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     // Redirecionar para a página de falha se o método de requisição não for POST
-    header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=  Não foi possivel realizar a alteração no cadastro do produto");
+    header("Location: ../ViewFail/FailCreateModificaProduto.php?erro=Não foi possivel realizar a alteração no cadastro do produto");
     exit();
 }
 ?>

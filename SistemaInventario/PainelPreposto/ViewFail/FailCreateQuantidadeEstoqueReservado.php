@@ -358,7 +358,7 @@
     
 
 
-    Erro ao atualizar a quantidade reservada do produto de origem <i class='fa fa-times-circle'></i>
+   Não foi possível atualizar a quantidade reservada do produto de origem. Refaça a operação e tente novamente <i class='fa fa-times-circle'></i>
     
 
     

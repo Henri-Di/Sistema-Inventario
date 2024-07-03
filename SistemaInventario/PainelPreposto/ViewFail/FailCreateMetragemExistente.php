@@ -365,7 +365,7 @@
     
 
 
-    Não foi possivel realizar o cadastro. A metragem já está cadastrada no sistema  <i class='fa fa-times-circle'></i>
+    Não foi possível realizar o cadastro da metragem. A metragem já está cadastrada no sistema  <i class='fa fa-times-circle'></i>
     
 
     

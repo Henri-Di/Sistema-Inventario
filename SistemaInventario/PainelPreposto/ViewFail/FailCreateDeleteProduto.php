@@ -361,7 +361,7 @@
     
 
 
-    Não foi possivel realizar a remoção do produto <i class='fa fa-times-circle'></i>
+    Não foi possivel realizar a remoção do produto. Tente novamente <i class='fa fa-times-circle'></i>
     
 
     

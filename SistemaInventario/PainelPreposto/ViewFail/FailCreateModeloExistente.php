@@ -365,7 +365,7 @@
     
 
 
-    Não foi possivel realizar o cadastro. O modelo já está cadastrado no sistema  <i class='fa fa-times-circle'></i>
+    Não foi possivel realizar o cadastro do modelo. O modelo já está cadastrado no sistema  <i class='fa fa-times-circle'></i>
     
 
     

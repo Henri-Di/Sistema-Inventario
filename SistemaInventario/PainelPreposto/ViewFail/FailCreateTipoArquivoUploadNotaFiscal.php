@@ -364,7 +364,7 @@
     
 
 
-    Tipo de arquivo não permitido ou compativél. Apenas PDF, JPG e PNG são aceitos e compativéis  <i class='fa fa-times-circle'></i>
+    Tipo de arquivo não permitido. Apenas PDF, JPG e PNG são aceitos. Refaça a operação e tente novamente  <i class='fa fa-times-circle'></i>
     
 
     

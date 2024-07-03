@@ -28,11 +28,11 @@ if (mysqli_num_rows($result_check) > 0) {
     // Executar a consulta SQL
     if (mysqli_query($conn, $sql)) {
         // Redirecionar para a página de sucesso
-        header("Location: ../ViewSucess/SucessCreate.php");
+        header("Location: ../ViewSucess/SucessCreateMaterial.php?sucesso=O cadastro do material foi realizado com sucesso");
         exit(); // Termina a execução do script após redirecionamento
     } else {
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreate.php?erro=Não foi possível realizar o cadastro");
+        header("Location: ../ViewFail/FailCreateMaterial.php?erro=Não foi possível realizar o cadastro do material");
         exit(); // Termina a execução do script após redirecionamento
     }
 }

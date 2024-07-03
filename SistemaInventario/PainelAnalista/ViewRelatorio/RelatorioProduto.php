@@ -223,17 +223,16 @@
 
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-   
 
-    
+
+
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
-    
+
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-
-
+    
     </ul>
 
 
@@ -526,63 +525,67 @@ $dateformated = date("d/m/Y", $date);
 
    <?php
 
+// Obter o ID do usuário a partir da sessão
+$idUsuario = $_SESSION['usuarioId'] ?? '';
 
-    // Obter o ID do usuário a partir da sessão
-    $idUsuario = $_SESSION['usuarioId'] ?? '';
+// Sanitizar o ID do usuário para evitar injeção de SQL
+$idUsuario = $conn->real_escape_string($idUsuario);
 
-    // Sanitizar o ID do usuário para evitar injeção de SQL
-    $idUsuario = $conn->real_escape_string($idUsuario);
+// Consulta para obter o datacenter e nível de acesso do usuário
+$consultaUsuario = "SELECT DATACENTER, NIVEL_ACESSO FROM USUARIO WHERE IDUSUARIO = ?";
+if ($stmt = $conn->prepare($consultaUsuario)) {
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    $stmt->bind_result($datacenterUsuario, $nivelAcesso);
+    $stmt->fetch();
+    $stmt->close();
+}
 
-    // Consulta para obter o datacenter do usuário
-    $consultaDatacenter = "SELECT DATACENTER FROM USUARIO WHERE IDUSUARIO = ?";
-    if ($stmt = $conn->prepare($consultaDatacenter)) {
-        $stmt->bind_param("i", $idUsuario);
-        $stmt->execute();
-        $stmt->bind_result($datacenterUsuario);
-        $stmt->fetch();
-        $stmt->close();
-    }
+// Consulta para obter os produtos
+$consulta = "
+    SELECT 
+        p.IDPRODUTO, 
+        m.MATERIAL, 
+        c.CONECTOR, 
+        met.METRAGEM, 
+        mdo.MODELO, 
+        f.FORNECEDOR, 
+        p.DATACADASTRO, 
+        d.NOME AS NOME_DATACENTER, 
+        e.QUANTIDADE
+    FROM 
+        PRODUTO p
+    INNER JOIN 
+        MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
+    INNER JOIN 
+        CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
+    INNER JOIN 
+        METRAGEM met ON p.IDMETRAGEM = met.IDMETRAGEM
+    INNER JOIN 
+        MODELO mdo ON p.IDMODELO = mdo.IDMODELO
+    INNER JOIN 
+        FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
+    INNER JOIN 
+        ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
+    INNER JOIN 
+        DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-    // Consulta para obter os produtos correspondentes ao datacenter do usuário
-    $consulta = "
-        SELECT 
-            p.IDPRODUTO, 
-            m.MATERIAL, 
-            c.CONECTOR, 
-            met.METRAGEM, 
-            mdo.MODELO, 
-            f.FORNECEDOR, 
-            p.DATACADASTRO, 
-            d.NOME AS NOME_DATACENTER, 
-            e.QUANTIDADE
-        FROM 
-            PRODUTO p
-        INNER JOIN 
-            MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
-        INNER JOIN 
-            CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
-        INNER JOIN 
-            METRAGEM met ON p.IDMETRAGEM = met.IDMETRAGEM
-        INNER JOIN 
-            MODELO mdo ON p.IDMODELO = mdo.IDMODELO
-        INNER JOIN 
-            FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
-        INNER JOIN 
-            ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
-        INNER JOIN 
-            DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
-        WHERE 
-            d.NOME = ?
-        ORDER BY 
-            p.IDPRODUTO";
+// Adicionar condição de datacenter se o nível de acesso não for 1
+if ($nivelAcesso != 1) {
+    $consulta .= " WHERE d.NOME = ?";
+}
 
-    if ($stmt = $conn->prepare($consulta)) {
+$consulta .= " ORDER BY p.IDPRODUTO";
+
+if ($stmt = $conn->prepare($consulta)) {
+    if ($nivelAcesso != 1) {
         $stmt->bind_param("s", $datacenterUsuario);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
+    }
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
-        if ($resultado->num_rows > 0) {
-            while ($row = $resultado->fetch_assoc()) { ?>
+    if ($resultado->num_rows > 0) {
+        while ($row = $resultado->fetch_assoc()) { ?>
 
 
 

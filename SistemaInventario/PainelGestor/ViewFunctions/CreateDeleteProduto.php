@@ -24,39 +24,57 @@ if (!empty($id)) {
 
         // Executar as consultas SQL para exclusão nas tabelas relacionadas
         if (!mysqli_query($conn, $sqlDeleteEstoque)) {
-            throw new Exception("Não foi possível remover os dados na tabela ESTOQUE");
+            header("Location: ../ViewFail/FailCreateRemoverDadosEstoque.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteAcrescimo)) {
-            throw new Exception("Não foi possível remover os dados na tabela ACRESCIMO");
+            header("Location: ../ViewFail/FailCreateRemoverDadosAcrescimo.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteSubtracao)) {
-            throw new Exception("Não foi possível remover os dados na tabela SUBTRACAO");
+            header("Location: ../ViewFail/FailCreateRemoverDadosSubtracao.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteSobrepor)) {
-            throw new Exception("Não foi possível remover os dados na tabela SOBREPOR");
+            header("Location: ../ViewFail/FailCreateRemoverDadosSobrepor.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteReserva)) {
-            throw new Exception("Não foi possível remover os dados na tabela RESERVA");
+            header("Location: ../ViewFail/FailCreateRemoverDadosReserva.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteDevolver)) {
-            throw new Exception("Não foi possível remover os dados na tabela DEVOLVER");
+            header("Location: ../ViewFail/FailCreateRemoverDadosDevolver.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteInutilizar)) {
-            throw new Exception("Não foi possível remover os dados na tabela INUTILIZAR");
+            header("Location: ../ViewFail/FailCreateRemoverDadosInutilizar.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteTransferir)) {
-            throw new Exception("Não foi possível remover os dados na tabela TRANSFERENCIA");
+            header("Location: ../ViewFail/FailCreateRemoverDadosTransferir.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         if (!mysqli_query($conn, $sqlDeleteNotaFiscal)) {
-            throw new Exception("Não foi possível remover os dados na tabela NOTAFISCAL");
+            header("Location: ../ViewFail/FailCreateRemoverDadosNotaFiscal.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         // Construir a consulta SQL para exclusão do produto
@@ -64,21 +82,23 @@ if (!empty($id)) {
 
         // Executar a consulta SQL para exclusão do produto
         if (!mysqli_query($conn, $sqlDeleteProduto) || mysqli_affected_rows($conn) <= 0) {
-            throw new Exception("Não foi possível remover o produto");
+            header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+            exit(); // Termina a execução do script após redirecionamento
+        } finally {
         }
 
         // Commit da transação se todas as operações foram bem-sucedidas
         $conn->commit();
 
         // Redirecionar para a página de sucesso com o ID do produto excluído
-        header("Location: ../ViewSuccess/SuccessCreateDeleteProduto.php?id=$id");
+        header("Location: ../ViewSuccess/SuccessCreateDeleteProduto.php?sucesso=O produto removido com sucesso");
         exit(); // Termina a execução do script após redirecionamento
     } catch (Exception $e) {
         // Em caso de erro, fazer rollback da transação
         $conn->rollback();
 
         // Redirecionar para a página de falha com mensagem de erro
-        header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=" . urlencode($e->getMessage()));
+        header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     } finally {
         // Fechar a conexão
@@ -86,7 +106,7 @@ if (!empty($id)) {
     }
 } else {
     // Redirecionar para a página de falha se o ID estiver vazio
-    header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=ID do produto não especificado");
+    header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
     exit(); // Termina a execução do script após redirecionamento
 }
 ?>

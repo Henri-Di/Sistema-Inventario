@@ -48,12 +48,12 @@ function processarUploadArquivo($file) {
     $fileType = mime_content_type($file['tmp_name']);
 
     if (!in_array($fileType, $allowedMimeTypes)) {
-        header("Location: ../ViewFail/FailCreateTipoArquivoUploadNotaFiscal.php?erro=Tipo de arquivo não permitido. Apenas PDF, JPG e PNG são aceitos");
+        header("Location: ../ViewFail/FailCreateTipoArquivoUploadNotaFiscal.php?erro=Tipo de arquivo não permitido. Apenas PDF, JPG e PNG são aceitos. Refaça a operação e tente novamente");
         exit();
     }
 
     if (!move_uploaded_file($file['tmp_name'], $uploadFilePath)) {
-        header("Location: ../ViewFail/FailCreateUploadNotaFiscal.php?erro=Falha ao fazer o upload do arquivo");
+        header("Location: ../ViewFail/FailCreateUploadNotaFiscal.php?erro=Falha ao fazer o upload do arquivo. Refaça a operação e tente novamente");
         exit();
     }
 
@@ -70,13 +70,13 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
     try {
         if (notaFiscalExiste($conn, $numNotaFiscal)) {
             $conn->rollback();
-            header("Location: ../ViewFail/FailCreateNotaFiscalExistente.php?erro=Nota fiscal já cadastrada");
+            header("Location: ../ViewFail/FailCreateNotaFiscalExistente.php?erro=Não foi possivel realizar o cadastro. Está nota fiscal já cadastrada no sistema");
             exit();
         }
 
         if (!datasSaoValidas($dataRecebimento, $dataCadastro)) {
             $conn->rollback();
-            header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido");
+            header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual a data atual");
             exit();
         }
 
@@ -85,7 +85,7 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
             $idDatacenter = cadastrarNovoDatacenter($conn, $dataCenter);
             if (!$idDatacenter) {
                 $conn->rollback();
-                header("Location: ../ViewFail/FailCreateNovoDatacenterNotaFiscal.php?erro=Não foi possível criar o DataCenter");
+                header("Location: ../ViewFail/FailCreateNovoDatacenterNotaFiscal.php?erro=Não foi possível cadastrar o DataCenter referente a nota fiscal. Refaça a operação e tente novamente");
                 exit();
             }
         }
@@ -111,11 +111,11 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
         $stmt->close();
 
         $conn->commit();
-        header("Location: ../ViewSucess/SucessCreateNotaFiscal.php");
+        header("Location: ../ViewSucess/SucessCreateNotaFiscal.php?sucesso=A nota fiscal foi cadastrada com sucesso. O estoque do produto foi iniciado ou alterado");
         exit();
     } catch (Exception $e) {
         $conn->rollback();
-        header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Não foi possível realizar o cadastro da nota fiscal. Operação será desfeita");
+        header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Não foi possivel realizar o cadastro da nota fiscal. A operação será desfeita. Tente novamente");
         exit();
     }
 }
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath);
 } else {
-    header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Formulário não foi submetido corretamente");
+    header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Não foi possivel realizar o cadastro da nota fiscal. A operação será desfeita. Tente novamente");
     exit();
 }
 ?>

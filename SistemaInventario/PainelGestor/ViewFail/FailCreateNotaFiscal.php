@@ -365,7 +365,7 @@
     
 
 
-    Não foi possivel realizar o cadastro da nota fiscal, a operação será desfeita. Tente novamente   <i class='fa fa-times-circle'></i>
+    Não foi possivel realizar o cadastro da nota fiscal. A operação será desfeita. Tente novamente   <i class='fa fa-times-circle'></i>
     
 
     

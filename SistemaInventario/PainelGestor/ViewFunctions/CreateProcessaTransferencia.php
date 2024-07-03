@@ -57,7 +57,7 @@ try {
 
     // Verificar se a transferência já foi aceita ou recusada anteriormente
     if ($situacaoTransferencia !== 'Pendente') {
-        header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=Essa transferência já foi processada");
+        header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=Essa transferência já foi processada. Tente novamente com uma transferência que esteja com o status pendente");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -103,7 +103,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdateOrigem->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateAtualizaEstoqueOrigemTransferencia.php?erro=Erro ao atualizar a situação da transferência para Recebido");
+            header("Location: ../ViewFail/FailCreateAtualizaEstoqueOrigemTransferencia.php?erro=Não foi possível atualizar o estoque do produto de origem da transferência. Tente novamente");
             exit(); // Termina a execução do script após redirecionamento
         }
         $stmtUpdateOrigem->close();
@@ -116,7 +116,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdate->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecusada.php?erro=Erro ao atualizar a situação da transferência para Recusado");
+            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecusada.php?erro=Não foi possível atualizar a situação da transferência para Recusado. Refaça a operação e tente novamente");
             exit(); // Termina a execução do script após redirecionamento
         }
         $stmtUpdate->close();
@@ -129,7 +129,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdateOrigem->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateQuantidadeEstoqueReservado.php?erro=Erro ao atualizar a quantidade reservada do produto de origem ");
+            header("Location: ../ViewFail/FailCreateQuantidadeEstoqueReservado.php?erro=Não foi possível atualizar a quantidade reservada do produto de origem. Refaça a operação e tente novamente");
             exit(); // Termina a execução do script após redirecionamento
         }
         $stmtUpdateOrigem->close();
@@ -166,7 +166,7 @@ try {
     $conn->commit();
 
     // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateAcaoTransferencia.php");
+    header("Location: ../ViewSucess/SucessCreateAcaoTransferencia.php?sucesso=A sua confirmação sobre a transferência foi realizada com sucesso");
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação
@@ -176,7 +176,7 @@ try {
     echo "Erro: " . $e->getMessage();
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateAcaoTransferencia.php?erro=Não foi possível processar a transferência de produtos");
+    header("Location: ../ViewFail/FailCreateAcaoTransferencia.php?erro=Não foi possível processar a transferência de produtos. Refaça a operação e tente novamente");
     exit(); // Termina a execução do script após redirecionamento
 } finally {
     // Fechar o statement de seleção

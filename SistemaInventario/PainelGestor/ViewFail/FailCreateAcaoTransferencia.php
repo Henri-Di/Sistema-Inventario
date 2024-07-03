@@ -362,7 +362,7 @@
     
 
 
-    Não foi possível processar a transferência de produtos. Tente novamente  <i class='fa fa-times-circle'></i>
+    Não foi possível processar a transferência de produtos. Refaça a operação e tente novamente  <i class='fa fa-times-circle'></i>
     
 
     

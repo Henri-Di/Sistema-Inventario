@@ -366,7 +366,7 @@
     
 
 
-    Não foi possível realizar o cadastro. O conector já está cadastrado no sistema  <i class='fa fa-times-circle'></i>
+    Não foi possível realizar o cadastro do conector. O conector já está cadastrado no sistema  <i class='fa fa-times-circle'></i>
     
 
     

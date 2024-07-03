@@ -366,7 +366,7 @@
     
 
 
-    Está transferência já foi processada. Realize a operação com uma transferência pendente  <i class='fa fa-times-circle'></i>
+    Essa transferência já foi processada. Tente novamente com uma transferência que esteja com o status pendente <i class='fa fa-times-circle'></i>
     
 
     

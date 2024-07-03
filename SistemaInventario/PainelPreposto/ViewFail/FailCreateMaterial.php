@@ -294,11 +294,11 @@
 
 
     color: #f0f0f0;
-
-
-
-    font-size:14px;
     
+
+    
+    font-size: 14px;
+
 
 
     }
@@ -365,12 +365,11 @@
     
 
 
-    Não foi possível realizar o cadastro. Tente novamente  <i class='fa fa-times-circle'></i>
+    Não foi possível realizar o cadastro do material. Tente novamente <i class='fa fa-times-circle'></i>
     
 
     
     </div>
-
 
 
     <style>

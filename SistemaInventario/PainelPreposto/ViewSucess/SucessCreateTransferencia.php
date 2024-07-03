@@ -367,7 +367,7 @@
     
 
 
-    A transferência foi realizada com sucesso. Aguarde a confirmação de recebimento no Datacenter de destino <i class='fa fa-check-circle'></i>
+    A transferência foi realizada com sucesso. Aguarde a confirmação do datacenter de destino <i class='fa fa-check-circle'></i>
     
 
 

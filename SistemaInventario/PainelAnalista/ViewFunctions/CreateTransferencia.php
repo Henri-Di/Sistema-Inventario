@@ -131,7 +131,7 @@ try {
     $stmtInsert->bind_param("isssssiiiss", $quantidadeTransferencia, $dataTransferencia, $idDatacenterDestino, $observacao, $operacao, $situacao, $idProdutoOrigem, $idProdutoDestino, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosTransferencia.php?erro=Não foi possível inserir os dados na tabela TRANSFERENCIA");
+        header("Location: ../ViewFail/FailCreateInserirDadosTransferencia.php?erro=Não foi possível inserir os dados na tabela TRANSFERENCIA. Informe o departamento de TI");
         exit();
     }
 
@@ -162,13 +162,13 @@ try {
     $conn->commit();
 
     // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateTransferencia.php");
+    header("Location: ../ViewSucess/SucessCreateTransferencia.php?sucesso=A transferência foi realizada com sucesso. Aguarde a confirmação do datacenter de destino");
     exit();
 
 } catch (Exception $e) {
     // Rollback da transação em caso de erro
     $conn->rollback();
-    header("Location: ../ViewFail/FailCreateTransferencia.php?erro=" . urlencode($e->getMessage()));
+    header("Location: ../ViewFail/FailCreateTransferencia.php?erro=Não foi possível criar a transferência do produto. Refaça a operação e tente novamente");
     exit();
 } finally {
     // Fechar statements e conexão

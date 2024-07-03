@@ -202,7 +202,7 @@
     border-top-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
-    border-bottom-color: #ff9900;
+    border-bottom-color:  #ff6600;
   }
   
   
@@ -389,10 +389,10 @@
   /* Estilo para o título de listagem */
   #blue-title-listar-alert {
     background-color: transparent; /* Fundo transparente */
-    color: #ff9900; /* Cor do texto */
+    color: #ff6600; /* Cor do texto */
     font-size: 12px; /* Tamanho da fonte */
     font-weight: bold; /* Texto em negrito */
-    border: 1px solid #ff9900; /* Borda sólida */
+    border: 1px solid  #ff6600; /* Borda sólida */
     text-align: center; /* Alinhamento central do texto */
   }
   
@@ -403,7 +403,7 @@
   
   /* Estilo para a linha das tabelas de formulários */
   #line-blue-table-alert {
-    border: 1px solid#ff9900; /* Borda sólida */
+    border: 1px solid  #ff6600; /* Borda sólida */
     cursor: pointer;
   }
   
@@ -431,7 +431,7 @@
   
   /* Estilo para a coluna das tabelas de formulários */
   #colun-blue-table-alert {
-    border: 1px solid #ff9900; /* Borda sólida */
+    border: 1px solid  #ff6600; /* Borda sólida */
   }
   
   /* Estilo para a coluna das tabelas de apresentação da sessão do usuário */
@@ -517,7 +517,7 @@
   /* Estilo para o título de botão no painel */
   #blue-title-btn-painel-alert {
     text-align: left; /* Alinhamento à esquerda */
-    color:#ff9900; /* Cor do texto */
+    color: #ff6600; /* Cor do texto */
     font-size: 12px; /* Tamanho da fonte */
   }
   
@@ -530,7 +530,7 @@
   
   /* Estilo para a linha simulada abaixo do título de botão no painel */
     #blue-line-title-btn-painel-alert {
-    border-bottom: 1px solid #ff9900; /* Linha sólida azul abaixo do título */
+    border-bottom: 1px solid #ff6600; /* Linha sólida azul abaixo do título */
   }
   
   
@@ -821,7 +821,7 @@
   #blue-icon-relatorio-produto-alert{
     margin-left: 1%;
     margin-top: 3%;
-    color: #ff9900;
+    color: #ff6600;
     font-size: 9px;  
     }
     
@@ -843,4 +843,10 @@
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   visibility: visible;
+}
+
+
+#blue-text-session{
+font-size: 10px;  
+float:center;
 }

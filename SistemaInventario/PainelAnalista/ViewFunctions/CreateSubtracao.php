@@ -99,7 +99,7 @@ try {
     $stmtInsert->bind_param("sisssssiss", $numwo, $quantidadeSubtracao, $dataSubtracao, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
     
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosSubtracao.php?erro=Não foi possível inserir os dados na tabela SUBTRACAO");
+        header("Location: ../ViewFail/FailCreateInserirDadosSubtracao.php?erro=Não foi possível inserir os dados na tabela SUBTRACAO. Informe o departamento de TI");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -110,13 +110,13 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeSubtracao, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possivel atualizar o estoque do produto");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possivel atualizar o estoque do produto. Refaça a operação e tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 
     // Verificar se a data de recebimento e data de cadastro são válidas
     if (!datasSaoValidas($dataSubtracao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido ");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual da data atual ");
         exit();
     }
 
@@ -126,9 +126,9 @@ try {
 
     // Redirecionar para a página apropriada com base na existência de reservas
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
     }
     exit();
 
@@ -140,7 +140,7 @@ try {
     echo "Erro: " . $e->getMessage();
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto");
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente ");
     exit(); // Termina a execução do script após redirecionamento
     
 } finally {
