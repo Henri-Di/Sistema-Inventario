@@ -218,21 +218,22 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+   
 
-
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-    
+
+
     </ul>
     
 
@@ -527,297 +528,90 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    // Conexão e consulta ao banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
+// Conexão e consulta ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
 
+$datacenter_usuario = $_SESSION['usuarioDatacenter']; // Obtém o datacenter do usuário da sessão
 
+$consulta = "SELECT * FROM NOTAFISCAL WHERE DATACENTER = '$datacenter_usuario' ORDER BY ID";
+$con = mysqli_query($conn, $consulta) or die (mysqli_error($conn));
 
-    $consulta = "SELECT * FROM NOTAFISCAL ORDER BY ID";
-
-
-
-    $con = mysqli_query($conn,$consulta) or die (mysqli_error());
-
-
-
-    ?> 
-    <!--  End código PHP para realização de listagem dos materiais -->
-
-
-    <!-- Start código PHP para repetição de listagem -->
-    <?php while($dado = $con->fetch_array()) { ?> 
-
-
-
-    <!-- Start código PHP para conversão da data, para modelo brasileiro -->
-     <?php 
-    
-
-
-    $date = strtotime($dado['DATARECEBIMENTO']);
-    // $data agora é uma inteiro timestamp
-    
-
-
-    $dateformated = date("d/m/Y", $date);
-    // date() formatou o $date para d/m/Y
-
-
-
-    $datetwo = strtotime($dado['DATACADASTRO']);
-    // $data agora é uma inteiro timestamp
-    
+// Verifica se a consulta retornou resultados
+if (mysqli_num_rows($con) > 0) {
+    // Start código PHP para repetição de listagem
+    while($dado = $con->fetch_array()) { 
+        // Start código PHP para conversão da data, para modelo brasileiro
+        $date = strtotime($dado['DATARECEBIMENTO']);
+        $dateformated = date("d/m/Y", $date);
+        $datetwo = strtotime($dado['DATACADASTRO']);
+        $dateformatetwo = date("d/m/Y", $datetwo);
+        // End código PHP para conversão da data, para modelo brasileiro
+        ?>
+        <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
+            <tr id="line-blue-table-hover">
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Código</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['ID']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Nº Nota Fiscal</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['NUMNOTAFISCAL']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Valor Nota Fiscal</p>
+                    <p id="blue-text-table-exibicao">R$<?php echo $dado['VALORNOTAFISCAL']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Material</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['MATERIAL']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Metragem</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['METRAGEM']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Modelo</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['MODELO']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Quantidade</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['QUANTIDADE']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Fornecedor</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['FORNECEDOR']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Data Entrada</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dateformated; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Data Cadastro</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dateformatetwo; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Data Center</p>
+                    <p id="blue-text-table-exibicao"><?php echo $dado['DATACENTER']; ?></p>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Modificar</p>
+                    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto"></i></div>
+                </td>
+                <td id="colun-blue-table">
+                    <p id="blue-title-listar-exibicao">Remover</p>
+                    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div>
+                </td>
+                <td id="colun-blue-table">
+                    <div id="blue-title-listar">Download</div>
+                    <a id="blue-optios-config-dados" href='../ViewForms/CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'><i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;"></i></a>
+                </td>
+            </tr>
+        </table>
+    <?php } 
+} else {
+    // Exibe uma mensagem se não houver registros
+    echo "<p id='blue-messenger-null'>Nenhuma nota fiscal encontrada para o seu datacenter <i class='fa fa-cart-plus'></i></p>"; }?>
  
- 
-    $dateformatetwo = date("d/m/Y", $datetwo);
-    // date() formatou o $date para d/m/Y
-
-
-
-    ?>
-    <!-- End código PHP para conversão da data, para modelo brasileiro -->
-
-
-
-    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
-
-
-
-    <tr id="line-blue-table-hover">
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Código</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['ID']; ?></p>   
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Nº Nota Fiscal</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['NUMNOTAFISCAL']; ?></p>
-
-
-
-    </td>
-    
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Valor Nota Fiscal</p>
-
-
-
-    <p id="blue-text-table-exibicao">R$<?php echo $dado['VALORNOTAFISCAL']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Material</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['MATERIAL']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Metragem</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['METRAGEM']; ?></p>
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Modelo</p>
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['MODELO']; ?></p>
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Quantidade</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['QUANTIDADE']; ?></p>
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Fornecedor</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['FORNECEDOR']; ?></p>
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Data Entrada</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dateformated; ?></p>
-
-
-
-    </td>
-    
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Data Cadastro</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dateformatetwo; ?></p>
-
-
-
-    </td>
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Data Center</p> 
-
-
-
-    <p id="blue-text-table-exibicao"><?php echo $dado['DATACENTER']; ?></p>
-
-
-
-    </td>
-
-
-    
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Modificar</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto"></i></div> 
-
-
-
-    </td>
-
-
-
-    <td id="colun-blue-table">
-
-
-
-    <p id="blue-title-listar-exibicao">Remover</p> 
-
-
-
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteNotaFiscal.php?id=<?php echo $dado['ID'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
-
-
-
-    </td>
-    
-
-
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">Download</div>
-    
-
-
-    <a id="blue-optios-config-dados" href='../ViewForms/CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'><i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;" ></i></a>
-
-    
-
-    </td>
-
-
-
-    </tr>
-
-
-
-    </table>
-
-
-
-    <?php } ?>
-
-    
     </div>
     
 

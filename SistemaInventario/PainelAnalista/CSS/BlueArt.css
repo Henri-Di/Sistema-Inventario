@@ -141,7 +141,6 @@ body {
 .well {
   background-color: #f0f0f0;
   border: 1px solid #f0f0f0;
-  font-size: 18px;
   font-weight: bold;
   color: #005ce6;
   cursor: context-menu;
@@ -178,7 +177,7 @@ body {
   outline: none;
   color: #33334d;
   text-align: center;
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: bold;
   border: 1px solid;
   margin-top: 1%;
@@ -195,14 +194,14 @@ body {
   outline: none;
   color: #33334d;
   text-align: center;
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: bold;
   border: 1px solid;
   margin-top: 1%;
   border-top-color: transparent;
   border-left-color: transparent;
   border-right-color: transparent;
-  border-bottom-color:  #e6b800;
+  border-bottom-color:  #cca300;
 }
 
 
@@ -212,7 +211,7 @@ body {
   outline: none;
   cursor: pointer;
   color: #33334d;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: bold;
   border: 1px solid #666699;
   margin-top: 1%;
@@ -382,6 +381,7 @@ body {
   color: #005ce6; /* Cor do texto */
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
+  margin-top: 0.5px;
   border: 1px solid #005ce6; /* Borda sólida */
   text-align: center; /* Alinhamento central do texto */
 }
@@ -389,10 +389,10 @@ body {
 /* Estilo para o título de listagem */
 #blue-title-listar-alert {
   background-color: transparent; /* Fundo transparente */
-  color: #e6b800; /* Cor do texto */
+  color: #cca300; /* Cor do texto */
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
-  border: 1px solid  #e6b800; /* Borda sólida */
+  border: 1px solid  #cca300; /* Borda sólida */
   text-align: center; /* Alinhamento central do texto */
 }
 
@@ -403,7 +403,7 @@ body {
 
 /* Estilo para a linha das tabelas de formulários */
 #line-blue-table-alert {
-  border: 1px solid  #e6b800; /* Borda sólida */
+  border: 1px solid  #cca300; /* Borda sólida */
   cursor: pointer;
 }
 
@@ -431,7 +431,7 @@ body {
 
 /* Estilo para a coluna das tabelas de formulários */
 #colun-blue-table-alert {
-  border: 1px solid #e6b800; /* Borda sólida */
+  border: 1px solid #cca300; /* Borda sólida */
 }
 
 /* Estilo para a coluna das tabelas de apresentação da sessão do usuário */
@@ -466,7 +466,7 @@ body {
   font-weight: bold; /* Texto em negrito */
   border: 1px solid #005ce6; /* Borda sólida */
   text-align: center; /* Alinhamento central do texto */
-  font-size: 10px; /* Tamanho da fonte */
+  font-size: 11px; /* Tamanho da fonte */
   margin-top: 1%; /* Margem superior */
   padding: 2px; /* Padding */
   border-radius: 5px; /* Borda arredondada */
@@ -484,7 +484,7 @@ body {
   color:  #33334d; /* Cor do texto */
   font-weight: bold; /* Texto em negrito */
   text-align: center; /* Alinhamento central do texto */
-  font-size: 7.5px; /* Tamanho da fonte */
+  font-size: 8px; /* Tamanho da fonte */
 }
 
 /* Estilo para a linha de painel */
@@ -517,7 +517,7 @@ body {
 /* Estilo para o título de botão no painel */
 #blue-title-btn-painel-alert {
   text-align: left; /* Alinhamento à esquerda */
-  color: #e6b800; /* Cor do texto */
+  color: #cca300; /* Cor do texto */
   font-size: 12px; /* Tamanho da fonte */
 }
 
@@ -530,7 +530,7 @@ body {
 
 /* Estilo para a linha simulada abaixo do título de botão no painel */
   #blue-line-title-btn-painel-alert {
-  border-bottom: 1px solid #e6b800; /* Linha sólida azul abaixo do título */
+  border-bottom: 1px solid #cca300; /* Linha sólida azul abaixo do título */
 }
 
 
@@ -624,7 +624,7 @@ body {
 
 /* Estilo para as células da tabela */
 #blue-table-cadastro-auxiliar td {
-  width: 50px; /* Defina uma largura fixa para cada célula */
+  width: 61px; /* Defina uma largura fixa para cada célula */
   overflow: hidden; /* Esconder conteúdo excedente */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
   white-space: nowrap; /* Não quebrar linhas */
@@ -821,7 +821,7 @@ font-size: 9px;
 #blue-icon-relatorio-produto-alert{
   margin-left: 1%;
   margin-top: 3%;
-  color: #e6b800;
+  color: #cca300;
   font-size: 9px;  
   }
   
@@ -849,4 +849,11 @@ visibility: visible;
 #blue-text-session{
 font-size: 10px;  
 float:center;
+}
+
+#blue-messenger-null{
+margin-top:15%;  
+font-size:16px;
+font-weight: bold;
+text-align:center;
 }

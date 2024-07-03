@@ -69,10 +69,11 @@ try {
 
     // Realizar ação com base na escolha do usuário
     if ($acao === 'Aceitar') {
-        // Atualizar a situação da transferência para 'Recebido'
-        $sqlUpdateAceitar = "UPDATE TRANSFERENCIA SET SITUACAO = 'RECEBIDO' WHERE ID = ?";
+        // Atualizar a situação da transferência para 'RECEBIDO'
+        $sqlUpdateAceitar = "UPDATE TRANSFERENCIA SET SITUACAO = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdateAceitar);
-        $stmtUpdate->bind_param("i", $idTransferencia);
+        $situacao = strtoupper('Recebido');
+        $stmtUpdate->bind_param("si", $situacao, $idTransferencia);
         $stmtUpdate->execute();
 
         // Verificar se a atualização foi bem-sucedida
@@ -108,10 +109,11 @@ try {
         }
         $stmtUpdateOrigem->close();
     } elseif ($acao === 'Recusar') {
-        // Atualizar a situação da transferência para 'Recusado'
-        $sqlUpdateRecusar = "UPDATE TRANSFERENCIA SET SITUACAO = 'RECUSADO' WHERE ID = ?";
+        // Atualizar a situação da transferência para 'RECUSADO'
+        $sqlUpdateRecusar = "UPDATE TRANSFERENCIA SET SITUACAO = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdateRecusar);
-        $stmtUpdate->bind_param("i", $idTransferencia);
+        $situacao = strtoupper('Recusado');
+        $stmtUpdate->bind_param("si", $situacao, $idTransferencia);
         $stmtUpdate->execute();
 
         // Verificar se a atualização foi bem-sucedida
@@ -154,7 +156,7 @@ try {
     }
 
     // Inserir registro no log de transferência
-    $acaoLog = $acao === 'Aceitar' ? 'Recebido' : 'Recusado';
+    $acaoLog = strtoupper($acao === 'Aceitar' ? 'Recebido' : 'Recusado');
     $sqlInsertLog = "INSERT INTO TRANSFERENCIA_LOG (IDTRANSFERENCIA, IDUSUARIO, NOME, CODIGOP, ACAO, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO) 
                      VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmtInsertLog = $conn->prepare($sqlInsertLog);

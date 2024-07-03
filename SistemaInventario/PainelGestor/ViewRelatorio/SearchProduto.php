@@ -597,84 +597,62 @@ $dateformated = date("d/m/Y", $date);
 
 
     
-    <!-- Start código PHP search material -->
-    <?php
+<!-- Start código PHP search material -->
+<?php
+// Conexão com o banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
 
+// Obtém o termo de pesquisa enviado pelo formulário
+$search = $_POST['search'] ?? '';
 
+// Protege contra SQL Injection escapando os caracteres especiais no input do usuário
+$search = mysqli_real_escape_string($conn, $search);
 
-    // Conexão com o banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
+// Ajusta a consulta SQL para pesquisar em múltiplos campos nas tabelas relacionadas sem filtrar pelo datacenter do usuário
+$result_search = "
+SELECT 
+    PRODUTO.IDPRODUTO, 
+    MATERIAL.MATERIAL AS MATERIAL, 
+    CONECTOR.CONECTOR AS CONECTOR, 
+    METRAGEM.METRAGEM AS METRAGEM, 
+    MODELO.MODELO AS MODELO, 
+    FORNECEDOR.FORNECEDOR AS FORNECEDOR, 
+    PRODUTO.DATACADASTRO, 
+    DATACENTER.NOME AS DATACENTER, 
+    ESTOQUE.QUANTIDADE 
+FROM 
+    PRODUTO
+JOIN 
+    ESTOQUE ON PRODUTO.IDPRODUTO = ESTOQUE.IDPRODUTO 
+JOIN 
+    DATACENTER ON PRODUTO.IDDATACENTER = DATACENTER.IDDATACENTER 
+JOIN 
+    MATERIAL ON PRODUTO.IDMATERIAL = MATERIAL.IDMATERIAL
+JOIN 
+    CONECTOR ON PRODUTO.IDCONECTOR = CONECTOR.IDCONECTOR
+JOIN 
+    METRAGEM ON PRODUTO.IDMETRAGEM = METRAGEM.IDMETRAGEM
+JOIN 
+    MODELO ON PRODUTO.IDMODELO = MODELO.IDMODELO
+JOIN 
+    FORNECEDOR ON PRODUTO.IDFORNECEDOR = FORNECEDOR.IDFORNECEDOR
+WHERE 
+    PRODUTO.IDPRODUTO LIKE '%$search%' 
+    OR MATERIAL.MATERIAL LIKE '%$search%' 
+    OR CONECTOR.CONECTOR LIKE '%$search%' 
+    OR METRAGEM.METRAGEM LIKE '%$search%' 
+    OR MODELO.MODELO LIKE '%$search%' 
+    OR FORNECEDOR.FORNECEDOR LIKE '%$search%' 
+    OR DATACENTER.NOME LIKE '%$search%' 
+    OR ESTOQUE.QUANTIDADE LIKE '%$search%'";
 
-    // Obter o ID do usuário a partir da sessão
-    $idUsuario = $_SESSION['usuarioId'] ?? '';
+$stmt = $conn->prepare($result_search);
+$stmt->execute();
+$resultado_search = $stmt->get_result();
 
-    // Sanitizar o ID do usuário para evitar injeção de SQL
-    $idUsuario = $conn->real_escape_string($idUsuario);
-
-    // Consulta para obter o datacenter do usuário
-    $consultaDatacenter = "SELECT DATACENTER FROM USUARIO WHERE IDUSUARIO = ?";
-    if ($stmt = $conn->prepare($consultaDatacenter)) {
-        $stmt->bind_param("i", $idUsuario);
-        $stmt->execute();
-        $stmt->bind_result($datacenterUsuario);
-        $stmt->fetch();
-        $stmt->close();
-    }
-
-    // Obtém o termo de pesquisa enviado pelo formulário
-    $search = $_POST['search'];
-
-    // Protege contra SQL Injection escapando os caracteres especiais no input do usuário
-    $search = mysqli_real_escape_string($conn, $search);
-    
-    // Ajusta a consulta SQL para pesquisar em múltiplos campos nas tabelas relacionadas e filtrar pelo datacenter do usuário
-    $result_search = "
-    SELECT 
-        PRODUTO.IDPRODUTO, 
-        MATERIAL.MATERIAL AS MATERIAL, 
-        CONECTOR.CONECTOR AS CONECTOR, 
-        METRAGEM.METRAGEM AS METRAGEM, 
-        MODELO.MODELO AS MODELO, 
-        FORNECEDOR.FORNECEDOR AS FORNECEDOR, 
-        PRODUTO.DATACADASTRO, 
-        DATACENTER.NOME AS DATACENTER, 
-        ESTOQUE.QUANTIDADE 
-    FROM 
-        PRODUTO
-    JOIN 
-        ESTOQUE ON PRODUTO.IDPRODUTO = ESTOQUE.IDPRODUTO 
-    JOIN 
-        DATACENTER ON PRODUTO.IDDATACENTER = DATACENTER.IDDATACENTER 
-    JOIN 
-        MATERIAL ON PRODUTO.IDMATERIAL = MATERIAL.IDMATERIAL
-    JOIN 
-        CONECTOR ON PRODUTO.IDCONECTOR = CONECTOR.IDCONECTOR
-    JOIN 
-        METRAGEM ON PRODUTO.IDMETRAGEM = METRAGEM.IDMETRAGEM
-    JOIN 
-        MODELO ON PRODUTO.IDMODELO = MODELO.IDMODELO
-    JOIN 
-        FORNECEDOR ON PRODUTO.IDFORNECEDOR = FORNECEDOR.IDFORNECEDOR
-    WHERE 
-        (PRODUTO.IDPRODUTO LIKE '%$search%' 
-        OR MATERIAL.MATERIAL LIKE '%$search%' 
-        OR CONECTOR.CONECTOR LIKE '%$search%' 
-        OR METRAGEM.METRAGEM LIKE '%$search%' 
-        OR MODELO.MODELO LIKE '%$search%' 
-        OR FORNECEDOR.FORNECEDOR LIKE '%$search%' 
-        OR DATACENTER.NOME LIKE '%$search%' 
-        OR ESTOQUE.QUANTIDADE LIKE '%$search%')
-        AND DATACENTER.NOME = ?";
-
-    if ($stmt = $conn->prepare($result_search)) {
-        $stmt->bind_param("s", $datacenterUsuario);
-        $stmt->execute();
-        $resultado_search = $stmt->get_result();
-
-        // Verifica se há resultados e os exibe
-        if ($resultado_search->num_rows > 0) {
-            while ($row = $resultado_search->fetch_assoc()) {
-
+// Verifica se há resultados e os exibe
+if ($resultado_search->num_rows > 0) {
+    while ($row = $resultado_search->fetch_assoc()) {
 
    $date = strtotime($row['DATACADASTRO']);
    // $data agora é uma inteiro timestamp
@@ -960,12 +938,8 @@ $dateformated = date("d/m/Y", $date);
 
 
     <?php } ?>
-
-
-
-    <?php } ?>
-
     
+
     
     </div>
     
