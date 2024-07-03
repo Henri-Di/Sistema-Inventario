@@ -731,7 +731,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
 
 
 
@@ -746,7 +746,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
 
 
 
@@ -761,7 +761,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/AcrescentarProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-level-up" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-level-up" id="blue-icon-relatorio-produto"></i></div> 
 
     
 
@@ -793,7 +793,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/SobreporProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-refresh" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-refresh" id="blue-icon-relatorio-produto"></i></div> 
 
     
 

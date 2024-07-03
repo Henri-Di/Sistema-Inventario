@@ -218,21 +218,22 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+   
 
-
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-    
+
+
     </ul>
     <!-- End menu-link page -->
     
@@ -960,11 +961,11 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="Aceitar">Aceitar</option>
+    <option id="select-option-form" value="Aceitar">ACEITAR</option>
     
 
 
-    <option id="select-option-form" value="Recusar">Recusar</option>
+    <option id="select-option-form" value="Recusar">RECUSAR</option>
     
 
 
@@ -1094,16 +1095,13 @@ $sql = "SELECT
                     // Determinar a cor do texto com base na situação
                     $color = '';
                     switch ($row['SITUACAO']) {
-                        case 'Pendente':
-                            $color = '#ff6600';
+                        case 'PENDENTE':
+                            $color = '#cca300';
                             break;
-                        case 'Recebido':
+                        case 'RECEBIDO':
                             $color = '#009900';
                             break;
-                        case 'Recusado':
-                            $color = '#ff0000';
-                            break;
-                        case 'Cancelada':
+                        case 'RECUSADO':
                             $color = '#ff0000';
                             break;
     }  

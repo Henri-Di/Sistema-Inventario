@@ -44,6 +44,7 @@ $quantidadeReservar = $_POST['Reservar'] ?? '';
 $datareserva = $_POST['DataReserva'] ?? '';
 $observacao = $_POST['Observacao'] ?? '';
 
+// Validar se os campos obrigatórios foram preenchidos e se os dados são válidos
 if (empty($idProduto) || empty($numwo) || !validarQuantidade($quantidadeReservar) || !validarData($datareserva) || !datasSaoValidas($datareserva)) {
     header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente ");
     exit();

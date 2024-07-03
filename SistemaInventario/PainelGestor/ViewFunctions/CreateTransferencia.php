@@ -15,7 +15,7 @@ $idProdutoOrigem = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 $quantidadeTransferencia = filter_input(INPUT_POST, 'QuantidadeTransferencia', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $dataTransferencia = filter_input(INPUT_POST, 'DataTransferencia', FILTER_SANITIZE_STRING);
 $idDataCenterDestino = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_STRING);
-$observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING);
+$observacao = strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING)); // Convertendo para maiúsculas
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
@@ -23,8 +23,8 @@ $nomeUsuario = $_SESSION['usuarioNome'];
 $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 
 // Definir valores fixos
-$operacao = "Transferência";
-$situacao = "Pendente"; // A transferência começa como "Pendente"
+$operacao = "TRANSFERÊNCIA";
+$situacao = "PENDENTE"; // A transferência começa como "Pendente"
 
 // Verifica se há campos vazios
 if (empty($idProdutoOrigem) || empty($quantidadeTransferencia) || empty($dataTransferencia) || empty($idDataCenterDestino) || empty($observacao)) {
@@ -105,7 +105,6 @@ try {
     if ($numRows == 0) {
         header("Location: ../ViewFail/FailCreateProdutoDestinoNaoEncontrado.php?erro=O produto de destino não foi encontrado no datacenter destino");
         exit();
-
     }
 
     // Obter ID do produto de destino
@@ -138,7 +137,7 @@ try {
     // Atualizar o campo RESERVADO no estoque do produto de origem
     $sqlTotalReservado = "SELECT SUM(QUANTIDADE) 
                           FROM TRANSFERENCIA 
-                          WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'Pendente'";
+                          WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
     $stmtTotalReservado = $conn->prepare($sqlTotalReservado);
     $stmtTotalReservado->bind_param("i", $idProdutoOrigem);
     $stmtTotalReservado->execute();

@@ -1,6 +1,6 @@
 <?php
 // Conexão e consulta ao banco de dados
- require_once('../../ViewConnection/ConnectionInventario.php');
+require_once('../../ViewConnection/ConnectionInventario.php');
 
 // Obter os dados do formulário
 $modelo = $_POST['Modelo'] ?? '';
@@ -12,6 +12,9 @@ if ($conn->connect_error) {
 
 // Sanitizar os dados de entrada para evitar injeção de SQL
 $modelo = $conn->real_escape_string($modelo);
+
+// Converter o modelo para letras maiúsculas
+$modelo = strtoupper($modelo);
 
 // Verificar se o modelo já existe na tabela
 $sql_check = "SELECT MODELO FROM MODELO WHERE MODELO = '$modelo'";
@@ -40,4 +43,3 @@ if (mysqli_num_rows($result_check) > 0) {
 // Fechar a conexão
 $conn->close();
 ?>
-

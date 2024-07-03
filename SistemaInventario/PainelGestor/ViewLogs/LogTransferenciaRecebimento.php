@@ -218,7 +218,7 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
@@ -232,8 +232,7 @@
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-
-
+    
     </ul>
     <!-- End menu-link page -->
     
@@ -982,13 +981,13 @@ if ($stmt = $conn->prepare($sql)) {
                         // Determinar a cor do texto com base na situação
                         $color = '';
                         switch ($row['ACAO']) {
-                            case 'Pendente':
-                                $color = '#ff9900';
+                            case 'PENDENTE':
+                                $color = '#cca300';
                                 break;
-                            case 'Recebido':
-                                $color = '#00b300';
+                            case 'RECEBIDO':
+                                $color = '#009900';
                                 break;
-                            case 'Recusado':
+                            case 'RECUSADO':
                                 $color = '#ff0000';
                                 break;
     

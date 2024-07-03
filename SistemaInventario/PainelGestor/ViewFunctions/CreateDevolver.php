@@ -20,7 +20,7 @@ $observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING);
 
 // Verificar se os dados obrigatórios estão preenchidos
 if (!$idProduto || !$numwo || !$quantidadeDevolver || !$datadevolucao) {
-    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Dados do formulário incompletos");
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
     exit(); // Termina a execução do script após redirecionamento
 }
 
@@ -64,9 +64,13 @@ try {
 
     // Verificar se a data de devolução é válida
     if (!dataDevolucaoValida($datadevolucao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data dever ser igual a data atual");
         exit(); // Termina a execução do script após redirecionamento
     }
+
+    // Converter os valores para letras maiúsculas
+    $numwo = strtoupper($numwo);
+    $observacao = strtoupper($observacao);
 
     // Inserir dados na tabela DEVOLVER usando prepared statement
     $sqlInsertDevolucao = "INSERT INTO DEVOLVER (NUMWO, QUANTIDADE, DATADEVOLUCAO, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
@@ -76,7 +80,8 @@ try {
     $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeDevolver, $datadevolucao, $observacao, $operacao, $situacao, $idProduto, $_SESSION['usuarioId'], $_SESSION['usuarioNome'], $_SESSION['usuarioCodigoP']);
     
     if (!$stmtInsert->execute()) {
-        throw new Exception("Não foi possível inserir os dados na tabela DEVOLVER");
+        header("Location: ../ViewFail/FailCreateInserirDadosDevolver.php?erro=Não foi possível inserir os dados na tabela DEVOLVER. Informe o departamento de TI");
+        exit(); // Termina a execução do script após redirecionamento
     }
 
     // Atualizar a tabela ESTOQUE adicionando a quantidade devolvida
@@ -86,16 +91,17 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeDevolver, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        throw new Exception("Não foi possível atualizar o estoque do produto");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        exit(); // Termina a execução do script após redirecionamento
     }
 
     // Commit da transação se todas as operações foram bem-sucedidas
     $conn->commit();
 
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
     }
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
@@ -103,7 +109,7 @@ try {
     $conn->rollback();
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateDevolucao.php?erro=Não foi possível realizar a devolução do produto. Erro: " . $e->getMessage());
+    header("Location: ../ViewFail/FailCreateDevolucao.php?erro=Não foi possivel realizar a devolução do produto. Refaça a operação e tente novamente");
     exit(); // Termina a execução do script após redirecionamento
 } finally {
     // Fechar os statements

@@ -981,13 +981,13 @@ if ($stmt = $conn->prepare($sql)) {
                         // Determinar a cor do texto com base na situação
                         $color = '';
                         switch ($row['ACAO']) {
-                            case 'Pendente':
-                                $color = '#ff9900';
+                            case 'PENDENTE':
+                                $color = '#cca300';
                                 break;
-                            case 'Recebido':
-                                $color = '#00b300';
+                            case 'RECEBIDO':
+                                $color = '#009900';
                                 break;
-                            case 'Recusado':
+                            case 'RECUSADO':
                                 $color = '#ff0000';
                                 break;
     

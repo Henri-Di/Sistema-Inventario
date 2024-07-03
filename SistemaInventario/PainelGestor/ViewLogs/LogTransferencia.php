@@ -961,11 +961,11 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="Aceitar">Aceitar</option>
+    <option id="select-option-form" value="Aceitar">ACEITAR</option>
     
 
 
-    <option id="select-option-form" value="Recusar">Recusar</option>
+    <option id="select-option-form" value="Recusar">RECUSAR</option>
     
 
 
@@ -1095,13 +1095,13 @@ $sql = "SELECT
                     // Determinar a cor do texto com base na situação
                     $color = '';
                     switch ($row['SITUACAO']) {
-                        case 'Pendente':
-                            $color = '#e6b800';
+                        case 'PENDENTE':
+                            $color = '#cca300';
                             break;
-                        case 'Recebido':
+                        case 'RECEBIDO':
                             $color = '#009900';
                             break;
-                        case 'Recusado':
+                        case 'RECUSADO':
                             $color = '#ff0000';
                             break;
     }  

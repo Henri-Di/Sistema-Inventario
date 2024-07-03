@@ -13,7 +13,7 @@ if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset
 
 // Obter os dados do formulário
 $idProduto = $_POST['id'] ?? '';
-$numwo = $_POST['NumWo'];
+$numwo = $_POST['NumWo'] ?? '';
 $quantidadeSubtracao = $_POST['Subtracao'] ?? '';
 $dataSubtracao = $_POST['DataSubtracao'] ?? '';
 $observacao = $_POST['Observacao'] ?? '';
@@ -45,11 +45,11 @@ $codigoPUsuario = $conn->real_escape_string($codigoPUsuario);
 // Verificar se a quantidade é positiva
 if ($quantidadeSubtracao <= 0) {
     // Se a quantidade for negativa ou zero, redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro= Não é permitido o registro de valores negativos no campo de quantidade");
+    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
     exit(); // Termina a execução do script após redirecionamento
 }
 
-// Função para validar se as datas de recebimento e cadastro são válidas
+// Função para validar se as datas de subtração são válidas
 function datasSaoValidas($dataSubtracao) {
     try {
         // Definir a zona de tempo para as datas recebidas e a data atual do servidor
@@ -79,7 +79,6 @@ function datasSaoValidas($dataSubtracao) {
 $conn->begin_transaction();
 
 try {
-
     // Verificar se há reservas para o produto
     $sqlVerificaReserva = "SELECT RESERVADO FROM ESTOQUE WHERE IDPRODUTO = ?";
     $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
@@ -93,10 +92,10 @@ try {
 
     // Inserir dados na tabela SUBTRACAO usando prepared statement
     $sqlInsertSubtracao = "INSERT INTO SUBTRACAO (NUMWO, QUANTIDADE, DATASUBTRACAO, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
-                           VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmtInsert = $conn->prepare($sqlInsertSubtracao);
-    $stmtInsert->bind_param("sisssssiss", $numwo, $quantidadeSubtracao, $dataSubtracao, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
+    $stmtInsert->bind_param("sisssssiss", strtoupper($numwo), $quantidadeSubtracao, $dataSubtracao, strtoupper($observacao), strtoupper($operacao), strtoupper($situacao), $idProduto, $idUsuario, strtoupper($nomeUsuario), strtoupper($codigoPUsuario));
     
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosSubtracao.php?erro=Não foi possível inserir os dados na tabela SUBTRACAO. Informe o departamento de TI");
@@ -110,19 +109,18 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeSubtracao, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possivel atualizar o estoque do produto. Refaça a operação e tente novamente");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 
-    // Verificar se a data de recebimento e data de cadastro são válidas
+    // Verificar se a data de subtração é válida
     if (!datasSaoValidas($dataSubtracao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual da data atual ");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual à data atual");
         exit();
     }
 
     // Commit da transação se todas as operações foram bem-sucedidas
     $conn->commit();
-
 
     // Redirecionar para a página apropriada com base na existência de reservas
     if ($temReserva) {
