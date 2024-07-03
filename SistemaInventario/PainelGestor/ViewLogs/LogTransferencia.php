@@ -1096,15 +1096,12 @@ $sql = "SELECT
                     $color = '';
                     switch ($row['SITUACAO']) {
                         case 'Pendente':
-                            $color = '#ff6600';
+                            $color = '#e6b800';
                             break;
                         case 'Recebido':
                             $color = '#009900';
                             break;
                         case 'Recusado':
-                            $color = '#ff0000';
-                            break;
-                        case 'Cancelada':
                             $color = '#ff0000';
                             break;
     }  
