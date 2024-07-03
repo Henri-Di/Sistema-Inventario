@@ -363,7 +363,7 @@
     
 
 
-    Não foi possível realizar o cadastro. O fornecedor já está cadastrado no sistema <i class='fa fa-times-circle'></i>
+    Não foi possível realizar o cadastro do fornecedor. O fornecedor já está cadastrado no sistema <i class='fa fa-times-circle'></i>
     
 
     

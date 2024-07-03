@@ -48,7 +48,8 @@ function getIdOrInsert($conn, $table, $column, $idColumn, $value) {
         if (mysqli_query($conn, $insertSql)) {
             return $conn->insert_id;
         } else {
-            throw new Exception("Erro ao inserir na tabela $table");
+            header("Location: ../ViewFail/FailCreateInserirDadosTabela.php?erro=Não foi possível inserir dados nas tabelas do banco de dados. Informe o departamento de TI ");
+            exit(); // Termina a execução do script após redirecionamento
         }
     }
 }
@@ -65,6 +66,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datacadastro = sanitize($conn, $_POST['DataCadastro'] ?? '');
     $datacenterNome = sanitize($conn, $_POST['DataCenter'] ?? '');
 
+    // Obter o ID do usuário a partir da sessão
+    $idUsuario = $_SESSION['usuarioId'] ?? '';
+
+    // Sanitizar o ID do usuário para evitar injeção de SQL
+    $idUsuario = $conn->real_escape_string($idUsuario);
+
+    // Consulta para obter o datacenter do usuário
+    $consultaDatacenter = "SELECT DATACENTER FROM USUARIO WHERE IDUSUARIO = ?";
+    if ($stmt = $conn->prepare($consultaDatacenter)) {
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+        $stmt->bind_result($datacenterUsuario);
+        $stmt->fetch();
+        $stmt->close();
+    }
+
     // Verificar se a quantidade é negativa
     if ($quantidade < 0) {
         // Redirecionar para a página de falha
@@ -75,7 +92,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se a data de cadastro é válida
     if (!datasSaoValidas($datacadastro)) {
         // Redirecionar para a página de falha com mensagem de erro
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual a data atual");
+        exit(); // Termina a execução do script após redirecionamento
+    }
+
+    // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário
+    if ($datacenterUsuario !== $datacenterNome) {
+        // Redirecionar para a página de falha
+        header("Location: ../ViewFail/FailCreateDatacenter.php?erro=O datacenter do usuário não corresponde ao datacenter do formulário");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -101,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_num_rows($result) > 0) {
             // Se o produto já existe, redirecionar para a página de falha
-            header("Location: ../ViewFail/FailCreateProdutoExistente.php?erro=Não foi possivel realizar o cadastro. Produto já cadastrado");
+            header("Location: ../ViewFail/FailCreateProdutoExistente.php?erro=Não foi possível realizar o cadastro. Produto já cadastrado");
             exit(); // Termina a execução do script após redirecionamento
         } else {
             // Inserir dados na tabela PRODUTO
@@ -127,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->commit();
 
             // Redirecionar para a página de sucesso
-            header("Location: ../ViewSucess/SucessCreate.php");
+            header("Location: ../ViewSucess/SucessCreateProduto.php?sucesso=O cadastro do produto foi realizado com sucesso");
             exit(); // Termina a execução do script após redirecionamento
         }
     } catch (Exception $e) {
@@ -138,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erro: " . $e->getMessage();
 
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreate.php?erro=Não foi possível realizar o cadastro");
+        header("Location: ../ViewFail/FailCreateProduto.php?erro=Não foi possível realizar o cadastro do produto. Tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 }

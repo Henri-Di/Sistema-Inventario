@@ -267,8 +267,7 @@
     <!-- Start container well -->
     <div class="well" id="well-zero"><br>
 
-
-
+    
     <!-- Botão de sair -->
     <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
 

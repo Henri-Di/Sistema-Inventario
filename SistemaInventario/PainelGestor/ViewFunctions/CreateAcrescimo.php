@@ -45,7 +45,7 @@ $dataAcrescimo = $_POST['DataAcrescimo'] ?? '';
 $observacao = $_POST['Observacao'] ?? '';
 
 if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarData($dataAcrescimo) || !datasSaoValidas($dataAcrescimo)) {
-    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Dados inválidos fornecidos");
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
     exit();
 }
 
@@ -84,7 +84,8 @@ try {
     $stmtInsert = $conn->prepare($sqlInsertAcrescimo);
     $stmtInsert->bind_param("issssisss", $quantidadeAcrescimo, $dataAcrescimo, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
     if (!$stmtInsert->execute()) {
-        throw new Exception("Não foi possível inserir os dados na tabela ACRESCIMO");
+        header("Location: ../ViewFail/FailCreateInserirDadosAcrescimo.php?erro=Não foi possível inserir os dados na tabela ACRESCIMO. Inform o departamento de TI");
+        exit();
     }
 
     // Atualizar a tabela ESTOQUE acrescentando a quantidade
@@ -92,7 +93,8 @@ try {
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
     $stmtUpdate->bind_param("ii", $quantidadeAcrescimo, $idProduto);
     if (!$stmtUpdate->execute()) {
-        throw new Exception("Não foi possivel atualizar o estoque do produto");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        exit();
     }
 
     // Commit da transação se todas as operações foram bem-sucedidas
@@ -100,16 +102,16 @@ try {
 
     // Redirecionar para a página apropriada com base na existência de reservas
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
     }
     exit();
     
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação
     $conn->rollback();
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode($e->getMessage()));
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
     exit();
 
 } finally {

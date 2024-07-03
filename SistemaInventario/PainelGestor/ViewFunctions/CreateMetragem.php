@@ -19,7 +19,7 @@ $result = $conn->query($sql_check);
 
 if ($result->num_rows > 0) {
     // Se já existe uma metragem igual, redirecionar para a página de falha de duplicidade
-    header("Location: ../ViewFail/FailCreateMetragemExistente.php?erro=Não foi possível realizar o cadastro. Metragem já cadastrada");
+    header("Location: ../ViewFail/FailCreateMetragemExistente.php?erro=Não foi possível realizar o cadastro da metragem. Metragem já está cadastrada no sistema");
     exit(); // Termina a execução do script após redirecionamento
 } else {
     // Se não existe, construir a consulta SQL para inserção
@@ -28,11 +28,11 @@ if ($result->num_rows > 0) {
     // Executar a consulta SQL e verificar o resultado
     if ($conn->query($sql) === TRUE) {
         // Redirecionar para a página de sucesso
-        header("Location: ../ViewSucess/SucessCreate.php");
+        header("Location: ../ViewSucess/SucessCreateMetragem.php?sucesso=O cadastro da metragem foi realizado com sucesso");
         exit(); // Termina a execução do script após redirecionamento
     } else {
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreate.php?erro=Não foi possível realizar o cadastro");
+        header("Location: ../ViewFail/FailCreateMetragem.php?erro=Não foi possível realizar o cadastro da metragem. Tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 }

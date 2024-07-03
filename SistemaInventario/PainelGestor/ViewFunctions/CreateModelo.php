@@ -19,7 +19,7 @@ $result_check = mysqli_query($conn, $sql_check);
 
 if (mysqli_num_rows($result_check) > 0) {
     // Se o modelo já existe, redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateModeloExistente.php?erro=Não foi possível realizar o cadastro. Modelo já cadastrado");
+    header("Location: ../ViewFail/FailCreateModeloExistente.php?erro=Não foi possível realizar o cadastro. O modelo já está cadastrado no sistema");
     exit(); // Termina a execução do script após redirecionamento
 } else {
     // Construir a consulta SQL para inserção
@@ -28,11 +28,11 @@ if (mysqli_num_rows($result_check) > 0) {
     // Executar a consulta SQL e verificar o resultado
     if (mysqli_query($conn, $sql)) {
         // Redirecionar para a página de sucesso
-        header("Location: ../ViewSucess/SucessCreate.php");
+        header("Location: ../ViewSucess/SucessCreateModelo.php?sucesso=O cadastro do modelo foi realizado com sucesso");
         exit(); // Termina a execução do script após redirecionamento
     } else {
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreate.php?erro=Não foi possível realizar o cadastro");
+        header("Location: ../ViewFail/FailCreateModelo.php?erro=Não foi possível realizar o cadastro do modelo. Tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 }

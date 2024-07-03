@@ -34,22 +34,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['NomeUsuario'], $_POST[
                 $stmt->bind_param("sssssi", $nome, $codigo, $senha, $email, $datacenter, $nivel_acesso);
                 if ($stmt->execute()) {
                     $_SESSION['message'] = "Usuário criado com sucesso.";
-                    header("Location: ../ViewSucess/SucessCreate.php");
+                    header("Location: ../ViewSucess/SucessCreateUsuario.php?sucesso=O cadastro do usuário foi realizado com sucesso");
                     exit(); // Termina a execução do script após redirecionamento
                 } else {
                     $_SESSION['message'] = "Falha ao criar usuário.";
-                    header("Location: ../ViewFail/FailCreateNovoUsuario.php?erro=Não foi possível realizar o cadastro do novo usuário");
+                    header("Location: ../ViewFail/FailCreateNovoUsuario.php?erro=Não foi possível realizar o cadastro do usuário. Refaça a operação e tente novamente");
                     exit(); // Termina a execução do script após redirecionamento
                 }
             } else {
                 $_SESSION['message'] = "Erro na preparação da inserção de usuário.";
-                header("Location: ../ViewFail/FailCreateInserirDadosUsuario.php?erro=Não foi possível inserir os dados na tabela USUARIO");
+                header("Location: ../ViewFail/FailCreateInserirDadosUsuario.php?erro=Não foi possível inserir os dados na tabela USUARIO. Informe o departamento de TI");
                 exit(); // Termina a execução do script após redirecionamento
             }
         }
     } else {
         $_SESSION['message'] = "Erro na preparação da consulta.";
-        header("Location: ../ViewFail/FailCreateNovoUsuario.php?erro=Não foi possível realizar o cadastro do novo usuário");
+        header("Location: ../ViewFail/FailCreateNovoUsuario.php?erro=Não foi possível realizar o cadastro do usuário. Refaça a operação e tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 

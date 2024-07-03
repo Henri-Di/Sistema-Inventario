@@ -44,7 +44,7 @@ $dataSobrepor = $_POST['DataSobrepor'] ?? '';
 $observacao = $_POST['Observacao'] ?? '';
 
 if (empty($idProduto) || !validarQuantidade($quantidadeSobrepor) || !validarData($dataSobrepor) || !datasSaoValidas($dataSobrepor)) {
-    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos");
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente ");
     exit();
 }
 
@@ -84,7 +84,7 @@ try {
     $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosSobrepor.php?erro=" . $e->getMessage());
+        header("Location: ../ViewFail/FailCreateInserirDadosSobrepor.php?erro=Não foi possível inserir os dados na tabela SOBREPOR. Informe o departamento de TI");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -94,7 +94,7 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeSobrepor, $idProduto);
 
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . $e->getMessage());
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -102,9 +102,9 @@ try {
     $conn->commit();
 
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
     }
     exit();
     
@@ -116,7 +116,7 @@ try {
     error_log("Erro: " . $e->getMessage());
 
     // Redirecionar para a página de falha com uma mensagem de erro
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode($e->getMessage()));
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
     exit(); // Termina a execução do script após redirecionamento
 } finally {
     // Fechar os statements e a conexão

@@ -365,7 +365,7 @@
     
 
 
-    Não foi possivel realizar o cadastro. O material já está cadastrado no sistema  <i class='fa fa-times-circle'></i>
+    Não foi possivel realizar o cadastro do material. O material já está cadastrado no sistema  <i class='fa fa-times-circle'></i>
     
 
     
