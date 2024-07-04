@@ -13,6 +13,9 @@ if ($conn->connect_error) {
 // Sanitizar os dados de entrada para evitar injeção de SQL
 $conector = $conn->real_escape_string($conector);
 
+// Converter o valor para letras maiúsculas
+$conector = strtoupper($conector);
+
 // Verificar se o conector já existe na tabela
 $sql_check = "SELECT CONECTOR FROM CONECTOR WHERE CONECTOR = '$conector'";
 $result_check = mysqli_query($conn, $sql_check);
@@ -40,4 +43,3 @@ if (mysqli_num_rows($result_check) > 0) {
 // Fechar a conexão
 $conn->close();
 ?>
-

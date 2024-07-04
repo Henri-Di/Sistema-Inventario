@@ -13,6 +13,9 @@ if ($conn->connect_error) {
 // Sanitizar os dados de entrada para evitar injeção de SQL
 $metragem = $conn->real_escape_string($metragem);
 
+// Converter a metragem para letras maiúsculas
+$metragem = strtoupper($metragem);
+
 // Construir a consulta SQL para verificar duplicidade
 $sql_check = "SELECT * FROM METRAGEM WHERE METRAGEM = '$metragem'";
 $result = $conn->query($sql_check);

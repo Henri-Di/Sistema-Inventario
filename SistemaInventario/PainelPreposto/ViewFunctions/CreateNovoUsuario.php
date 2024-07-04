@@ -8,11 +8,11 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 // Verificar se o formulário foi submetido via método POST e se todos os campos estão presentes
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['NomeUsuario'], $_POST['CodigoUsuario'], $_POST['SenhaUsuario'], $_POST['EmailUsuario'], $_POST['DataCenter'], $_POST['NiveldeAcesso'])) {
     // Receber os dados do formulário
-    $nome = filter_input(INPUT_POST, 'NomeUsuario', FILTER_SANITIZE_SPECIAL_CHARS);
-    $codigo = filter_input(INPUT_POST, 'CodigoUsuario', FILTER_SANITIZE_SPECIAL_CHARS);
+    $nome = strtoupper(filter_input(INPUT_POST, 'NomeUsuario', FILTER_SANITIZE_SPECIAL_CHARS));
+    $codigo = strtoupper(filter_input(INPUT_POST, 'CodigoUsuario', FILTER_SANITIZE_SPECIAL_CHARS));
     $senha = password_hash($_POST['SenhaUsuario'], PASSWORD_DEFAULT); // Hasheando a senha
     $email = filter_input(INPUT_POST, 'EmailUsuario', FILTER_SANITIZE_EMAIL);
-    $datacenter = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_SPECIAL_CHARS);
+    $datacenter = strtoupper(filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_SPECIAL_CHARS));
     $nivel_acesso = filter_input(INPUT_POST, 'NiveldeAcesso', FILTER_SANITIZE_NUMBER_INT);
 
     // Verificar se o usuário ou e-mail já existem no banco de dados

@@ -1,477 +1,606 @@
 /* Reset de margin e padding para todos os elementos */
 * {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Estilo de fundo para o corpo da página */
-  body {
-    background-color: #f0f0f0;
-  }
-  
-  /* Estilo do ícone de carregamento */
-  #loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 30px;
-    height: 30px;
-    margin: -40px 0 0 120px; /* Ajuste fino de posicionamento */
-    border: 5px solid #f2f2f2;
-    border-radius: 50%;
-    border-top: 5px solid #005ce6;
-    animation: spin 1s linear infinite; /* Animação de rotação */
-  }
-  
-  /* Animação de rotação para o ícone */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  /* Efeito de aparecimento para elementos com classe 'animate-bottom' */
-  .animate-bottom {
-    position: relative;
-    animation: animatebottom 0.1s;
-  }
-  
-  /* Animação para elementos com classe 'animate-bottom' */
-  @keyframes animatebottom {
-    from { bottom: -100px; opacity: 0; }
-    to { bottom: 0px; opacity: 1; }
-  }
-  
-  /* Estilo para o logo da página */
-  #logo-blue {
-    color: #005ce6;
-    font-size: 20px;
-    font-weight: bold;
-    text-align:center;
-  }
-  
-  /* Estilo para o ícone do logo da página */
-  #blue-icon-logo {
-    color: #005ce6;
-    font-size: 15px;
-    margin-left: 5px;
-  }
-  
-  /* Estilo para o subtítulo da página */
-  #blue-sub-title-page {
-    font-size: 16px;
-    color: #005ce6;
-    text-align: center;
-  }
-  
-  
-  /* Estilo para os links da barra de navegação */
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo de fundo para o corpo da página */
+body {
+  background-color: #ffffff;
+}
+
+/* Estilo de fundo para um menu lateral escondido em telas pequenas */
+#blue-sidenav-hidden-xs {
+  background-color: #ffffff;
+}
+
+/* Estilo para um container principal, ajustando margem superior e fundo */
+#blue-col-sm-9 {
+  margin-top: -20px;
+  background-color: #ffffff;
+}
+
+/* Estilo para todas as imagens */
+img {
+  image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
+  object-fit: cover; /* Mantém a proporção da imagem sem distorção */
+  width: 100%; /* Redimensiona a imagem para ajustar ao contêiner */
+}
+
+/* Estilo para a logo */
+.logo {
+  max-width: 50px; /* Define a largura máxima para a logo */
+  height: auto; /* Mantém a altura proporcional à largura */
+  margin-top: -13%; /* Ajusta a margem superior para posicionamento */
+  margin-left: 40%; /* Ajusta a margem esquerda para centralizar */
+  filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
+}
+
+/* Estilo do ícone de carregamento */
+#loader {
+  position: absolute; /* Posição absoluta em relação ao container pai */
+  left: 50%; /* Centraliza horizontalmente */
+  top: 50%; /* Centraliza verticalmente */
+  z-index: 1; /* Garante que o loader fique acima de outros elementos */
+  width: 30px; /* Define a largura do loader */
+  height: 30px; /* Define a altura do loader */
+  margin: -40px 0 0 120px; /* Ajuste fino de posicionamento */
+  border: 5px solid #f2f2f2; /* Borda externa do loader */
+  border-radius: 50%; /* Arredonda as bordas para formar um círculo */
+  border-top: 5px solid #005ce6; /* Cor da borda superior do loader */
+  animation: spin 1s linear infinite; /* Animação de rotação */
+}
+
+/* Animação de rotação para o ícone */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Efeito de aparecimento para elementos com classe 'animate-bottom' */
+.animate-bottom {
+  position: relative; /* Posição relativa em relação ao container pai */
+  animation: animatebottom 0.1s; /* Aplica animação de aparecimento */
+}
+
+/* Animação para elementos com classe 'animate-bottom' */
+@keyframes animatebottom {
+  from { bottom: -100px; opacity: 0; } /* Posição inicial fora da tela e transparente */
+  to { bottom: 0px; opacity: 1; } /* Posição final na tela e opaca */
+}
+
+/* Estilo para o logo da página */
+#logo-blue {
+  color: #005ce6; /* Cor do texto */
+  font-size: 20px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Estilo para o ícone do logo da página */
+#blue-icon-logo {
+  color: #005ce6; /* Cor do texto */
+  font-size: 15px; /* Tamanho da fonte */
+  margin-left: 5px; /* Espaçamento à esquerda */
+}
+
+/* Estilo para o subtítulo da página */
+#blue-sub-title-page {
+  font-size: 16px; /* Tamanho da fonte */
+  color: #005ce6; /* Cor do texto */
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Estilo para os links da barra de navegação */
+#menu-blue {
+  color: #005ce6; /* Cor do texto */
+  width: 85%; /* Largura do link */
+  font-weight: bold; /* Negrito */
+  font-size: 12px; /* Tamanho da fonte */
+  border: 1px solid #005ce6; /* Borda ao redor do link */
+  text-align: center; /* Centraliza o texto */
+  margin-left: 4%; /* Espaçamento à esquerda */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Efeito hover para os links da barra de navegação */
+#menu-blue:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do texto ao passar o mouse */
+  font-weight: bold; /* Negrito */
+  opacity: 0.7; /* Transparência ao passar o mouse */
+}
+
+/* Estilo para os itens de lista da barra de navegação */
+#list-blue {
+  background-color: transparent; /* Fundo transparente */
+  border-radius: 5px; /* Bordas arredondadas */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Efeito hover para os itens de lista da barra de navegação */
+#list-blue:hover {
+  background-color: #ffffff; /* Cor de fundo ao passar o mouse */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
   #menu-blue {
-    color: #005ce6;
-    width: 85%;
-    font-weight: bold;
-    font-size: 12px;
-    border: 1px solid #005ce6;
-    text-align: center;
-    margin-left: 4%;
-    transition: background-color ease 0.5s;
+    width: 90%; /* Ajusta a largura do link */
+    margin-left: 2%; /* Ajusta o espaçamento à esquerda */
+    font-size: 13px; /* Ajusta o tamanho da fonte */
+    border-width: 1px; /* Ajusta a largura da borda */
+    padding: 8px; /* Ajusta o padding */
   }
-  
-  /* Efeito hover para os links da barra de navegação */
+
   #menu-blue:hover {
-    background-color: #005ce6;
-    color: #ffffff;
-    font-weight: bold;
-    opacity: 0.7;
+    font-size: 13px; /* Ajusta o tamanho da fonte ao passar o mouse */
   }
-  
-  /* Estilo para os itens de lista da barra de navegação */
+
   #list-blue {
-    background-color: transparent;
-    border-radius: 5px;
-    transition: background-color ease 0.5s;
+    padding: 8px 0; /* Ajusta o padding dos itens da lista */
   }
-  
-  /* Efeito hover para os itens de lista da barra de navegação */
-  #list-blue:hover {
-    background-color: #f0f0f0;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+  #menu-blue {
+    width: 95%; /* Ajusta a largura do link */
+    margin-left: 2.5%; /* Ajusta o espaçamento à esquerda */
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    padding: 6px; /* Ajusta o padding */
   }
-  
-  /* Estilo para o formulário de login do usuário */
-  #blue-form-login {
-    margin-left: 33%;
-  }
-  
-  /* Estilo para o campo de entrada de login do usuário */
-  #blue-input-login {
-    width: 28%;
-    height: auto;
-    outline: none;
-    font-size: 12px;
-    font-weight: bold;
-    background-color: #f0f0f0;
-    color: #5c5c8a;
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-bottom: 1px solid #005ce6;
-  }
-  
-  /* Estilo para o botão de login do usuário */
-  #blue-btn-login {
-    background-color: transparent;
-    border: 1px solid #005ce6;
-    color: #005ce6;
-    font-size: 11px;
-    font-weight: bold;
-    width: 28%;
-    padding: 1px;
-    border-radius: 5px;
-    transition: background-color ease 0.5s;
-  }
-  
-  /* Efeito hover para o botão de login do usuário */
-  #blue-btn-login:hover {
-    background-color: #005ce6;
-    color: #ffffff;
-    opacity: 0.7;
-  }
-  
-  /* Estilo para o container de documentos */
-  .well {
-    background-color: #f0f0f0;
-    border: 1px solid #f0f0f0;
-    font-size: 18px;
-    font-weight: bold;
-    color: #005ce6;
-    cursor: context-menu;
-    text-align: center;
-    border-radius: 0px;
-  }
-  
-  /* Container para formulários com largura máxima de 100% */
-  #blue-table-cdst {
-    max-width: 100%;
-  }
-  
-  /* Estilo para o título de tabelas de formulários */
-  #blue-title-table-cdst {
-    padding: 10px;
-    background-color: #f2f2f2;
-    font-family: 'Sofia Sans Extra Condensed';
-    font-size: 15px;
-    font-weight: bold;
-    color: #5c5c8a;
-    text-align: center;
-  }
-  
-  
-   /* Estilo para tabela de formulários */
-  #blue-table-input {
-    background-color: transparent;
-  }
-  
-  /* Estilo para campos de entrada nos formulários */
-  #blue-input-cdst {
-    width: 100%;
-    background-color: transparent;
-    outline: none;
-    color: #33334d;
-    text-align: center;
-    font-size: 8px;
-    font-weight: bold;
-    border: 1px solid;
-    margin-top: 1%;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color: #666699;
-  }
-  
-  /* Estilo para campos de entrada nos formulários */
-  #blue-input-cdst-alert {
-    width: 100%;
-    background-color: transparent;
-    outline: none;
-    color: #33334d;
-    text-align: center;
-    font-size: 10px;
-    font-weight: bold;
-    border: 1px solid;
-    margin-top: 1%;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-bottom-color:  #ff6600;
-  }
+}
+
+/* Estilo para o formulário de login do usuário */
+#blue-form-login {
+  margin-left: 33%; /* Ajusta a margem à esquerda para centralizar */
+}
+
+/* Estilo para o campo de entrada de login do usuário */
+#blue-input-login {
+  width: 28%; /* Largura do campo de entrada */
+  height: auto; /* Altura automática */
+  outline: none; /* Remove a borda de foco padrão */
+  font-size: 12px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
+  background-color: #ffffff; /* Cor de fundo */
+  color: #5c5c8a; /* Cor do texto */
+  border-top: none; /* Remove a borda superior */
+  border-right: none; /* Remove a borda direita */
+  border-left: none; /* Remove a borda esquerda */
+  border-bottom: 1px solid #005ce6; /* Define a borda inferior */
+}
+
+/* Estilo para o botão de login do usuário */
+#blue-btn-login {
+  background-color: transparent; /* Fundo transparente */
+  border: 1px solid #005ce6; /* Borda do botão */
+  color: #005ce6; /* Cor do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
+  width: 28%; /* Largura do botão */
+  padding: 1px; /* Padding */
+  border-radius: 5px; /* Bordas arredondadas */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Efeito hover para o botão de login do usuário */
+#blue-btn-login:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do texto ao passar o mouse */
+  opacity: 0.7; /* Transparência ao passar o mouse */
+}
+
+/* Estilo para o container de documentos */
+.well {
+  background-color: #ffffff; /* Cor de fundo */
+  font-weight: bold; /* Negrito */
+  border: none; /* Remove a borda */
+  color: #005ce6; /* Cor do texto */
+  cursor: context-menu; /* Cursor de contexto */
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Container para formulários com largura máxima de 100% */
+#blue-table-cdst {
+  max-width: 100%; /* Largura máxima de 100% */
+}
+
+/* Estilo para o título de tabelas de formulários */
+#blue-title-table-cdst {
+  padding: 10px; /* Padding */
+  background-color: #ffffff; /* Cor de fundo */
+  font-family: 'Sofia Sans Extra Condensed'; /* Fonte */
+  font-size: 15px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
+  color: #5c5c8a; /* Cor do texto */
+  text-align: center; /* Centraliza o texto */
+}
   
   
-  /* Estilo para selects nos formulários */
-  #select-form {
-    width: 100%;
-    outline: none;
-    cursor: pointer;
-    color: #33334d;
-    font-size: 10px;
-    font-weight: bold;
-    border: 1px solid #666699;
-    margin-top: 1%;
-    text-align: center;
-    background-color: transparent;
-    transition: background-color ease 0.5s;
-  }
-  
-  /* Estilo para botões de cadastro nos formulários */
-  #blue-btn-cdst {
-    padding: 3px;
-    width: 20%;
-    height: auto;
-    color: #005ce6;
-    outline: none;
-    background-color: transparent;
-    border: 1px solid #005ce6;
-    border-radius: 5px;
-    font-size: 13px;
-    font-family: 'Sofia Sans Extra Condensed';
-    transition: color ease 0.7s;
-  }
-  
-  /* Efeito hover para botões de cadastro nos formulários */
-  #blue-btn-cdst:hover {
-    background-color: #005ce6;
-    color: #ffffff;
-    opacity: 0.7;
-  }
-  
-  /* Estilo para container do rodapé da página */
+/* Estilo para tabela de formulários */
+#blue-table-input {
+  background-color: transparent; /* Define o fundo da tabela como transparente */
+}
+
+/* Estilo para campos de entrada nos formulários */
+#blue-input-cdst {
+  width: 100%; /* Define a largura como 100% do contêiner */
+  background-color: transparent; /* Define o fundo como transparente */
+  outline: none; /* Remove a borda de foco padrão */
+  color: #33334d; /* Define a cor do texto */
+  text-align: center; /* Centraliza o texto */
+  font-size: 10px; /* Define o tamanho da fonte */
+  font-weight: bold; /* Define a fonte como negrito */
+  border: 1px solid; /* Define a borda */
+  margin-top: 1%; /* Adiciona uma margem superior de 1% */
+  border-top-color: transparent; /* Remove a cor da borda superior */
+  border-left-color: transparent; /* Remove a cor da borda esquerda */
+  border-right-color: transparent; /* Remove a cor da borda direita */
+  border-bottom-color: #666699; /* Define a cor da borda inferior */
+}
+
+/* Estilo para campos de entrada nos formulários com alerta */
+#blue-input-cdst-alert {
+  width: 100%; /* Define a largura como 100% do contêiner */
+  background-color: transparent; /* Define o fundo como transparente */
+  outline: none; /* Remove a borda de foco padrão */
+  color: #33334d; /* Define a cor do texto */
+  text-align: center; /* Centraliza o texto */
+  font-size: 10px; /* Define o tamanho da fonte */
+  font-weight: bold; /* Define a fonte como negrito */
+  border: 1px solid; /* Define a borda */
+  margin-top: 1%; /* Adiciona uma margem superior de 1% */
+  border-top-color: transparent; /* Remove a cor da borda superior */
+  border-left-color: transparent; /* Remove a cor da borda esquerda */
+  border-right-color: transparent; /* Remove a cor da borda direita */
+  border-bottom-color: #ff6600; /* Define a cor da borda inferior como laranja para alerta */
+}
+
+/* Estilo para selects nos formulários */
+#select-form {
+  width: 100%; /* Define a largura como 100% do contêiner */
+  outline: none; /* Remove a borda de foco padrão */
+  cursor: pointer; /* Define o cursor como pointer */
+  color: #33334d; /* Define a cor do texto */
+  font-size: 10px; /* Define o tamanho da fonte */
+  font-weight: bold; /* Define a fonte como negrito */
+  border: 1px solid #666699; /* Define a borda */
+  margin-top: 1%; /* Adiciona uma margem superior de 1% */
+  text-align: center; /* Centraliza o texto */
+  background-color: transparent; /* Define o fundo como transparente */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Estilo para botões de cadastro nos formulários */
+#blue-btn-cdst {
+  padding: 3px; /* Define o padding */
+  width: 20%; /* Define a largura como 20% do contêiner */
+  height: auto; /* Define a altura automática */
+  color: #005ce6; /* Define a cor do texto */
+  outline: none; /* Remove a borda de foco padrão */
+  background-color: transparent; /* Define o fundo como transparente */
+  border: 1px solid #005ce6; /* Define a borda */
+  border-radius: 5px; /* Define bordas arredondadas */
+  font-size: 13px; /* Define o tamanho da fonte */
+  font-family: 'Sofia Sans Extra Condensed'; /* Define a família da fonte */
+  transition: color ease 0.7s; /* Transição suave para a cor do texto */
+}
+
+/* Efeito hover para botões de cadastro nos formulários */
+#blue-btn-cdst:hover {
+  background-color: #005ce6; /* Define a cor de fundo ao passar o mouse */
+  color: #ffffff; /* Define a cor do texto ao passar o mouse */
+  opacity: 0.7; /* Define a opacidade ao passar o mouse */
+}
+
+/* Estilo para container do rodapé da página */
+#footer-page {
+  background-color: #ffffff; /* Define a cor de fundo */
+  padding: 10px; /* Adiciona padding para espaçamento interno */
+  margin-top: 4%; /* Adiciona uma margem superior de 4% */
+  margin-bottom: 0; /* Remove a margem inferior */
+  text-align: center; /* Centraliza o texto */
+  width: 100%; /* Define a largura como 100% do contêiner */
+}
+
+/* Estilo para grupo de texto no rodapé da página */
+#group-text-footer {
+  color: #005ce6; /* Define a cor do texto */
+  font-size: 12px; /* Define o tamanho da fonte */
+  font-weight: bold; /* Define a fonte como negrito */
+}
+
+/* Estilo para ícones no rodapé da página */
+#group-icon-footer {
+  color: #005ce6; /* Define a cor do texto */
+  font-size: 12px; /* Define o tamanho da fonte */
+  font-weight: bold; /* Define a fonte como negrito */
+}
+
+/* Media Queries para dispositivos menores */
+@media (max-width: 768px) {
   #footer-page {
-    background-color: #f0f0f0;
-    padding: 0;
-    margin-top: 4%;
-    margin-bottom: -5%;
-    margin-left: -10%;
+    text-align: center; /* Centraliza o texto em telas menores */
+    padding: 10px 5%; /* Ajusta o padding para telas menores */
   }
   
-  /* Estilo para grupo de texto no rodapé da página */
   #group-text-footer {
-    text-align: right;
-    color: #005ce6;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 10px; /* Reduz o tamanho da fonte em telas menores */
   }
   
-  /* Estilo para ícones no rodapé da página */
   #group-icon-footer {
-    color: #005ce6;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 10px; /* Reduz o tamanho da fonte em telas menores */
+  }
+}
+
+@media (max-width: 576px) {
+  #footer-page {
+    padding: 10px 2%; /* Ajusta o padding para telas muito pequenas */
   }
   
-  /* Estilo para botão de retorno nas páginas de sucesso de cadastro */
-  #link-sucess-return {
-    width: 100%;
-    height: auto;
-    background-color: transparent;
-    border: 1px solid #005ce6;
-    padding: 6px;
-    font-size: 15px;
-    color: #005ce6;
-    margin-left: 1%;
-    cursor: pointer;
-    border-radius: 3px;
-    text-decoration: none;
-    transition: background-color ease 0.5s;
+  #group-text-footer {
+    font-size: 8px; /* Reduz ainda mais o tamanho da fonte em telas muito pequenas */
   }
   
-  /* Efeito hover para botão de retorno */
-  #link-sucess-return:hover {
-    background-color: #005ce6;
-    color: #ffffff;
-    opacity: 0.7;
+  #group-icon-footer {
+    font-size: 8px; /* Reduz ainda mais o tamanho da fonte em telas muito pequenas */
   }
-  
-  /* Estilo para container de pesquisa */
+}
+
+/* Estilo para botão de retorno nas páginas de sucesso de cadastro */
+#link-sucess-return {
+  width: 100%; /* Define a largura como 100% do contêiner */
+  height: auto; /* Define a altura automática */
+  background-color: transparent; /* Define o fundo como transparente */
+  border: 1px solid #005ce6; /* Define a borda */
+  padding: 6px; /* Define o padding */
+  font-size: 15px; /* Define o tamanho da fonte */
+  color: #005ce6; /* Define a cor do texto */
+  margin-left: 1%; /* Adiciona uma margem à esquerda de 1% */
+  cursor: pointer; /* Define o cursor como pointer */
+  border-radius: 3px; /* Define bordas arredondadas */
+  text-decoration: none; /* Remove a decoração do texto (sublinhado) */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Efeito hover para botão de retorno */
+#link-sucess-return:hover {
+  background-color: #005ce6; /* Define a cor de fundo ao passar o mouse */
+  color: #ffffff; /* Define a cor do texto ao passar o mouse */
+  opacity: 0.7; /* Define a opacidade ao passar o mouse */
+}
+
+/* Container para pesquisa */
+#blue-search {
+  padding: 0; /* Remove o padding */
+  float: right; /* Flutua o container para a direita */
+  display: flex; /* Define o display como flex */
+  justify-content: flex-end; /* Alinha os itens ao final do contêiner */
+  align-items: center; /* Alinha os itens ao centro verticalmente */
+  width: 100%; /* Define a largura como 100% do contêiner */
+}
+
+/* Formulário de pesquisa */
+.example {
+  display: flex; /* Define o display como flex */
+  align-items: center; /* Alinha os itens ao centro verticalmente */
+  width: 100%; /* Define a largura como 100% do contêiner */
+  max-width: 600px; /* Define a largura máxima como 600px */
+}
+
+/* Campo de pesquisa */
+#input-blue-search {
+  width: 100%; /* Define a largura como 100% do contêiner */
+  height: 35px; /* Define a altura */
+  padding: 5px; /* Define o padding */
+  font-size: 14px; /* Define o tamanho da fonte */
+  color: #33334d; /* Define a cor do texto */
+  background-color: transparent; /* Define o fundo como transparente */
+  outline: none; /* Remove a borda de foco padrão */
+  border-top: none; /* Remove a borda superior */
+  border-left: none; /* Remove a borda esquerda */
+  border-right: none; /* Remove a borda direita */
+  border-bottom: 1px solid #005ce6; /* Define a borda inferior */
+  flex-grow: 1; /* Permite que o campo cresça para preencher o espaço disponível */
+}
+
+/* Ícone de pesquisa */
+#icon-search-blue {
+  width: 35px; /* Define a largura do ícone */
+  height: 35px; /* Define a altura do ícone */
+  font-size: 14px; /* Define o tamanho da fonte do ícone */
+  border-radius: 5px; /* Define bordas arredondadas */
+  background-color: transparent; /* Define o fundo como transparente */
+  border: none; /* Remove a borda */
+  color: #005ce6; /* Define a cor do ícone */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+  display: flex; /* Define o display como flex */
+  align-items: center; /* Alinha os itens ao centro verticalmente */
+  justify-content: center; /* Centraliza os itens horizontalmente */
+}
+
+
+/* Efeito hover para ícone de pesquisa */
+#icon-search-blue:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do ícone ao passar o mouse */
+  opacity: 0.7; /* Opacidade ao passar o mouse */
+}
+
+/* Media Queries para dispositivos menores */
+@media (max-width: 768px) {
   #blue-search {
-    padding: 0;
-    float: right;
+    justify-content: center; /* Centraliza o container de pesquisa */
   }
-  
-  /* Estilo para campo de pesquisa */
+
+  .example {
+    max-width: 100%; /* Largura máxima de 100% */
+  }
+
   #input-blue-search {
-    width: 30%;
-    height: 6%;
-    padding: 5px;
-    font-size: 10px;
-    color: #33334d;
-    background-color: transparent;
-    outline: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid #005ce6;
+    font-size: 12px; /* Tamanho da fonte ainda menor */
+    height: 30px; /* Altura ainda menor */
   }
-  
-  /* Estilo para ícone de pesquisa */
+
   #icon-search-blue {
-    width: 5%;
-    height: 4%;
-    font-size: 10px;
-    border-radius: 5px;
-    background-color: transparent;
-    border-top: none;
-    border-bottom: none;
-    border-right: none;
-    border-left: none;
-    color: #005ce6;
-    margin-top: 2%;
-    margin-left: -5%;
-    transition: background-color ease 0.5s;
+    font-size: 12px; /* Tamanho da fonte do ícone ainda menor */
+    width: 30px; /* Tamanho do ícone ainda menor */
+    height: 30px; /* Tamanho do ícone ainda menor */
   }
-  
-  /* Efeito hover para ícone de pesquisa */
-  #icon-search-blue:hover {
-    background-color: #005ce6;
-    color: #f0f0f0;
-    opacity: 0.7;
+}
+
+@media (max-width: 576px) {
+  #input-blue-search {
+    font-size: 10px; /* Ajuste para dispositivos muito pequenos */
+    height: 25px; /* Ajuste para dispositivos muito pequenos */
   }
-  
-  /* Estilo para botão de configuração de dados */
-  #blue-optios-config-dados {
-    background-color: transparent;
-    padding: 0;
-    border: none;
-    cursor: pointer;
-    color: #005ce6;
-    font-size: 13px;
-    text-align: center;
-    font-weight: bold;
-    font-family: 'Sofia Sans Extra Condensed';
-    transition: color ease 0.7s;
+
+  #icon-search-blue {
+    font-size: 10px; /* Ajuste para dispositivos muito pequenos */
+    width: 25px; /* Ajuste para dispositivos muito pequenos */
+    height: 25px; /* Ajuste para dispositivos muito pequenos */
   }
+}
   
+/* Estilo para botão de configuração de dados */
+#blue-optios-config-dados {
+  background-color: transparent; /* Fundo transparente */
+  padding: 0; /* Sem padding */
+  border: none; /* Sem borda */
+  cursor: pointer; /* Cursor de ponteiro */
+  color: #005ce6; /* Cor do texto */
+  font-size: 13px; /* Tamanho da fonte */
+  text-align: center; /* Alinhamento central */
+  font-weight: bold; /* Texto em negrito */
+  font-family: 'Sofia Sans Extra Condensed'; /* Fonte personalizada */
+  transition: color ease 0.7s; /* Transição suave para a cor */
+}
   
-    /* Estilo para o botão de acesso às funções na listagem de materiais */
-  #blue-optios-config-dados:hover {
-    background-color: transparent; /* Fundo transparente */
-    color: #5c5c8a; /* Cor do texto */
-  }
+/* Estilo para o botão de acesso às funções na listagem de materiais */
+#blue-optios-config-dados:hover {
+  background-color: transparent; /* Fundo transparente */
+  color: #5c5c8a; /* Cor do texto ao passar o mouse */
+}
   
-  /* Estilo para o botão na tabela de listagem dos produtos */
-  #myBtn {
-    background-color: transparent; /* Fundo transparente */
-    border: none; /* Sem borda */
-    cursor: pointer; /* Cursor de ponteiro ao passar */
-    color: #005ce6; /* Cor do texto */
-    font-size: 14px; /* Tamanho da fonte */
-    border-radius: 4px; /* Borda arredondada */
-    text-align: center; /* Alinhamento central do texto */
-    font-weight: bold; /* Texto em negrito */
-    font-family: 'Sofia Sans Extra Condensed'; /* Fonte personalizada */
-    transition: color ease 0.5s; /* Transição suave da cor */
-  }
+/* Estilo para o botão na tabela de listagem dos produtos */
+#myBtn {
+  background-color: transparent; /* Fundo transparente */
+  border: none; /* Sem borda */
+  cursor: pointer; /* Cursor de ponteiro ao passar */
+  color: #005ce6; /* Cor do texto */
+  font-size: 14px; /* Tamanho da fonte */
+  border-radius: 4px; /* Borda arredondada */
+  text-align: center; /* Alinhamento central do texto */
+  font-weight: bold; /* Texto em negrito */
+  font-family: 'Sofia Sans Extra Condensed'; /* Fonte personalizada */
+  transition: color ease 0.5s; /* Transição suave da cor */
+}
   
-  /* Efeito hover para o botão na tabela de listagem dos produtos */
-  #myBtn:hover {
-    background-color: transparent; /* Fundo transparente */
-    color: #5c5c8a; /* Cor do texto ao passar o mouse */
-  }
+/* Efeito hover para o botão na tabela de listagem dos produtos */
+#myBtn:hover {
+  background-color: transparent; /* Fundo transparente */
+  color: #5c5c8a; /* Cor do texto ao passar o mouse */
+}
   
-  /* Estilo para o título de listagem */
-  #blue-title-listar {
-    background-color: transparent; /* Fundo transparente */
-    color: #005ce6; /* Cor do texto */
-    font-size: 12px; /* Tamanho da fonte */
-    font-weight: bold; /* Texto em negrito */
-    border: 1px solid #005ce6; /* Borda sólida */
-    text-align: center; /* Alinhamento central do texto */
-  }
+/* Estilo para o título de listagem */
+#blue-title-listar {
+  background-color: transparent; /* Fundo transparente */
+  color: #005ce6; /* Cor do texto */
+  font-size: 12px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  margin-top: 0.5px; /* Margem superior */
+  border: 1px solid #005ce6; /* Borda sólida */
+  text-align: center; /* Alinhamento central do texto */
+}
   
-  /* Estilo para o título de listagem */
-  #blue-title-listar-alert {
-    background-color: transparent; /* Fundo transparente */
-    color: #ff6600; /* Cor do texto */
-    font-size: 12px; /* Tamanho da fonte */
-    font-weight: bold; /* Texto em negrito */
-    border: 1px solid  #ff6600; /* Borda sólida */
-    text-align: center; /* Alinhamento central do texto */
-  }
+/* Estilo para o título de listagem */
+#blue-title-listar-alert {
+  background-color: transparent; /* Fundo transparente */
+  color: #ff6600; /* Cor do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  border: 1px solid #ff6600; /* Borda sólida */
+  text-align: center; /* Alinhamento central do texto */
+}
   
-  /* Estilo para a linha das tabelas de formulários */
-  #line-blue-table {
-    border: 1px solid #666699; /* Borda sólida */
-  }
+/* Estilo para a linha das tabelas de formulários */
+#line-blue-table {
+  border: 1px solid #666699; /* Borda sólida */
+}
   
-  /* Estilo para a linha das tabelas de formulários */
-  #line-blue-table-alert {
-    border: 1px solid  #ff6600; /* Borda sólida */
-    cursor: pointer;
-  }
+/* Estilo para a linha das tabelas de formulários */
+#line-blue-table-alert {
+  border: 1px solid #ff6600; /* Borda sólida */
+  cursor: pointer; /* Cursor de ponteiro */
+}
   
-  /* Estilo para a linha das tabelas de apresentação da sessão do usuário */
-  #line-blue-table-perfil {
-    border: 1px solid #005ce6; /* Borda sólida */
-  }
+/* Estilo para a linha das tabelas de apresentação da sessão do usuário */
+#line-blue-table-perfil {
+  border: 1px solid #005ce6; /* Borda sólida */
+}
   
-  /* Estilo para a linha das tabelas com efeito de hover */
-  #line-blue-table-hover {
-    border: 0.5px solid #666699; /* Borda sólida mais fina */
-    cursor: pointer; /* Cursor de ponteiro */
-    transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  }
+/* Estilo para a linha das tabelas com efeito de hover */
+#line-blue-table-hover {
+  border: 0.5px solid #666699; /* Borda sólida mais fina */
+  cursor: pointer; /* Cursor de ponteiro */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+}
   
-  /* Efeito hover para a linha das tabelas com efeito de hover */
-  #line-blue-table-hover:hover {
-    background-color: #ffcccc; /* Cor de fundo ao passar o mouse */
-  }
+/* Efeito hover para a linha das tabelas com efeito de hover */
+#line-blue-table-hover:hover {
+  background-color: #ffcccc; /* Cor de fundo ao passar o mouse */
+}
   
-  /* Estilo para a coluna das tabelas de formulários */
-  #colun-blue-table {
-    border: 1px solid #666699; /* Borda sólida */
-  }
+/* Estilo para a coluna das tabelas de formulários */
+#colun-blue-table {
+  border: 1px solid #666699; /* Borda sólida */
+}
   
-  /* Estilo para a coluna das tabelas de formulários */
-  #colun-blue-table-alert {
-    border: 1px solid  #ff6600; /* Borda sólida */
-  }
+/* Estilo para a coluna das tabelas de formulários */
+#colun-blue-table-alert {
+  border: 1px solid #ff6600; /* Borda sólida */
+}
   
-  /* Estilo para a coluna das tabelas de apresentação da sessão do usuário */
-  #colun-blue-table-perfil {
-    border: 1px solid #005ce6; /* Borda sólida */
-  }
+/* Estilo para a coluna das tabelas de apresentação da sessão do usuário */
+#colun-blue-table-perfil {
+  border: 1px solid #005ce6; /* Borda sólida */
+}
   
-  /* Estilo para o texto alinhado ao centro com cor azul */
-  #echo-blue-table {
-    text-align: center; /* Alinhamento central do texto */
-    color: #005ce6; /* Cor do texto */
-    font-weight: bold; /* Texto em negrito */
-  }
+/* Estilo para o texto alinhado ao centro com cor azul */
+#echo-blue-table {
+  text-align: center; /* Alinhamento central do texto */
+  color: #005ce6; /* Cor do texto */
+  font-weight: bold; /* Texto em negrito */
+}
   
-  /* Estilo para o container da tabela de exibição da listagem de materiais */
-  #blue-container-table-exibicao,
-  #blue-container-table-exibicao-auxiliar {
-    background-color: #f0f0f0; /* Cor de fundo */
-  }
+/* Estilo para o container da tabela de exibição da listagem de materiais */
+#blue-container-table-exibicao,
+#blue-container-table-exibicao-auxiliar {
+  background-color: #ffffff; /* Cor de fundo */
+}
   
-  /* Estilo para a tabela de exibição da listagem de materiais */
-  #blue-table-exibicao {
-    width: 100%; /* Largura total */
-    padding: 0; /* Padding zero */
-    margin-top: -1%; /* Margem superior negativa */
-  }
+/* Estilo para a tabela de exibição da listagem de materiais */
+#blue-table-exibicao {
+  width: 100%; /* Largura total */
+  padding: 0; /* Sem padding */
+  margin-top: -1%; /* Margem superior negativa */
+}
   
-  /* Estilo para o título da coluna de exibição da tabela de listagem de materiais */
-  #blue-title-listar-exibicao {
-    background-color: transparent; /* Fundo transparente */
-    color: #005ce6; /* Cor do texto */
-    font-weight: bold; /* Texto em negrito */
-    border: 1px solid #005ce6; /* Borda sólida */
-    text-align: center; /* Alinhamento central do texto */
-    font-size: 10px; /* Tamanho da fonte */
-    margin-top: 1%; /* Margem superior */
-    padding: 2px; /* Padding */
-    border-radius: 5px; /* Borda arredondada */
-  }
-  
+/* Estilo para o título da coluna de exibição da tabela de listagem de materiais */
+#blue-title-listar-exibicao {
+  background-color: transparent; /* Fundo transparente */
+  color: #005ce6; /* Cor do texto */
+  font-weight: bold; /* Texto em negrito */
+  border: 1px solid #005ce6; /* Borda sólida */
+  text-align: center; /* Alinhamento central do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  margin-top: 1%; /* Margem superior */
+  padding: 2px; /* Padding */
+  border-radius: 5px; /* Borda arredondada */
+}
+
   /* Estilo para o texto em cards de virada */
   #blue-text-flip-card {
     color: #5c5c8a; /* Cor do texto */
@@ -484,7 +613,7 @@
     color:  #33334d; /* Cor do texto */
     font-weight: bold; /* Texto em negrito */
     text-align: center; /* Alinhamento central do texto */
-    font-size: 9px; /* Tamanho da fonte */
+    font-size: 10px; /* Tamanho da fonte */
   }
   
   /* Estilo para a linha de painel */
@@ -510,29 +639,25 @@
   #blue-title-btn-painel {
     text-align: left; /* Alinhamento à esquerda */
     color: #005ce6; /* Cor do texto */
-    font-size: 12px; /* Tamanho da fonte */
+    font-size: 13px; /* Tamanho da fonte */
   }
   
-  
-  /* Estilo para o título de botão no painel */
+  /* Estilo para o título de botão de alerta no painel */
   #blue-title-btn-painel-alert {
     text-align: left; /* Alinhamento à esquerda */
     color: #ff6600; /* Cor do texto */
-    font-size: 12px; /* Tamanho da fonte */
+    font-size: 13px; /* Tamanho da fonte */
   }
   
-  
-    /* Estilo para a linha simulada abaixo do título de botão no painel */
+  /* Estilo para a linha simulada abaixo do título de botão no painel */
   #blue-line-title-btn-painel {
     border-bottom: 1px solid #005ce6; /* Linha sólida azul abaixo do título */
   }
   
-  
-  /* Estilo para a linha simulada abaixo do título de botão no painel */
-    #blue-line-title-btn-painel-alert {
-    border-bottom: 1px solid #ff6600; /* Linha sólida azul abaixo do título */
+  /* Estilo para a linha simulada abaixo do título de botão de alerta no painel */
+  #blue-line-title-btn-painel-alert {
+    border-bottom: 1px solid #ff6600; /* Linha sólida laranja abaixo do título */
   }
-  
   
   /* Estilo para o botão de exibição das sessões de função do usuário */
   #blue-btn-painel {
@@ -559,7 +684,7 @@
   
   /* Estilo para o ícone dos botões na sessão de reservas do painel administrativo */
   #blue-icon-btn-painel {
-    font-size: 9px; /* Tamanho da fonte */
+    font-size: 11px; /* Tamanho da fonte */
   }
   
   /* Estilo para o container que envolve os botões na sessão de reservas do painel administrativo */
@@ -590,9 +715,7 @@
     opacity: 0.7; /* Opacidade reduzida */
   }
   
-  
-  
-    /* Estilo para o botão de relatório diferente na sessão de relatórios do painel administrativo */
+  /* Estilo para o botão de relatório diferente na sessão de relatórios do painel administrativo */
   #blue-btn-relatorio-painel-diferent {
     width: 18.5%; /* Largura do botão */
     height: auto; /* Altura automática */
@@ -619,234 +742,128 @@
   #blue-table-cadastro-auxiliar {
     width: 100%; /* Largura total */
     margin-top: -1%; /* Margem superior */
-    table-layout: fixed; /* Fixar a largura das células */
+    table-layout: auto; /* Ajustar a largura das células automaticamente */
   }
-  
-  /* Estilo para as células da tabela */
+
   #blue-table-cadastro-auxiliar td {
-    width: 50px; /* Defina uma largura fixa para cada célula */
+    padding: 5.5px; /* Espaçamento interno */
     overflow: hidden; /* Esconder conteúdo excedente */
     text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
     white-space: nowrap; /* Não quebrar linhas */
   }
 
+  /* Media Queries para dispositivos menores */
+  @media (max-width: 1200px) {
+    #blue-table-cadastro-auxiliar {
+      table-layout: fixed; /* Fixar a largura das células */
+    }
+    #blue-table-cadastro-auxiliar td {
+      width: 100%; /* Largura fixa para cada célula em telas menores */
+    }
+  }
+
+  @media (max-width: 992px) {
+    #blue-table-cadastro-auxiliar td {
+      width: 100%; /* Largura total para cada célula em telas pequenas */
+      display: block; /* Exibir cada célula como bloco */
+    }
+  }
+
+  @media (max-width: 768px) {
+    #blue-table-cadastro-auxiliar td {
+      width: 100%; /* Largura total para cada célula em telas muito pequenas */
+      display: block; /* Exibir cada célula como bloco */
+      padding: 5px; /* Espaçamento interno menor */
+    }
+  }
+
+  @media (max-width: 576px) {
+    #blue-table-cadastro-auxiliar td {
+      width: 100%; /* Largura total para cada célula em telas muito pequenas */
+      display: block; /* Exibir cada célula como bloco */
+      padding: 5px; /* Espaçamento interno menor */
+      font-size: 12px; /* Tamanho de fonte menor */
+    }
+  }
 
   /* Estilo para o contêiner da tabela auxiliar de cadastro */
   #blue-table-cadastro-auxiliars {
-      width: 49%; /* Largura total */
-      margin-top: -1%; /* Margem superior */
-      margin-left: 1%;
-      float:left;
-      table-layout: fixed; /* Fixar a largura das células */
-    }
-    
-    /* Estilo para as células da tabela */
-    #blue-table-cadastro-auxiliars td {
-      width: 50px; /* Defina uma largura fixa para cada célula */
-      overflow: hidden; /* Esconder conteúdo excedente */
-      text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
-      white-space: nowrap; /* Não quebrar linhas */
-    }
-
-    
-  /* Estilo para o botão de cadastro auxiliar */
-  #blue-btn-cadastro-auxiliar {
-    background-color: transparent; /* Fundo transparente */
-    width: 100%; /* Largura total */
-    height: auto; /* Altura automática */
-    color: #005ce6; /* Cor do texto */
-    font-size: 11px; /* Tamanho da fonte */
-    font-weight: bold; /* Texto em negrito */
-    margin-top: 5%; /* Margem superior */
-    border-radius: 3px; /* Borda arredondada */
-    border: 1px solid #005ce6; /* Borda sólida azul */
-    transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  }
-  
-  /* Efeito hover para o botão de cadastro auxiliar */
-  #blue-btn-cadastro-auxiliar:hover {
-    background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-    color: #f0f0f0; /* Cor do texto branco */
-    opacity: 0.7; /* Opacidade reduzida */
-  }
-  
-  /* Estilo para o botão de tabela de cadastro de produto */
-  #blue-btn-table-cadastro-produto {
-    background-color: transparent; /* Fundo transparente */
-    width: 20%; /* Largura */
-    color: #005ce6; /* Cor do texto */
-    font-size: 11px; /* Tamanho da fonte */
-    font-weight: bold; /* Texto em negrito */
-    border-radius: 3px; /* Borda arredondada */
-    border: 1px solid #005ce6; /* Borda sólida azul */
-    transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  }
-  
-  /* Efeito hover para o botão de tabela de cadastro de produto */
-  #blue-btn-table-cadastro-produto:hover {
-    background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-    color: #f0f0f0; /* Cor do texto branco */
-    opacity: 0.7; /* Opacidade reduzida */
-  }
-  
-  /* Estilo para o botão de logout */
-  #blue-btn-sign-out {
-    width: 5%; /* Largura */
-    height: auto; /* Altura automática */
-    float: right; /* Alinhamento à direita */
-    border: none; /* Sem borda */
-    outline: none; /* Sem contorno ao focar */
-    color: #005ce6; /* Cor do texto */
-    font-size: 14px; /* Tamanho da fonte */
-    font-weight: bold; /* Texto em negrito */
-    transition: color ease 0.5s; /* Transição suave de cor */
-  }
-  
-  /* Efeito hover para o botão de logout */
-  #blue-btn-sign-out:hover {
-    color: #ff0000; /* Cor vermelha ao passar o mouse */
-    opacity: 0.7; /* Opacidade reduzida */
-  }
-  
-  /* Estilo para o botão de relatório auxiliar */
-  #blue-btn-relatorio-auxiliar {
-    width: 18%; /* Largura */
-    height: 4%; /* Altura */
-    outline: none; /* Sem contorno ao focar */
-    margin-left: 1%; /* Margem esquerda */
-    border-radius: 5px; /* Borda arredondada */
-    border: 1px solid #005ce6; /* Borda sólida azul */
-    font-size: 10px; /* Tamanho da fonte */
-    transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  }
-  
-  /* Efeito hover para o botão de relatório auxiliar */
-  #blue-btn-relatorio-auxiliar:hover {
-    background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-    color: #f0f0f0; /* Cor do texto branco */
-    opacity: 0.7; /* Opacidade reduzida */
-  }
-  
-  /* Estilo para o botão de relatório auxiliar azul */
-  #blue-btn-relatorio-auxiliar-blue {
-    width: 9.9%; /* Largura */
-    height: 4%; /* Altura */
-    padding: 2px;
-    outline: none; /* Sem contorno ao focar */
-    margin-top: 1%;
-    margin-left: 1%; /* Margem esquerda */
-    border-radius: 3px; /* Borda arredondada */
-    border: 1px solid #005ce6; /* Borda sólida azul */
-    font-size: 11px; /* Tamanho da fonte */
-    transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  }
-  
-  /* Efeito hover para o botão de relatório auxiliar azul */
-  #blue-btn-relatorio-auxiliar-blue:hover {
-    background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-    color: #f0f0f0; /* Cor do texto branco */
-    opacity: 0.7; /* Opacidade reduzida */
-  }
-  
-  /* Estilo para o contêiner que envolve o campo de arquivo */
-  .custom-file-upload {
-    display: inline-block; /* Exibe como bloco inline para alinhar com o conteúdo adjacente */
-    position: relative; /* Define a posição como relativa para facilitar o posicionamento do input[type="file"] */
-    font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte para o texto do botão */
-    overflow: hidden; /* Esconde qualquer conteúdo que exceda os limites do contêiner */
-    margin-top: 5px; /* Margem superior para espaçamento */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-  }
-  
-  /* Estilo para o input[type="file"] dentro do contêiner de upload */
-  .custom-file-upload input[type="file"] {
-    position: absolute; /* Define a posição absoluta para sobrepor o botão personalizado */
-    font-size: 100px; /* Tamanho grande para cobrir todo o botão personalizado */
-    right: 0; /* Alinha o input à direita do contêiner */
-    top: 0; /* Alinha o input ao topo do contêiner */
-    opacity: 0; /* Torna o input invisível */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-  }
-  
-  /* Estilo para o botão personalizado dentro do contêiner de upload */
-  .custom-file-upload span {
-    display: inline-block; /* Exibe como bloco inline para ajustar ao conteúdo */
-    background-color: transparent; /* Cor de fundo transparente */
-    color: #005ce6; /* Cor do texto azul */
-    border: none; /* Remove a borda */
-    padding: 0px 0px; /* Preenchimento interno */
-    border-radius: 0px; /* Borda arredondada */
-    font-size: 10px; /* Tamanho da fonte */
-    cursor: pointer; /* Muda o cursor para indicar que é clicável */
-    transition: color ease 0.5s; /* Transição suave de cor */
-  }
-  
-  /* Estilo para o botão personalizado dentro do contêiner de upload ao passar o mouse */
-  .custom-file-upload span:hover {
-    background-color: #666699; /* Cor de fundo mais escura ao passar o cursor */
-  }
-  
-  
-  #blue-button-nova-senha{
-    width:20%;
-    height:auto;
-    font-size:12px;
-    font-weight: bold;
-    margin-left:-40%;
-    margin-top:-1%;
-    outline: none;
-    border-radius: 3px;
-    border:1px solid #005ce6;
-    transition: background-color ease 0.5s; /* Transição suave de cor */
-  }
-  
-  
-  #blue-button-nova-senha:hover{
-    background-color: #005ce6;
-    color:#ffffff;
-    opacity: 0.7;
-  }
-  
-  
-  #blue-icon-upload{
-  margin-left: 36%;
-  }
-  
-  
-  #blue-icon-relatorio-produto{
-  margin-left: 1%;
-  font-size: 9px;  
-  }
-  
-  #blue-icon-relatorio-produto-alert{
+    width: 49%; /* Largura total */
+    margin-top: -1%; /* Margem superior */
     margin-left: 1%;
-    margin-top: 3%;
-    color: #ff6600;
-    font-size: 9px;  
-    }
-    
-/* Tooltip container */
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-    width: 120px;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+    float: left;
+    table-layout: fixed; /* Fixar a largura das células */
+  }
+  
+  /* Estilo para as células da tabela */
+  #blue-table-cadastro-auxiliars td {
+    padding: 5.5px; /* Espaçamento interno */
+    overflow: hidden; /* Esconder conteúdo excedente */
+    text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
+    white-space: nowrap; /* Não quebrar linhas */
   }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
+  /* Estilo para a div na qual a tabela está inserida */
+  .blue-table-scroll {
+    overflow-y: auto; /* Rolagem vertical automática */
+    max-height: 350px; /* Altura máxima da div */
+  }
+  
+  /* Estilo para a tabela que precisa de rolagem horizontal */
+  #blue-table-cadastro {
+    width: 100%; /* Largura total */
+    margin-top: -1%; /* Margem superior */
+    border-collapse: collapse; /* Colapsar bordas da tabela */
+  }
+  
+  /* Estilo para as células da tabela */
+  #blue-table-cadastro td {
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #dddddd; /* Borda das células */
+    text-align: left; /* Alinhamento do texto */
+  }
 
-
-#blue-text-session{
-font-size: 10px;  
-float:center;
-}
+  /* Estilo para a barra de rolagem horizontal */
+  .blue-table-scroll-horizontal {
+    overflow-x: auto; /* Rolagem horizontal automática */
+    max-width: 100%; /* Largura máxima da div */
+  }
+  
+  /* Estilo para a div que envolve a tabela de rolagem horizontal */
+  .blue-table-scroll-container {
+    width: 100%; /* Largura total */
+    margin: 0 auto; /* Centralizar a div */
+  }
+  
+  /* Estilo para as células da tabela */
+  #blue-table-cadastro td {
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #dddddd; /* Borda das células */
+    text-align: left; /* Alinhamento do texto */
+  }
+  
+  /* Estilo para a tabela que precisa de rolagem horizontal */
+  #blue-table-cadastro {
+    width: 100%; /* Largura total */
+    margin-top: -1%; /* Margem superior */
+    border-collapse: collapse; /* Colapsar bordas da tabela */
+  }
+  
+  /* Estilo para as células da tabela */
+  #blue-table-cadastro td {
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #dddddd; /* Borda das células */
+    text-align: left; /* Alinhamento do texto */
+  }
+  
+  /* Estilo para a barra de rolagem horizontal */
+  .blue-table-scroll-horizontal {
+    overflow-x: auto; /* Rolagem horizontal automática */
+    max-width: 100%; /* Largura máxima da div */
+  }
+  
+  /* Estilo para a div que envolve a tabela de rolagem horizontal */
+  .blue-table-scroll-container {
+    width: 100%; /* Largura total */
+    margin: 0 auto; /* Centralizar a div */
+  }

@@ -206,13 +206,6 @@ function cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idM
     return $idProduto;
 }
 
-function atualizarEstoqueExistente($conn, $idProduto, $quantidade) {
-    $stmt = $conn->prepare("UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ? WHERE IDPRODUTO = ?");
-    $stmt->bind_param("ii", $quantidade, $idProduto);
-    $stmt->execute();
-    $stmt->close();
-}
-
 function inserirEstoqueInicial($conn, $idProduto, $quantidade) {
     $stmt = $conn->prepare("INSERT INTO ESTOQUE (IDPRODUTO, QUANTIDADE) VALUES (?, ?)");
     $stmt->bind_param("ii", $idProduto, $quantidade);
@@ -220,34 +213,29 @@ function inserirEstoqueInicial($conn, $idProduto, $quantidade) {
     $stmt->close();
 }
 
-function recuperarIdProdutoExistente($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter) {
-    $stmt = $conn->prepare("SELECT IDPRODUTO FROM PRODUTO WHERE IDMATERIAL = ? AND IDCONECTOR = ? AND IDMETRAGEM = ? AND IDMODELO = ? AND IDFORNECEDOR = ? AND IDDATACENTER = ?");
-    $stmt->bind_param("iiiiii", $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter);
+function atualizarEstoqueExistente($conn, $idProduto, $quantidade) {
+    $stmt = $conn->prepare("UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ? WHERE IDPRODUTO = ?");
+    $stmt->bind_param("ii", $quantidade, $idProduto);
     $stmt->execute();
-    $stmt->bind_result($idProduto);
-    $stmt->fetch();
     $stmt->close();
-
-    return $idProduto;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $numNotaFiscal = sanitize($conn, $_POST['NumNotaFiscal']);
-    $valorNotaFiscal = sanitize($conn, $_POST['ValorNotaFiscal']);
-    $material = sanitize($conn, $_POST['Material']);
-    $conector = sanitize($conn, $_POST['Conector']);
-    $metragem = sanitize($conn, $_POST['Metragem']);
-    $modelo = sanitize($conn, $_POST['Modelo']);
-    $quantidade = sanitize($conn, $_POST['Quantidade']);
-    $fornecedor = sanitize($conn, $_POST['Fornecedor']);
-    $dataRecebimento = sanitize($conn, $_POST['DataRecebimento']);
-    $dataCadastro = sanitize($conn, $_POST['DataCadastro']);
-    $dataCenter = sanitize($conn, $_POST['DataCenter']);
-    $filePath = processarUploadArquivo($_FILES['NotaFiscalFile']);
+    $numNotaFiscal = sanitize($conn, strtoupper($_POST['numNotaFiscal']));
+    $valorNotaFiscal = sanitize($conn, strtoupper($_POST['valorNotaFiscal']));
+    $material = sanitize($conn, strtoupper($_POST['material']));
+    $conector = sanitize($conn, strtoupper($_POST['conector']));
+    $metragem = sanitize($conn, strtoupper($_POST['metragem']));
+    $modelo = sanitize($conn, strtoupper($_POST['modelo']));
+    $quantidade = (int) sanitize($conn, $_POST['quantidade']);
+    $fornecedor = sanitize($conn, strtoupper($_POST['fornecedor']));
+    $dataRecebimento = sanitize($conn, $_POST['dataRecebimento']);
+    $dataCadastro = sanitize($conn, $_POST['dataCadastro']);
+    $dataCenter = sanitize($conn, strtoupper($_POST['dataCenter']));
+    $file = $_FILES['file'];
+
+    $filePath = processarUploadArquivo($file);
 
     cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath);
-} else {
-    header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Não foi possivel realizar o cadastro da nota fiscal. A operação será desfeita. Tente novamente");
-    exit();
 }
 ?>

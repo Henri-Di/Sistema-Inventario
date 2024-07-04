@@ -43,6 +43,7 @@ $quantidadeSobrepor = $_POST['Sobrepor'] ?? '';
 $dataSobrepor = $_POST['DataSobrepor'] ?? '';
 $observacao = $_POST['Observacao'] ?? '';
 
+// Validar se os campos obrigatórios foram preenchidos e se os dados são válidos
 if (empty($idProduto) || !validarQuantidade($quantidadeSobrepor) || !validarData($dataSobrepor) || !datasSaoValidas($dataSobrepor)) {
     header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente ");
     exit();
@@ -79,7 +80,7 @@ try {
 
     // Inserir dados na tabela SOBREPOR usando prepared statement
     $sqlInsertSobrepor = "INSERT INTO SOBREPOR (QUANTIDADE, DATASOBREPOR, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                          VALUES (?, ?, ?, UPPER(?), UPPER(?), ?, ?, UPPER(?), ?)";
     $stmtInsert = $conn->prepare($sqlInsertSobrepor);
     $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
@@ -89,9 +90,9 @@ try {
     }
 
     // Atualizar a tabela ESTOQUE com a quantidade sobreposta
-    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = ? WHERE IDPRODUTO = ?";
+    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = UPPER(?) WHERE IDPRODUTO = ?";
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
-    $stmtUpdate->bind_param("ii", $quantidadeSobrepor, $idProduto);
+    $stmtUpdate->bind_param("si", $quantidadeSobrepor, $idProduto);
 
     if (!$stmtUpdate->execute()) {
         header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");

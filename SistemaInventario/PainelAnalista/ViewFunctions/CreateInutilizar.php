@@ -32,6 +32,11 @@ $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 $operacao = "Inutilizar";
 $situacao = "Inutilizado";
 
+// Converter observação, operação e situação para letras maiúsculas
+$observacao = strtoupper($observacao);
+$operacao = strtoupper($operacao);
+$situacao = strtoupper($situacao);
+
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
@@ -124,7 +129,7 @@ try {
     $conn->commit();
 
     // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php");
+    header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação

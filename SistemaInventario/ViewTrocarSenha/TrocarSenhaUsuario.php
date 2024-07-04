@@ -203,16 +203,20 @@
 
 
 
-    <!-- Coluna lateral esquerda (sidenav) -->
-    <div class="col-sm-3 sidenav hidden-xs" style="background-color: #f0f0f0;">
+    <!-- Start container col-sm-3 sidenav -->
+    <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
 
 
-
-    <!-- Logo -->
+    <!-- Start logo page -->
     <h2 id="logo-blue">Inventário de Material<i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
+    <!-- End logo page -->
 
 
 
+    <img src="../../Images/images.png" class="logo">
+
+
+    
     <!-- Start menu-link page -->
     <ul class="nav nav-pills nav-stacked">
 
@@ -231,30 +235,34 @@
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-
-
+    
     </ul>
+    
+
+
+    <br>
     <!-- End menu-link page -->
 
 
 
     </div>
-    <!-- Fim da coluna lateral esquerda -->
+    <!-- End container col-sm-3 sidenav -->
 
 
 
-    <!-- Container para o loader -->
+    <!-- Start container loader page -->
     <div id="loader"></div>
+    <!-- End container loader page -->
 
 
 
-    <!-- Container principal que será animado -->
+    <!-- Start container animate-bottom -->
     <div style="display:none;" id="blue-animate" class="animate-bottom">
 
 
 
-    <!-- Coluna principal -->
-    <div class="col-sm-9" style="margin-top: -20px; background-color: #f0f0f0; border-radius: 0px;">
+    <!-- Start container col-sm-9 -->
+    <div class="col-sm-9" id="blue-col-sm-9">
 
 
 

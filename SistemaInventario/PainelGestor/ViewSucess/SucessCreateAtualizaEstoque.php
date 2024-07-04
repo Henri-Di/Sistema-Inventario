@@ -205,12 +205,16 @@
 
 
     <!-- Start container col-sm-3 sidenav -->
-    <div class="col-sm-3 sidenav hidden-xs" style="background-color:#f0f0f0;">    
+    <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
 
 
     <!-- Start logo page -->
     <h2 id="logo-blue">Inventário de Material<i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
     <!-- End logo page -->
+
+
+    
+    <img src="../../Images/images.png" class="logo">
 
 
 
@@ -232,14 +236,13 @@
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-
-
+    
     </ul>
-    <!-- End menu-link page -->
     
 
 
     <br>
+    <!-- End menu-link page -->
 
 
 
@@ -260,7 +263,7 @@
 
 
     <!-- Start container col-sm-9 -->
-    <div class="col-sm-9" style="margin-top:-20px;background-color:#f0f0f0;border-radius:0px;">
+    <div class="col-sm-9" id="blue-col-sm-9">
 
 
 

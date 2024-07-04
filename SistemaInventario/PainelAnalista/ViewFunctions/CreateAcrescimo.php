@@ -42,7 +42,7 @@ function datasSaoValidas($dataAcrescimo) {
 $idProduto = $_POST['id'] ?? '';
 $quantidadeAcrescimo = $_POST['Acrescimo'] ?? '';
 $dataAcrescimo = $_POST['DataAcrescimo'] ?? '';
-$observacao = $_POST['Observacao'] ?? '';
+$observacao = strtoupper($_POST['Observacao'] ?? '');
 
 if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarData($dataAcrescimo) || !datasSaoValidas($dataAcrescimo)) {
     header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
@@ -51,12 +51,12 @@ if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarDat
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = $_SESSION['usuarioNome'];
-$codigoPUsuario = $_SESSION['usuarioCodigoP'];
+$nomeUsuario = strtoupper($_SESSION['usuarioNome']);
+$codigoPUsuario = strtoupper($_SESSION['usuarioCodigoP']);
 
 // Definir valores fixos
-$operacao = "Acréscimo";
-$situacao = "Acrescentado";
+$operacao = "ACRÉSCIMO";
+$situacao = "ACRESCENTADO";
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
@@ -84,7 +84,7 @@ try {
     $stmtInsert = $conn->prepare($sqlInsertAcrescimo);
     $stmtInsert->bind_param("issssisss", $quantidadeAcrescimo, $dataAcrescimo, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosAcrescimo.php?erro=Não foi possível inserir os dados na tabela ACRESCIMO. Inform o departamento de TI");
+        header("Location: ../ViewFail/FailCreateInserirDadosAcrescimo.php?erro=Não foi possível inserir os dados na tabela ACRESCIMO. Informe o departamento de TI");
         exit();
     }
 

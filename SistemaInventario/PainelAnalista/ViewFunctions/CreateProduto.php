@@ -37,7 +37,7 @@ function datasSaoValidas($datacadastro) {
 
 // Função para obter ou inserir e obter o ID de uma tabela
 function getIdOrInsert($conn, $table, $column, $idColumn, $value) {
-    $checkSql = "SELECT $idColumn FROM $table WHERE $column = '$value'";
+    $checkSql = "SELECT $idColumn FROM $table WHERE UPPER($column) = UPPER('$value')";
     $result = mysqli_query($conn, $checkSql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idUsuario = $conn->real_escape_string($idUsuario);
 
     // Consulta para obter o datacenter do usuário
-    $consultaDatacenter = "SELECT DATACENTER FROM USUARIO WHERE IDUSUARIO = ?";
+    $consultaDatacenter = "SELECT UPPER(DATACENTER) FROM USUARIO WHERE IDUSUARIO = ?";
     if ($stmt = $conn->prepare($consultaDatacenter)) {
         $stmt->bind_param("i", $idUsuario);
         $stmt->execute();
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário
-    if ($datacenterUsuario !== $datacenterNome) {
+    if (strtoupper($datacenterUsuario) !== strtoupper($datacenterNome)) {
         // Redirecionar para a página de falha
         header("Location: ../ViewFail/FailCreateDatacenter.php?erro=O datacenter do usuário não corresponde ao datacenter do formulário");
         exit(); // Termina a execução do script após redirecionamento
@@ -106,12 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $conn->begin_transaction();
 
-        $idMaterial = getIdOrInsert($conn, 'MATERIAL', 'MATERIAL', 'IDMATERIAL', $material);
-        $idConector = getIdOrInsert($conn, 'CONECTOR', 'CONECTOR', 'IDCONECTOR', $conector);
-        $idMetragem = getIdOrInsert($conn, 'METRAGEM', 'METRAGEM', 'IDMETRAGEM', $metragem);
-        $idModelo = getIdOrInsert($conn, 'MODELO', 'MODELO', 'IDMODELO', $modelo);
-        $idFornecedor = getIdOrInsert($conn, 'FORNECEDOR', 'FORNECEDOR', 'IDFORNECEDOR', $fornecedor);
-        $idDataCenter = getIdOrInsert($conn, 'DATACENTER', 'NOME', 'IDDATACENTER', $datacenterNome);
+        $idMaterial = getIdOrInsert($conn, 'MATERIAL', 'MATERIAL', 'IDMATERIAL', strtoupper($material));
+        $idConector = getIdOrInsert($conn, 'CONECTOR', 'CONECTOR', 'IDCONECTOR', strtoupper($conector));
+        $idMetragem = getIdOrInsert($conn, 'METRAGEM', 'METRAGEM', 'IDMETRAGEM', strtoupper($metragem));
+        $idModelo = getIdOrInsert($conn, 'MODELO', 'MODELO', 'IDMODELO', strtoupper($modelo));
+        $idFornecedor = getIdOrInsert($conn, 'FORNECEDOR', 'FORNECEDOR', 'IDFORNECEDOR', strtoupper($fornecedor));
+        $idDataCenter = getIdOrInsert($conn, 'DATACENTER', 'NOME', 'IDDATACENTER', strtoupper($datacenterNome));
 
         // Verificar se um produto com os mesmos detalhes já existe no mesmo datacenter
         $check_sql = "SELECT p.* FROM PRODUTO p
