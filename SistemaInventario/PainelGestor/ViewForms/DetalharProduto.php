@@ -831,7 +831,7 @@ $dateformated = date("d/m/Y", $date);
     </div>
     
     
-    <div class="container-fluid" style="margin-left:-2%;margin-top:1%;">
+    <div class="container-fluid" class="blue-container-btn-auxiliar-blue">
     
 
 

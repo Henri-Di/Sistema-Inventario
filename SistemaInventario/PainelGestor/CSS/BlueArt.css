@@ -22,17 +22,19 @@ body {
 
 /* Estilo para todas as imagens */
 img {
+  max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do contêiner */
+  height: auto; /* Mantém a proporção da imagem */
   image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
-  width: 100%; /* Redimensiona a imagem para ajustar ao contêiner */
 }
 
 /* Estilo para a logo */
 .logo {
   max-width: 50px; /* Define a largura máxima para a logo */
   height: auto; /* Mantém a altura proporcional à largura */
-  margin-top: -13%; /* Ajusta a margem superior para posicionamento */
-  margin-left: 40%; /* Ajusta a margem esquerda para centralizar */
+  margin-top: -12%; /* Ajusta a margem superior para posicionamento */
+  margin-left: 50%; /* Ajusta a margem esquerda para centralizar */
+  transform: translateX(-50%); /* Centraliza horizontalmente */
   filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
 }
 
@@ -72,15 +74,16 @@ img {
 /* Estilo para o logo da página */
 #logo-blue {
   color: #005ce6; /* Cor do texto */
-  font-size: 20px; /* Tamanho da fonte */
+  font-size: 2rem; /* Tamanho da fonte responsivo */
   font-weight: bold; /* Negrito */
   text-align: center; /* Centraliza o texto */
+  margin: 15px 0; /* Margem superior e inferior */
 }
 
 /* Estilo para o ícone do logo da página */
 #blue-icon-logo {
   color: #005ce6; /* Cor do texto */
-  font-size: 15px; /* Tamanho da fonte */
+  font-size: 1.5rem; /* Tamanho da fonte responsivo */
   margin-left: 5px; /* Espaçamento à esquerda */
 }
 
@@ -684,7 +687,7 @@ img {
   
   /* Estilo para o ícone dos botões na sessão de reservas do painel administrativo */
   #blue-icon-btn-painel {
-    font-size: 11px; /* Tamanho da fonte */
+    font-size: 9px; /* Tamanho da fonte */
   }
   
   /* Estilo para o container que envolve os botões na sessão de reservas do painel administrativo */
@@ -738,6 +741,74 @@ img {
     opacity: 0.7; /* Opacidade reduzida */
   }
   
+  /* Estilo para o botão de tabela de cadastro de produto */
+#blue-btn-table-cadastro-produto {
+  background-color: transparent; /* Fundo transparente */
+  width: 20%; /* Largura */
+  color: #005ce6; /* Cor do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida azul */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+}
+
+/* Efeito hover para o botão de tabela de cadastro de produto */
+#blue-btn-table-cadastro-produto:hover {
+  background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
+  color: #f0f0f0; /* Cor do texto branco */
+  opacity: 0.7; /* Opacidade reduzida */
+}
+
+/* Estilo para o botão de logout */
+#blue-btn-sign-out {
+  width: 5%; /* Largura */
+  height: auto; /* Altura automática */
+  float: right; /* Alinhamento à direita */
+  background-color: transparent; /* Fundo transparente */
+  border: none; /* Sem borda */
+  outline: none; /* Sem contorno ao focar */
+  color: #005ce6; /* Cor do texto */
+  font-size: 14px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  transition: color ease 0.5s; /* Transição suave de cor */
+}
+
+/* Efeito hover para o botão de logout */
+#blue-btn-sign-out:hover {
+  color: #ff0000; /* Cor vermelha ao passar o mouse */
+  opacity: 0.7; /* Opacidade reduzida */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 1200px) {
+  #blue-btn-sign-out {
+    width: 8%; /* Aumenta a largura em telas menores */
+    font-size: 12px; /* Diminui o tamanho da fonte */
+  }
+}
+
+@media (max-width: 992px) {
+  #blue-btn-sign-out {
+    width: 10%; /* Aumenta ainda mais a largura */
+    font-size: 10px; /* Diminui mais o tamanho da fonte */
+  }
+}
+
+@media (max-width: 768px) {
+  #blue-btn-sign-out {
+    width: 15%; /* Aumenta ainda mais a largura */
+    font-size: 8px; /* Diminui mais o tamanho da fonte */
+  }
+}
+
+@media (max-width: 576px) {
+  #blue-btn-sign-out {
+    width: 20%; /* Aumenta a largura para telas muito pequenas */
+    font-size: 6px; /* Diminui o tamanho da fonte para se ajustar */
+  }
+}
+
   /* Estilo para o contêiner da tabela auxiliar de cadastro */
   #blue-table-cadastro-auxiliar {
     width: 100%; /* Largura total */
@@ -801,6 +872,28 @@ img {
     overflow: hidden; /* Esconder conteúdo excedente */
     text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
     white-space: nowrap; /* Não quebrar linhas */
+  }
+
+  /* Estilo para o botão de cadastro auxiliar */
+#blue-btn-cadastro-auxiliar {
+  background-color: transparent; /* Fundo transparente */
+  width: 100%; /* Largura total */
+  height: auto; /* Altura automática */
+  color: #005ce6; /* Cor do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  margin-top: 5%; /* Margem superior */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida azul */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  
+  }
+
+/* Efeito hover para o botão de cadastro auxiliar */
+#blue-btn-cadastro-auxiliar:hover {
+  background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
+  color: #f0f0f0; /* Cor do texto branco */
+  opacity: 0.7; /* Opacidade reduzida */
   }
 
   /* Estilo para a div na qual a tabela está inserida */
@@ -867,3 +960,140 @@ img {
     width: 100%; /* Largura total */
     margin: 0 auto; /* Centralizar a div */
   }
+
+
+  /* Estilo para o contêiner que envolve o campo de arquivo */
+.custom-file-upload {
+  display: inline-block; /* Exibe como bloco inline para alinhar com o conteúdo adjacente */
+  position: relative; /* Define a posição como relativa para facilitar o posicionamento do input[type="file"] */
+  font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte para o texto do botão */
+  overflow: hidden; /* Esconde qualquer conteúdo que exceda os limites do contêiner */
+  margin-top: 5px; /* Margem superior para espaçamento */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+/* Estilo para o input[type="file"] dentro do contêiner de upload */
+.custom-file-upload input[type="file"] {
+  position: absolute; /* Define a posição absoluta para sobrepor o botão personalizado */
+  font-size: 100px; /* Tamanho grande para cobrir todo o botão personalizado */
+  right: 0; /* Alinha o input à direita do contêiner */
+  top: 0; /* Alinha o input ao topo do contêiner */
+  opacity: 0; /* Torna o input invisível */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+/* Estilo para o botão personalizado dentro do contêiner de upload */
+.custom-file-upload span {
+  display: inline-block; /* Exibe como bloco inline para ajustar ao conteúdo */
+  background-color: transparent; /* Cor de fundo transparente */
+  color: #005ce6; /* Cor do texto azul */
+  border: none; /* Remove a borda */
+  padding: 0px 0px; /* Preenchimento interno */
+  border-radius: 0px; /* Borda arredondada */
+  font-size: 10px; /* Tamanho da fonte */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  transition: color ease 0.5s; /* Transição suave de cor */
+}
+
+/* Estilo para o botão personalizado dentro do contêiner de upload ao passar o mouse */
+.custom-file-upload span:hover {
+  background-color: #666699; /* Cor de fundo mais escura ao passar o cursor */
+}
+
+/* Estilo para o botão 'Nova Senha' */
+#blue-button-nova-senha {
+  width: 20%; /* Largura do botão */
+  height: auto; /* Altura automática */
+  background-color:#ffffff; /* Cor de fundo do botão */
+  font-size: 12px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  margin-left: -40%; /* Margem à esquerda negativa para reposicionar */
+  margin-top: -1%; /* Margem superior negativa para reposicionar */
+  outline: none; /* Sem contorno ao focar */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida com cor */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+}
+
+/* Efeito hover para o botão 'Nova Senha' */
+#blue-button-nova-senha:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do texto ao passar o mouse */
+  opacity: 0.7; /* Opacidade reduzida ao passar o mouse */
+}
+
+/* Estilo para o ícone 'Upload' */
+#blue-icon-upload {
+  margin-left: 36%; /* Margem à esquerda para posicionar o ícone */
+}
+
+/* Estilo para o ícone 'Relatório de Produto' */
+#blue-icon-relatorio-produto {
+  margin-left: 1%; /* Margem à esquerda para posicionar o ícone */
+  font-size: 9px; /* Tamanho da fonte do ícone */
+}
+
+/* Estilo para o botão de relatório auxiliar */
+#blue-btn-relatorio-auxiliar {
+  width: 18%; /* Largura do botão */
+  height: auto; /* Altura automática */
+  background-color: #ffffff; /* Cor de fundo branca */
+  outline: none; /* Sem contorno ao focar */
+  margin-left: 1%; /* Margem à esquerda entre os botões */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida azul */
+  font-size: 11px; /* Tamanho da fonte */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  flex: 1; /* Ocupa espaço igualmente dentro do container flexível */
+  max-width: 18%; /* Largura máxima para garantir que 5 botões caibam na mesma linha */
+  text-align: center; /* Centralizar texto */
+  margin-top: 1.5%; /*  Ajuste de margem superior */
+}
+
+/* Efeito hover para o botão de relatório auxiliar */
+#blue-btn-relatorio-auxiliar:hover {
+  background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
+  color: #f0f0f0; /* Cor do texto branco */
+  opacity: 0.7; /* Opacidade reduzida */
+}
+
+/* Estilo para o container dos botões */
+.blue-container-btn-auxiliar {
+  display: flex; /* Container flexível */
+  justify-content: space-between; /* Espaço entre os itens */
+  flex-wrap: wrap; /* Quebra de linha automática */
+  margin-top: 1.5%; /*  Ajuste de margem superior */
+  margin-left: -4.5%; /* Margem esquerda negativa para compensar o espaçamento */
+}
+
+/* Estilo para o botão de relatório auxiliar azul */
+#blue-btn-relatorio-auxiliar-blue {
+  width: 10%; /* Largura do botão */
+  height: auto; /* Altura automática */
+  background-color: #ffffff; /* Define a cor de fundo como branco*/
+  outline: none; /* Sem contorno ao focar */
+  margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida azul */
+  font-size: 11px; /* Tamanho da fonte reduzido */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  flex: 1; /* Ocupa espaço igualmente dentro do container flexível */
+  max-width: 10%; /* Largura máxima para garantir que 9 botões caibam na mesma linha */
+  text-align: center; /* Centralizar texto */
+  margin-top: 1.5%; /*  Ajuste de margem superior */
+}
+
+/* Efeito hover para o botão de relatório auxiliar azul */
+#blue-btn-relatorio-auxiliar-blue:hover {
+  background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
+  color: #ffffff; /* Cor do texto branco */
+  opacity: 0.7; /* Opacidade reduzida */
+}
+
+/* Estilo para o container dos botões */
+.blue-container-btn-auxiliar-blue {
+  display: flex; /* Container flexível */
+  justify-content: flex-start; /* Alinhamento à esquerda */
+  flex-wrap: wrap; /* Quebra de linha automática */
+  margin-left: -1%; /* Ajuste de margem esquerda */
+}

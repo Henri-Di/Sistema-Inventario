@@ -205,7 +205,7 @@
 
 
     <!-- Start container col-sm-3 sidenav -->
-    <div class="col-sm-3 sidenav hidden-xs" style="background-color:#f0f0f0;">    
+    <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
 
 
     <!-- Start logo page -->
@@ -213,12 +213,16 @@
     <!-- End logo page -->
 
 
+    
+    <img src="../../Images/images.png" class="logo">
+
+
 
     <!-- Start menu-link page -->
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
@@ -234,12 +238,11 @@
 
     
     </ul>
-    <!-- End menu-link page -->
     
 
 
     <br>
-
+    <!-- End menu-link page -->
 
 
 
@@ -260,7 +263,7 @@
 
 
     <!-- Start container col-sm-9 -->
-    <div class="col-sm-9" style="margin-top:-20px;background-color:#f0f0f0;border-radius:0px;">
+    <div class="col-sm-9" id="blue-col-sm-9">
 
 
 

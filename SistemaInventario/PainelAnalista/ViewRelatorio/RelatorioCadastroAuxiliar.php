@@ -203,9 +203,8 @@
     <div class="row content">
 
 
-
     <!-- Start container col-sm-3 sidenav -->
-    <div class="col-sm-3 sidenav hidden-xs" style="background-color:#f0f0f0;">    
+    <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
 
 
     <!-- Start logo page -->
@@ -214,6 +213,10 @@
 
 
 
+    <img src="../../Images/images.png" class="logo">
+
+
+    
     <!-- Start menu-link page -->
     <ul class="nav nav-pills nav-stacked">
 
@@ -259,7 +262,7 @@
 
 
     <!-- Start container col-sm-9 -->
-    <div class="col-sm-9" style="margin-top:-20px;background-color:#f0f0f0;border-radius:0px;">
+    <div class="col-sm-9" id="blue-col-sm-9">
 
 
 

@@ -738,6 +738,74 @@ img {
     opacity: 0.7; /* Opacidade reduzida */
   }
   
+  /* Estilo para o botão de tabela de cadastro de produto */
+#blue-btn-table-cadastro-produto {
+  background-color: transparent; /* Fundo transparente */
+  width: 20%; /* Largura */
+  color: #005ce6; /* Cor do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida azul */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+}
+
+/* Efeito hover para o botão de tabela de cadastro de produto */
+#blue-btn-table-cadastro-produto:hover {
+  background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
+  color: #f0f0f0; /* Cor do texto branco */
+  opacity: 0.7; /* Opacidade reduzida */
+}
+
+/* Estilo para o botão de logout */
+#blue-btn-sign-out {
+  width: 5%; /* Largura */
+  height: auto; /* Altura automática */
+  float: right; /* Alinhamento à direita */
+  background-color: transparent; /* Fundo transparente */
+  border: none; /* Sem borda */
+  outline: none; /* Sem contorno ao focar */
+  color: #005ce6; /* Cor do texto */
+  font-size: 14px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  transition: color ease 0.5s; /* Transição suave de cor */
+}
+
+/* Efeito hover para o botão de logout */
+#blue-btn-sign-out:hover {
+  color: #ff0000; /* Cor vermelha ao passar o mouse */
+  opacity: 0.7; /* Opacidade reduzida */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 1200px) {
+  #blue-btn-sign-out {
+    width: 8%; /* Aumenta a largura em telas menores */
+    font-size: 12px; /* Diminui o tamanho da fonte */
+  }
+}
+
+@media (max-width: 992px) {
+  #blue-btn-sign-out {
+    width: 10%; /* Aumenta ainda mais a largura */
+    font-size: 10px; /* Diminui mais o tamanho da fonte */
+  }
+}
+
+@media (max-width: 768px) {
+  #blue-btn-sign-out {
+    width: 15%; /* Aumenta ainda mais a largura */
+    font-size: 8px; /* Diminui mais o tamanho da fonte */
+  }
+}
+
+@media (max-width: 576px) {
+  #blue-btn-sign-out {
+    width: 20%; /* Aumenta a largura para telas muito pequenas */
+    font-size: 6px; /* Diminui o tamanho da fonte para se ajustar */
+  }
+}
+
   /* Estilo para o contêiner da tabela auxiliar de cadastro */
   #blue-table-cadastro-auxiliar {
     width: 100%; /* Largura total */
@@ -801,6 +869,28 @@ img {
     overflow: hidden; /* Esconder conteúdo excedente */
     text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
     white-space: nowrap; /* Não quebrar linhas */
+  }
+
+  /* Estilo para o botão de cadastro auxiliar */
+#blue-btn-cadastro-auxiliar {
+  background-color: transparent; /* Fundo transparente */
+  width: 100%; /* Largura total */
+  height: auto; /* Altura automática */
+  color: #005ce6; /* Cor do texto */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  margin-top: 5%; /* Margem superior */
+  border-radius: 3px; /* Borda arredondada */
+  border: 1px solid #005ce6; /* Borda sólida azul */
+  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  
+  }
+
+/* Efeito hover para o botão de cadastro auxiliar */
+#blue-btn-cadastro-auxiliar:hover {
+  background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
+  color: #f0f0f0; /* Cor do texto branco */
+  opacity: 0.7; /* Opacidade reduzida */
   }
 
   /* Estilo para a div na qual a tabela está inserida */
@@ -867,3 +957,74 @@ img {
     width: 100%; /* Largura total */
     margin: 0 auto; /* Centralizar a div */
   }
+
+
+  /* Estilo para o contêiner que envolve o campo de arquivo */
+.custom-file-upload {
+  display: inline-block; /* Exibe como bloco inline para alinhar com o conteúdo adjacente */
+  position: relative; /* Define a posição como relativa para facilitar o posicionamento do input[type="file"] */
+  font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte para o texto do botão */
+  overflow: hidden; /* Esconde qualquer conteúdo que exceda os limites do contêiner */
+  margin-top: 5px; /* Margem superior para espaçamento */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+/* Estilo para o input[type="file"] dentro do contêiner de upload */
+.custom-file-upload input[type="file"] {
+  position: absolute; /* Define a posição absoluta para sobrepor o botão personalizado */
+  font-size: 100px; /* Tamanho grande para cobrir todo o botão personalizado */
+  right: 0; /* Alinha o input à direita do contêiner */
+  top: 0; /* Alinha o input ao topo do contêiner */
+  opacity: 0; /* Torna o input invisível */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+}
+
+/* Estilo para o botão personalizado dentro do contêiner de upload */
+.custom-file-upload span {
+  display: inline-block; /* Exibe como bloco inline para ajustar ao conteúdo */
+  background-color: transparent; /* Cor de fundo transparente */
+  color: #005ce6; /* Cor do texto azul */
+  border: none; /* Remove a borda */
+  padding: 0px 0px; /* Preenchimento interno */
+  border-radius: 0px; /* Borda arredondada */
+  font-size: 10px; /* Tamanho da fonte */
+  cursor: pointer; /* Muda o cursor para indicar que é clicável */
+  transition: color ease 0.5s; /* Transição suave de cor */
+}
+
+/* Estilo para o botão personalizado dentro do contêiner de upload ao passar o mouse */
+.custom-file-upload span:hover {
+  background-color: #666699; /* Cor de fundo mais escura ao passar o cursor */
+}
+
+
+#blue-button-nova-senha{
+  width:20%;
+  height:auto;
+  font-size:12px;
+  font-weight: bold;
+  margin-left:-40%;
+  margin-top:-1%;
+  outline: none;
+  border-radius: 3px;
+  border:1px solid #005ce6;
+  transition: background-color ease 0.5s; /* Transição suave de cor */
+}
+
+
+#blue-button-nova-senha:hover{
+  background-color: #005ce6;
+  color:#ffffff;
+  opacity: 0.7;
+}
+
+
+#blue-icon-upload{
+margin-left: 36%;
+}
+
+
+#blue-icon-relatorio-produto{
+margin-left: 1%;
+font-size: 9px;  
+}
