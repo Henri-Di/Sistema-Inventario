@@ -65,6 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fornecedor = sanitize($conn, $_POST['Fornecedor'] ?? '');
     $datacadastro = sanitize($conn, $_POST['DataCadastro'] ?? '');
     $datacenterNome = sanitize($conn, $_POST['DataCenter'] ?? '');
+    $grupo = sanitize($conn, $_POST['Grupo'] ?? '');
+    $localizacao = sanitize($conn, $_POST['Localizacao'] ?? '');
 
     // Obter o ID do usuário a partir da sessão
     $idUsuario = $_SESSION['usuarioId'] ?? '';
@@ -99,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário
     if (strtoupper($datacenterUsuario) !== strtoupper($datacenterNome)) {
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreateDatacenter.php?erro=O datacenter do usuário não corresponde ao datacenter do formulário");
+        header("Location: ../ViewFail/FailCreateProdutoDatacenterIncorreto.php?erro=Você não pode cadastrar um produto que seja de outro datacenter");
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -112,6 +114,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idModelo = getIdOrInsert($conn, 'MODELO', 'MODELO', 'IDMODELO', strtoupper($modelo));
         $idFornecedor = getIdOrInsert($conn, 'FORNECEDOR', 'FORNECEDOR', 'IDFORNECEDOR', strtoupper($fornecedor));
         $idDataCenter = getIdOrInsert($conn, 'DATACENTER', 'NOME', 'IDDATACENTER', strtoupper($datacenterNome));
+        $idGrupo = getIdOrInsert($conn, 'GRUPO', 'GRUPO', 'IDGRUPO', strtoupper($grupo));
+        $idLocalizacao = getIdOrInsert($conn, 'LOCALIZACAO', 'LOCALIZACAO', 'IDLOCALIZACAO', strtoupper($localizacao));
 
         // Verificar se um produto com os mesmos detalhes já existe no mesmo datacenter
         $check_sql = "SELECT p.* FROM PRODUTO p
@@ -120,7 +124,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       AND p.IDMETRAGEM = '$idMetragem'
                       AND p.IDMODELO = '$idModelo'
                       AND p.IDFORNECEDOR = '$idFornecedor'
-                      AND p.IDDATACENTER = '$idDataCenter'";
+                      AND p.IDDATACENTER = '$idDataCenter'
+                      AND p.IDGRUPO = '$idGrupo'
+                      AND p.IDLOCALIZACAO = '$idLocalizacao'";
         $result = mysqli_query($conn, $check_sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -129,8 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit(); // Termina a execução do script após redirecionamento
         } else {
             // Inserir dados na tabela PRODUTO
-            $sqlInsertProduto = "INSERT INTO PRODUTO (IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, DATACADASTRO, IDDATACENTER) 
-                                 VALUES ('$idMaterial', '$idConector', '$idMetragem', '$idModelo', '$idFornecedor', '$datacadastro', '$idDataCenter')";
+            $sqlInsertProduto = "INSERT INTO PRODUTO (IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, DATACADASTRO, IDDATACENTER, IDGRUPO, IDLOCALIZACAO) 
+                                 VALUES ('$idMaterial', '$idConector', '$idMetragem', '$idModelo', '$idFornecedor', '$datacadastro', '$idDataCenter', '$idGrupo', '$idLocalizacao')";
             if (!mysqli_query($conn, $sqlInsertProduto)) {
                 header("Location: ../ViewFail/FailCreateInserirDadosProduto.php?erro=Não foi possível inserir os dados na tabela PRODUTO");
                 exit();

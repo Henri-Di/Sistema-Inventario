@@ -7,6 +7,7 @@
 /* Estilo de fundo para o corpo da página */
 body {
   background-color: #ffffff;
+
 }
 
 /* Estilo de fundo para um menu lateral escondido em telas pequenas */
@@ -203,6 +204,24 @@ img {
   color: #005ce6; /* Cor do texto */
   cursor: context-menu; /* Cursor de contexto */
   text-align: center; /* Centraliza o texto */
+  position: relative; /* Necessário para o uso do pseudo-elemento */
+  z-index: 1; /* Garante que o conteúdo esteja na frente */
+}
+
+.well::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../Images/IconCaixa.png'); /* Substitua pelo caminho da sua imagem */
+  background-size: 50%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
+  background-position: center; /* Centraliza a imagem */
+  background-repeat: no-repeat; /* Evita repetição da imagem */
+  opacity: 0.2; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
+  z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
+  pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
 }
 
 /* Container para formulários com largura máxima de 100% */
@@ -553,7 +572,7 @@ img {
   
 /* Efeito hover para a linha das tabelas com efeito de hover */
 #line-blue-table-hover:hover {
-  background-color: #ffcccc; /* Cor de fundo ao passar o mouse */
+  background-color: #b3d9ff; /* Cor de fundo ao passar o mouse */
 }
   
 /* Estilo para a coluna das tabelas de formulários */

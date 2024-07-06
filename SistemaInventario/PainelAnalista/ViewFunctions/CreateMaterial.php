@@ -10,8 +10,8 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
-// Converter o valor do material para letras maiúsculas
-$material = strtoupper($material);
+// Converter o valor do material para letras maiúsculas, lidando com caracteres acentuados
+$material = mb_strtoupper($material, 'UTF-8');
 
 // Sanitizar os dados de entrada para evitar injeção de SQL
 $material = $conn->real_escape_string($material);

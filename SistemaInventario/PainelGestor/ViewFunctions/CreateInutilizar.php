@@ -32,10 +32,10 @@ $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 $operacao = "Inutilizar";
 $situacao = "Inutilizado";
 
-// Converter observação, operação e situação para letras maiúsculas
-$observacao = strtoupper($observacao);
-$operacao = strtoupper($operacao);
-$situacao = strtoupper($situacao);
+// Converter observação, operação e situação para letras maiúsculas usando mb_strtoupper
+$observacao = mb_strtoupper($observacao, 'UTF-8');
+$operacao = mb_strtoupper($operacao, 'UTF-8');
+$situacao = mb_strtoupper($situacao, 'UTF-8');
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {

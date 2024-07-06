@@ -80,9 +80,9 @@ try {
 
     // Inserir dados na tabela SOBREPOR usando prepared statement
     $sqlInsertSobrepor = "INSERT INTO SOBREPOR (QUANTIDADE, DATASOBREPOR, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
-                          VALUES (?, ?, ?, UPPER(?), UPPER(?), ?, ?, UPPER(?), ?)";
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sqlInsertSobrepor);
-    $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
+    $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, strtoupper($operacao), strtoupper($situacao), $idProduto, $idUsuario, strtoupper($nomeUsuario), $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosSobrepor.php?erro=Não foi possível inserir os dados na tabela SOBREPOR. Informe o departamento de TI");
@@ -90,7 +90,7 @@ try {
     }
 
     // Atualizar a tabela ESTOQUE com a quantidade sobreposta
-    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = UPPER(?) WHERE IDPRODUTO = ?";
+    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = ? WHERE IDPRODUTO = ?";
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
     $stmtUpdate->bind_param("si", $quantidadeSobrepor, $idProduto);
 

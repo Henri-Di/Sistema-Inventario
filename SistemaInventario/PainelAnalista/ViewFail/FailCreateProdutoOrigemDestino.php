@@ -222,7 +222,7 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
@@ -778,6 +778,78 @@ $dateformated = date("d/m/Y", $date);
 
 
 
+    <!-- Formulário para cadastrar Fornecedor -->
+    <form method="POST" action="../ViewFunctions/CreateGrupo.php">
+    
+    
+    
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Grupo" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
+    <!-- Formulário para cadastrar Fornecedor -->
+    <form method="POST" action="../ViewFunctions/CreateLocalizacao.php">
+    
+    
+    
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Localizacao" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
     </tr>
     
 
@@ -1054,6 +1126,64 @@ $dateformated = date("d/m/Y", $date);
     </td>
 
 
+    <!-- Coluna 8: Grupo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Grupo">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM GRUPO ORDER BY IDGRUPO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['GRUPO'] . '">' . $dado['GRUPO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
 
     </tr>
 
@@ -1197,6 +1327,64 @@ $dateformated = date("d/m/Y", $date);
 
 
     <option id="select-option-form" value="DTC">DTC</option>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+    <!-- Coluna 12: Localização -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Localizacao">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM LOCALIZACAO ORDER BY IDLOCALIZACAO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['LOCALIZACAO'] . '">' . $dado['LOCALIZACAO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
     
 
 
@@ -1541,6 +1729,64 @@ $dateformated = date("d/m/Y", $date);
 
 
     </td>
+
+
+    <!-- Coluna 7: Grupo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Grupo">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM GRUPO ORDER BY IDGRUPO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['GRUPO'] . '">' . $dado['GRUPO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
     
 
 
@@ -1762,6 +2008,65 @@ $dateformated = date("d/m/Y", $date);
 
 
     </div>
+
+
+
+    <!-- Coluna 6: Modelo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Localizao">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM LOCALIZACAO ORDER BY IDLOCALIZACAO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['LOCALIZACAO'] . '">' . $dado['LOCALIZACAO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
     
 
 
@@ -1785,240 +2090,7 @@ $dateformated = date("d/m/Y", $date);
     </form>
 
 
-    <!-- Título da seção de cadastro de produto -->
-    <div id="blue-line-title-btn-painel">
     
-
-
-    <p id="blue-title-btn-painel">Cadastro de Usuário  <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
-    
-
-
-    </div>
-
-
-
-    <br>
-
-
-    
-    <!-- Tabela para formulário de cadastro -->
-    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
-    
-
-
-    <form method="POST" action="../ViewFunctions/CreateNovoUsuario.php">
-    
-
-
-    <!-- Linha da tabela -->
-    <tr id="line-blue-table">
-    
-
-
-    <!-- Coluna 1 -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Nome Usuário
-    
-
-
-    </div>
-    
-
-
-    <input type="text" id="blue-input-cdst" name="NomeUsuario" value="" autocomplete="off" required />
-    
-
-
-    </td>
-
-
-
-
-    <!-- Coluna 2 -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Código Usuário
-    
-
-
-    </div>
-    
-
-
-    <input type="text" id="blue-input-cdst" name="CodigoUsuario" value="" autocomplete="off" required />
-    
-
-
-    </td>
-
-
-
-    <!-- Coluna 3: Material -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Senha
-    
-
-
-    </div>
-    
-
-
-    <input type="password" id="blue-input-cdst" name="SenhaUsuario" value="" autocomplete="off" required />
-    
-
-
-    </td>
-
-
-
-    <!-- Coluna 4: Conector -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-    
-    E-mail 
-    
-
-
-    </div>
-    
-
-    <input type="text" id="blue-input-cdst" name="EmailUsuario" value="" autocomplete="off" required />
-    
-    
-
-
-    </td>
-
-
-    <!-- Coluna 5: Metragem -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-   DataCenter
-    
-
-
-    </div>
-    
-
-
-    <select id="select-form" name="DataCenter">
-    
-
-
-    <option value="CTC">CTC</option>
-
-
-
-    <option value="DTC">DTC</option>
-
-
-
-    </select>
-    
-
-
-    </td>
-
-
-
-    <!-- Coluna 5: Metragem -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Nivel de Acesso
-    
-
-
-    </div>
-    
-
-
-    <select id="select-form" name="NiveldeAcesso">
-    
-
-
-    <option value="1">Gestor</option>
-
-
-
-    <option value="2">Preposto</option>
-
-
-
-    <option value="3">Analista</option>
-
-
-
-    <option value="4">Técnico</option>
-
-
-
-    </select>
-    
-
-
-    </td>
-    
-
-
-    </td>
-    
-
-
-    </tr>
-
-
-
-    </table>
-
-
-
-    <!-- Botão de submit -->
-    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></button>
-    
-
-
-    </form>
-
-
-
     <!-- Início do container footer-page -->
     <div class="container-fluid" id="footer-page">
     
@@ -2048,7 +2120,7 @@ $dateformated = date("d/m/Y", $date);
         </g>
     </svg>
     </div>
-    
+
 
     
     </div>
@@ -2097,3 +2169,5 @@ $dateformated = date("d/m/Y", $date);
 
     </html>
     <!-- Fim do HTML page -->
+
+

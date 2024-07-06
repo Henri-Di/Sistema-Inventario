@@ -16,8 +16,8 @@ $metragem = $conn->real_escape_string($metragem);
 // Converter a metragem para letras maiúsculas
 $metragem = strtoupper($metragem);
 
-// Construir a consulta SQL para verificar duplicidade
-$sql_check = "SELECT * FROM METRAGEM WHERE METRAGEM = '$metragem'";
+// Construir a consulta SQL para verificar duplicidade (insensível a maiúsculas e minúsculas)
+$sql_check = "SELECT * FROM METRAGEM WHERE UPPER(METRAGEM) = '$metragem'";
 $result = $conn->query($sql_check);
 
 if ($result->num_rows > 0) {

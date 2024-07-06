@@ -500,35 +500,41 @@ $dateformated = date("d/m/Y", $date);
 
     // Preparar a consulta SQL usando prepared statement
     $consulta = "SELECT 
-                p.IDPRODUTO, 
-                m.MATERIAL, 
-                c.CONECTOR, 
-                mt.METRAGEM, 
-                mo.MODELO, 
-                f.FORNECEDOR, 
-                p.DATACADASTRO, 
-                d.NOME AS DATACENTER, 
-                e.QUANTIDADE
-            FROM 
-                PRODUTO p
-            INNER JOIN 
-                ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
-            INNER JOIN 
-                DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
-            INNER JOIN 
-                MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
-            INNER JOIN 
-                CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
-            INNER JOIN 
-                METRAGEM mt ON p.IDMETRAGEM = mt.IDMETRAGEM
-            INNER JOIN 
-                MODELO mo ON p.IDMODELO = mo.IDMODELO
-            INNER JOIN 
-                FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
-            WHERE 
-                p.IDPRODUTO = ?
-            ORDER BY 
-                p.IDPRODUTO";
+                    p.IDPRODUTO, 
+                    m.MATERIAL, 
+                    c.CONECTOR, 
+                    mt.METRAGEM, 
+                    mo.MODELO, 
+                    f.FORNECEDOR, 
+                    p.DATACADASTRO, 
+                    d.NOME AS DATACENTER, 
+                    e.QUANTIDADE,
+                    g.GRUPO,
+                    l.LOCALIZACAO
+                FROM 
+                    PRODUTO p
+                INNER JOIN 
+                    ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
+                INNER JOIN 
+                    DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
+                INNER JOIN 
+                    MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
+                INNER JOIN 
+                    CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
+                INNER JOIN 
+                    METRAGEM mt ON p.IDMETRAGEM = mt.IDMETRAGEM
+                INNER JOIN 
+                    MODELO mo ON p.IDMODELO = mo.IDMODELO
+                INNER JOIN 
+                    FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
+                INNER JOIN 
+                    GRUPO g ON p.IDGRUPO = g.IDGRUPO
+                INNER JOIN 
+                    LOCALIZACAO l ON p.IDLOCALIZACAO = l.IDLOCALIZACAO
+                WHERE 
+                    p.IDPRODUTO = ?
+                ORDER BY 
+                    p.IDPRODUTO";
 
     // Inicializar o statement
     $stmt = $conn->prepare($consulta);
@@ -554,27 +560,22 @@ $dateformated = date("d/m/Y", $date);
 
     <!-- Start código PHP para repetição de listagem -->
     <?php while($dado = $resultado->fetch_assoc()) { ?>
+    
 
 
-   <!-- Start código PHP para conversão da data, para modelo brasileiro -->
-   <?php 
+    <?php
+    $date = strtotime($dado['DATACADASTRO']);
+    // $data agora é uma inteiro timestamp
+
+
+
+    $dateformated = date("d/m/Y", $date);
+    // date() formatou o $date para d/m/Y
    
 
 
-   $date = strtotime($dado['DATACADASTRO']);
-   // $data agora é uma inteiro timestamp
-
-
-
-   $dateformated = date("d/m/Y", $date);
-   // date() formatou o $date para d/m/Y
-   
-
-
-   ?>
-   <!-- End código PHP para conversão da data, para modelo brasileiro -->
-
-
+    ?>
+    <!-- End código PHP para conversão da data, para modelo brasileiro -->
 
 
     <br>
@@ -765,6 +766,31 @@ $dateformated = date("d/m/Y", $date);
     </td>
 
 
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Grupo
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Fornecedor" value="<?php echo $dado['GRUPO'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
     <td id="colun-blue-table">
     
 
@@ -808,6 +834,30 @@ $dateformated = date("d/m/Y", $date);
 
 
     <input type="text" id="blue-input-cdst" name="DataCenter" value="<?php echo $dado['DATACENTER'];?>" autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Localização
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <input type="text" id="blue-input-cdst" name="DataCenter" value="<?php echo $dado['LOCALIZACAO'];?>" autocomplete="off" required disabled /><br>
 
 
 

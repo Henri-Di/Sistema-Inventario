@@ -60,7 +60,7 @@ function processarUploadArquivo($file) {
     return $uploadFilePath;
 }
 
-function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath) {
+function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $grupo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath, $localizacao) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -70,7 +70,7 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
     try {
         if (notaFiscalExiste($conn, $numNotaFiscal)) {
             $conn->rollback();
-            header("Location: ../ViewFail/FailCreateNotaFiscalExistente.php?erro=Não foi possivel realizar o cadastro. Está nota fiscal já cadastrada no sistema");
+            header("Location: ../ViewFail/FailCreateNotaFiscalExistente.php?erro=Não foi possível realizar o cadastro. Esta nota fiscal já está cadastrada no sistema");
             exit();
         }
 
@@ -91,22 +91,51 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
         }
 
         $idMaterial = recuperarIdMaterial($conn, $material);
-        $idConector = recuperarIdConector($conn, $conector);
-        $idMetragem = recuperarIdMetragem($conn, $metragem);
-        $idModelo = recuperarIdModelo($conn, $modelo);
-        $idFornecedor = recuperarIdFornecedor($conn, $fornecedor);
+        if (!$idMaterial) {
+            $idMaterial = cadastrarNovoMaterial($conn, $material);
+        }
 
-        $idProduto = recuperarIdProdutoExistente($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter);
+        $idConector = recuperarIdConector($conn, $conector);
+        if (!$idConector) {
+            $idConector = cadastrarNovoConector($conn, $conector);
+        }
+
+        $idMetragem = recuperarIdMetragem($conn, $metragem);
+        if (!$idMetragem) {
+            $idMetragem = cadastrarNovaMetragem($conn, $metragem);
+        }
+
+        $idModelo = recuperarIdModelo($conn, $modelo);
+        if (!$idModelo) {
+            $idModelo = cadastrarNovoModelo($conn, $modelo);
+        }
+
+        $idGrupo = recuperarIdGrupo($conn, $grupo);
+        if (!$idGrupo) {
+            $idGrupo = cadastrarNovoGrupo($conn, $grupo);
+        }
+
+        $idFornecedor = recuperarIdFornecedor($conn, $fornecedor);
+        if (!$idFornecedor) {
+            $idFornecedor = cadastrarNovoFornecedor($conn, $fornecedor);
+        }
+
+        $idLocalizacao = recuperarIdLocalizacao($conn, $localizacao);
+        if (!$idLocalizacao) {
+            $idLocalizacao = cadastrarNovaLocalizacao($conn, $localizacao);
+        }
+
+        $idProduto = recuperarIdProdutoExistente($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter, $idGrupo, $idLocalizacao);
 
         if ($idProduto) {
             atualizarEstoqueExistente($conn, $idProduto, $quantidade);
         } else {
-            $idProduto = cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter);
+            $idProduto = cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter, $idGrupo, $idLocalizacao);
             inserirEstoqueInicial($conn, $idProduto, $quantidade);
         }
 
-        $stmt = $conn->prepare("INSERT INTO NOTAFISCAL (NUMNOTAFISCAL, VALORNOTAFISCAL, MATERIAL, CONECTOR, METRAGEM, MODELO, QUANTIDADE, FORNECEDOR, DATARECEBIMENTO, DATACADASTRO, DATACENTER, IDPRODUTO, IDDATACENTER, FILEPATH) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssissssiis", $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $idProduto, $idDatacenter, $filePath);
+        $stmt = $conn->prepare("INSERT INTO NOTAFISCAL (NUMNOTAFISCAL, VALORNOTAFISCAL, MATERIAL, CONECTOR, METRAGEM, MODELO, GRUPO, QUANTIDADE, FORNECEDOR, DATARECEBIMENTO, DATACADASTRO, DATACENTER, IDPRODUTO, IDDATACENTER, FILEPATH, LOCALIZACAO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssssssssiiss", $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $grupo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $idProduto, $idDatacenter, $filePath, $localizacao);
         $stmt->execute();
         $stmt->close();
 
@@ -115,7 +144,7 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
         exit();
     } catch (Exception $e) {
         $conn->rollback();
-        header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Não foi possivel realizar o cadastro da nota fiscal. A operação será desfeita. Tente novamente");
+        header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Não foi possível realizar o cadastro da nota fiscal. A operação será desfeita. Tente novamente");
         exit();
     }
 }
@@ -152,12 +181,32 @@ function recuperarIdMaterial($conn, $material) {
     return $idMaterial;
 }
 
+function cadastrarNovoMaterial($conn, $material) {
+    $stmt = $conn->prepare("INSERT INTO MATERIAL (MATERIAL) VALUES (?)");
+    $stmt->bind_param("s", $material);
+    $stmt->execute();
+    $idMaterial = $stmt->insert_id;
+    $stmt->close();
+
+    return $idMaterial;
+}
+
 function recuperarIdConector($conn, $conector) {
     $stmt = $conn->prepare("SELECT IDCONECTOR FROM CONECTOR WHERE CONECTOR = ?");
     $stmt->bind_param("s", $conector);
     $stmt->execute();
     $stmt->bind_result($idConector);
     $stmt->fetch();
+    $stmt->close();
+
+    return $idConector;
+}
+
+function cadastrarNovoConector($conn, $conector) {
+    $stmt = $conn->prepare("INSERT INTO CONECTOR (CONECTOR) VALUES (?)");
+    $stmt->bind_param("s", $conector);
+    $stmt->execute();
+    $idConector = $stmt->insert_id;
     $stmt->close();
 
     return $idConector;
@@ -174,6 +223,16 @@ function recuperarIdMetragem($conn, $metragem) {
     return $idMetragem;
 }
 
+function cadastrarNovaMetragem($conn, $metragem) {
+    $stmt = $conn->prepare("INSERT INTO METRAGEM (METRAGEM) VALUES (?)");
+    $stmt->bind_param("s", $metragem);
+    $stmt->execute();
+    $idMetragem = $stmt->insert_id;
+    $stmt->close();
+
+    return $idMetragem;
+}
+
 function recuperarIdModelo($conn, $modelo) {
     $stmt = $conn->prepare("SELECT IDMODELO FROM MODELO WHERE MODELO = ?");
     $stmt->bind_param("s", $modelo);
@@ -183,6 +242,37 @@ function recuperarIdModelo($conn, $modelo) {
     $stmt->close();
 
     return $idModelo;
+}
+
+function cadastrarNovoModelo($conn, $modelo) {
+    $stmt = $conn->prepare("INSERT INTO MODELO (MODELO) VALUES (?)");
+    $stmt->bind_param("s", $modelo);
+    $stmt->execute();
+    $idModelo = $stmt->insert_id;
+    $stmt->close();
+
+    return $idModelo;
+}
+
+function recuperarIdGrupo($conn, $grupo) {
+    $stmt = $conn->prepare("SELECT IDGRUPO FROM GRUPO WHERE GRUPO = ?");
+    $stmt->bind_param("s", $grupo);
+    $stmt->execute();
+    $stmt->bind_result($idGrupo);
+    $stmt->fetch();
+    $stmt->close();
+
+    return $idGrupo;
+}
+
+function cadastrarNovoGrupo($conn, $grupo) {
+    $stmt = $conn->prepare("INSERT INTO GRUPO (GRUPO) VALUES (?)");
+    $stmt->bind_param("s", $grupo);
+    $stmt->execute();
+    $idGrupo = $stmt->insert_id;
+    $stmt->close();
+
+    return $idGrupo;
 }
 
 function recuperarIdFornecedor($conn, $fornecedor) {
@@ -196,21 +286,56 @@ function recuperarIdFornecedor($conn, $fornecedor) {
     return $idFornecedor;
 }
 
-function cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter) {
-    $stmt = $conn->prepare("INSERT INTO PRODUTO (IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, DATACADASTRO, IDDATACENTER) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iiiiisi", $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter);
+function cadastrarNovoFornecedor($conn, $fornecedor) {
+    $stmt = $conn->prepare("INSERT INTO FORNECEDOR (FORNECEDOR) VALUES (?)");
+    $stmt->bind_param("s", $fornecedor);
     $stmt->execute();
-    $idProduto = $stmt->insert_id;
+    $idFornecedor = $stmt->insert_id;
+    $stmt->close();
+
+    return $idFornecedor;
+}
+
+function recuperarIdLocalizacao($conn, $localizacao) {
+    $stmt = $conn->prepare("SELECT IDLOCALIZACAO FROM LOCALIZACAO WHERE LOCALIZACAO = ?");
+    $stmt->bind_param("s", $localizacao);
+    $stmt->execute();
+    $stmt->bind_result($idLocalizacao);
+    $stmt->fetch();
+    $stmt->close();
+
+    return $idLocalizacao;
+}
+
+function cadastrarNovaLocalizacao($conn, $localizacao) {
+    $stmt = $conn->prepare("INSERT INTO LOCALIZACAO (LOCALIZACAO) VALUES (?)");
+    $stmt->bind_param("s", $localizacao);
+    $stmt->execute();
+    $idLocalizacao = $stmt->insert_id;
+    $stmt->close();
+
+    return $idLocalizacao;
+}
+
+function recuperarIdProdutoExistente($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter, $idGrupo, $idLocalizacao) {
+    $stmt = $conn->prepare("SELECT IDPRODUTO FROM PRODUTO WHERE IDMATERIAL = ? AND IDCONECTOR = ? AND IDMETRAGEM = ? AND IDMODELO = ? AND IDFORNECEDOR = ? AND IDDATACENTER = ? AND IDGRUPO = ? AND IDLOCALIZACAO = ?");
+    $stmt->bind_param("iiiiiiii", $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter, $idGrupo, $idLocalizacao);
+    $stmt->execute();
+    $stmt->bind_result($idProduto);
+    $stmt->fetch();
     $stmt->close();
 
     return $idProduto;
 }
 
-function inserirEstoqueInicial($conn, $idProduto, $quantidade) {
-    $stmt = $conn->prepare("INSERT INTO ESTOQUE (IDPRODUTO, QUANTIDADE) VALUES (?, ?)");
-    $stmt->bind_param("ii", $idProduto, $quantidade);
+function cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter, $idGrupo, $idLocalizacao) {
+    $stmt = $conn->prepare("INSERT INTO PRODUTO (IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, DATACADASTRO, IDDATACENTER, IDGRUPO, IDLOCALIZACAO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("iiiiisiii", $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter, $idGrupo, $idLocalizacao);
     $stmt->execute();
+    $idProduto = $stmt->insert_id;
     $stmt->close();
+
+    return $idProduto;
 }
 
 function atualizarEstoqueExistente($conn, $idProduto, $quantidade) {
@@ -220,22 +345,34 @@ function atualizarEstoqueExistente($conn, $idProduto, $quantidade) {
     $stmt->close();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $numNotaFiscal = sanitize($conn, strtoupper($_POST['numNotaFiscal']));
-    $valorNotaFiscal = sanitize($conn, strtoupper($_POST['valorNotaFiscal']));
-    $material = sanitize($conn, strtoupper($_POST['material']));
-    $conector = sanitize($conn, strtoupper($_POST['conector']));
-    $metragem = sanitize($conn, strtoupper($_POST['metragem']));
-    $modelo = sanitize($conn, strtoupper($_POST['modelo']));
-    $quantidade = (int) sanitize($conn, $_POST['quantidade']);
-    $fornecedor = sanitize($conn, strtoupper($_POST['fornecedor']));
-    $dataRecebimento = sanitize($conn, $_POST['dataRecebimento']);
-    $dataCadastro = sanitize($conn, $_POST['dataCadastro']);
-    $dataCenter = sanitize($conn, strtoupper($_POST['dataCenter']));
-    $file = $_FILES['file'];
+function inserirEstoqueInicial($conn, $idProduto, $quantidade) {
+    $stmt = $conn->prepare("INSERT INTO ESTOQUE (IDPRODUTO, QUANTIDADE) VALUES (?, ?)");
+    $stmt->bind_param("ii", $idProduto, $quantidade);
+    $stmt->execute();
+    $stmt->close();
+}
 
-    $filePath = processarUploadArquivo($file);
+// Receber dados do formulário
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $numNotaFiscal = sanitize($conn, $_POST['NumNotaFiscal']);
+    $valorNotaFiscal = sanitize($conn, $_POST['ValorNotaFiscal']);
+    $material = sanitize($conn, $_POST['Material']);
+    $conector = sanitize($conn, $_POST['Conector']);
+    $metragem = sanitize($conn, $_POST['Metragem']);
+    $modelo = sanitize($conn, $_POST['Modelo']);
+    $grupo = sanitize($conn, $_POST['Grupo']);
+    $quantidade = sanitize($conn, $_POST['Quantidade']);
+    $fornecedor = sanitize($conn, $_POST['Fornecedor']);
+    $dataRecebimento = sanitize($conn, $_POST['DataRecebimento']);
+    $dataCadastro = date('Y-m-d');
+    $dataCenter = sanitize($conn, $_POST['DataCenter']);
+    $localizacao = sanitize($conn, $_POST['Localizacao']);
 
-    cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath);
+    $filePath = processarUploadArquivo($_FILES['NotaFiscalFile']);
+
+    cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $grupo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath, $localizacao);
+} else {
+    header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Ocorreu um erro ao processar o formulário. Tente novamente");
+    exit();
 }
 ?>

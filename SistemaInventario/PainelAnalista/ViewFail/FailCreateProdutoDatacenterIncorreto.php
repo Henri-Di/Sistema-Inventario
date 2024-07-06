@@ -222,7 +222,7 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
@@ -574,8 +574,8 @@ $dateformated = date("d/m/Y", $date);
 </div>
 
     
-    <!-- Título da seção de cadastros auxiliares -->
-    <div id="blue-line-title-btn-painel">
+   <!-- Título da seção de cadastros auxiliares -->
+   <div id="blue-line-title-btn-painel">
     
 
 
@@ -1788,240 +1788,7 @@ $dateformated = date("d/m/Y", $date);
     </form>
 
 
-    <!-- Título da seção de cadastro de produto -->
-    <div id="blue-line-title-btn-painel">
     
-
-
-    <p id="blue-title-btn-painel">Cadastro de Usuário  <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
-    
-
-
-    </div>
-
-
-
-    <br>
-
-
-    
-    <!-- Tabela para formulário de cadastro -->
-    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
-    
-
-
-    <form method="POST" action="../ViewFunctions/CreateNovoUsuario.php">
-    
-
-
-    <!-- Linha da tabela -->
-    <tr id="line-blue-table">
-    
-
-
-    <!-- Coluna 1 -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Nome Usuário
-    
-
-
-    </div>
-    
-
-
-    <input type="text" id="blue-input-cdst" name="NomeUsuario" value="" autocomplete="off" required />
-    
-
-
-    </td>
-
-
-
-
-    <!-- Coluna 2 -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Código Usuário
-    
-
-
-    </div>
-    
-
-
-    <input type="text" id="blue-input-cdst" name="CodigoUsuario" value="" autocomplete="off" required />
-    
-
-
-    </td>
-
-
-
-    <!-- Coluna 3: Material -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Senha
-    
-
-
-    </div>
-    
-
-
-    <input type="password" id="blue-input-cdst" name="SenhaUsuario" value="" autocomplete="off" required />
-    
-
-
-    </td>
-
-
-
-    <!-- Coluna 4: Conector -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-    
-    E-mail 
-    
-
-
-    </div>
-    
-
-    <input type="text" id="blue-input-cdst" name="EmailUsuario" value="" autocomplete="off" required />
-    
-    
-
-
-    </td>
-
-
-    <!-- Coluna 5: Metragem -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-   DataCenter
-    
-
-
-    </div>
-    
-
-
-    <select id="select-form" name="DataCenter">
-    
-
-
-    <option value="CTC">CTC</option>
-
-
-
-    <option value="DTC">DTC</option>
-
-
-
-    </select>
-    
-
-
-    </td>
-
-
-
-    <!-- Coluna 5: Metragem -->
-    <td id="colun-blue-table">
-    
-
-
-    <div id="blue-title-listar">
-    
-
-
-    Nivel de Acesso
-    
-
-
-    </div>
-    
-
-
-    <select id="select-form" name="NiveldeAcesso">
-    
-
-
-    <option value="1">Gestor</option>
-
-
-
-    <option value="2">Preposto</option>
-
-
-
-    <option value="3">Analista</option>
-
-
-
-    <option value="4">Técnico</option>
-
-
-
-    </select>
-    
-
-
-    </td>
-    
-
-
-    </td>
-    
-
-
-    </tr>
-
-
-
-    </table>
-
-
-
-    <!-- Botão de submit -->
-    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></button>
-    
-
-
-    </form>
-
-
-
     <!-- Início do container footer-page -->
     <div class="container-fluid" id="footer-page">
     
@@ -2051,7 +1818,7 @@ $dateformated = date("d/m/Y", $date);
         </g>
     </svg>
     </div>
-    
+
 
     
     </div>

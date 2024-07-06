@@ -95,7 +95,7 @@ try {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmtInsert = $conn->prepare($sqlInsertSubtracao);
-    $stmtInsert->bind_param("sisssssiss", strtoupper($numwo), $quantidadeSubtracao, $dataSubtracao, strtoupper($observacao), strtoupper($operacao), strtoupper($situacao), $idProduto, $idUsuario, strtoupper($nomeUsuario), strtoupper($codigoPUsuario));
+    $stmtInsert->bind_param("sisssssiss", mb_strtoupper($numwo, 'UTF-8'), $quantidadeSubtracao, $dataSubtracao, mb_strtoupper($observacao, 'UTF-8'), mb_strtoupper($operacao, 'UTF-8'), mb_strtoupper($situacao, 'UTF-8'), $idProduto, $idUsuario, mb_strtoupper($nomeUsuario, 'UTF-8'), mb_strtoupper($codigoPUsuario, 'UTF-8'));
     
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosSubtracao.php?erro=Não foi possível inserir os dados na tabela SUBTRACAO. Informe o departamento de TI");

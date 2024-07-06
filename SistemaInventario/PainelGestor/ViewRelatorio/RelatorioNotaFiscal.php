@@ -272,7 +272,7 @@
     
 
 
-    <button id="blue-btn-sign-out" onclick="window.location.href='SairSistema.php';"><i class="fa fa-sign-out"></i></button>
+    <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
 
     
 
@@ -803,7 +803,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <a id="blue-optios-config-dados" href='../ViewForms/CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'><i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;" ></i></a>
+    <a id="blue-optios-config-dados" href='../ViewFunctions/CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'><i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;" ></i></a>
 
     
 

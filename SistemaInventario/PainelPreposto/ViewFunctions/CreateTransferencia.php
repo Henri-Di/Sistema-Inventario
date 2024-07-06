@@ -15,7 +15,7 @@ $idProdutoOrigem = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 $quantidadeTransferencia = filter_input(INPUT_POST, 'QuantidadeTransferencia', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 $dataTransferencia = filter_input(INPUT_POST, 'DataTransferencia', FILTER_SANITIZE_STRING);
 $idDataCenterDestino = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_STRING);
-$observacao = strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING)); // Convertendo para maiúsculas
+$observacao = mb_strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING), 'UTF-8'); // Convertendo para maiúsculas com suporte a UTF-8
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];

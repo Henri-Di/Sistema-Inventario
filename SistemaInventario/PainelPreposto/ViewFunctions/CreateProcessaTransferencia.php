@@ -72,7 +72,7 @@ try {
         // Atualizar a situação da transferência para 'RECEBIDO'
         $sqlUpdateAceitar = "UPDATE TRANSFERENCIA SET SITUACAO = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdateAceitar);
-        $situacao = strtoupper('Recebido');
+        $situacao = mb_strtoupper('Recebido', 'UTF-8');
         $stmtUpdate->bind_param("si", $situacao, $idTransferencia);
         $stmtUpdate->execute();
 
@@ -112,7 +112,7 @@ try {
         // Atualizar a situação da transferência para 'RECUSADO'
         $sqlUpdateRecusar = "UPDATE TRANSFERENCIA SET SITUACAO = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdateRecusar);
-        $situacao = strtoupper('Recusado');
+        $situacao = mb_strtoupper('Recusado', 'UTF-8');
         $stmtUpdate->bind_param("si", $situacao, $idTransferencia);
         $stmtUpdate->execute();
 
@@ -156,7 +156,7 @@ try {
     }
 
     // Inserir registro no log de transferência
-    $acaoLog = strtoupper($acao === 'Aceitar' ? 'Recebido' : 'Recusado');
+    $acaoLog = mb_strtoupper($acao === 'Aceitar' ? 'Recebido' : 'Recusado', 'UTF-8');
     $sqlInsertLog = "INSERT INTO TRANSFERENCIA_LOG (IDTRANSFERENCIA, IDUSUARIO, NOME, CODIGOP, ACAO, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO) 
                      VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmtInsertLog = $conn->prepare($sqlInsertLog);

@@ -501,35 +501,41 @@ $dateformated = date("d/m/Y", $date);
 
     // Preparar a consulta SQL usando prepared statement
     $consulta = "SELECT 
-                p.IDPRODUTO, 
-                m.MATERIAL, 
-                c.CONECTOR, 
-                mt.METRAGEM, 
-                mo.MODELO, 
-                f.FORNECEDOR, 
-                p.DATACADASTRO, 
-                d.NOME AS DATACENTER, 
-                e.QUANTIDADE
-            FROM 
-                PRODUTO p
-            INNER JOIN 
-                ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
-            INNER JOIN 
-                DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
-            INNER JOIN 
-                MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
-            INNER JOIN 
-                CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
-            INNER JOIN 
-                METRAGEM mt ON p.IDMETRAGEM = mt.IDMETRAGEM
-            INNER JOIN 
-                MODELO mo ON p.IDMODELO = mo.IDMODELO
-            INNER JOIN 
-                FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
-            WHERE 
-                p.IDPRODUTO = ?
-            ORDER BY 
-                p.IDPRODUTO";
+                    p.IDPRODUTO, 
+                    m.MATERIAL, 
+                    c.CONECTOR, 
+                    mt.METRAGEM, 
+                    mo.MODELO, 
+                    f.FORNECEDOR, 
+                    p.DATACADASTRO, 
+                    d.NOME AS DATACENTER, 
+                    e.QUANTIDADE,
+                    g.GRUPO,
+                    l.LOCALIZACAO
+                FROM 
+                    PRODUTO p
+                INNER JOIN 
+                    ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
+                INNER JOIN 
+                    DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
+                INNER JOIN 
+                    MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
+                INNER JOIN 
+                    CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
+                INNER JOIN 
+                    METRAGEM mt ON p.IDMETRAGEM = mt.IDMETRAGEM
+                INNER JOIN 
+                    MODELO mo ON p.IDMODELO = mo.IDMODELO
+                INNER JOIN 
+                    FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
+                INNER JOIN 
+                    GRUPO g ON p.IDGRUPO = g.IDGRUPO
+                INNER JOIN 
+                    LOCALIZACAO l ON p.IDLOCALIZACAO = l.IDLOCALIZACAO
+                WHERE 
+                    p.IDPRODUTO = ?
+                ORDER BY 
+                    p.IDPRODUTO";
 
     // Inicializar o statement
     $stmt = $conn->prepare($consulta);
@@ -555,6 +561,26 @@ $dateformated = date("d/m/Y", $date);
 
     <!-- Start código PHP para repetição de listagem -->
     <?php while($dado = $resultado->fetch_assoc()) { ?>
+    
+
+
+    <?php
+    $date = strtotime($dado['DATACADASTRO']);
+    // $data agora é uma inteiro timestamp
+
+
+
+    $dateformated = date("d/m/Y", $date);
+    // date() formatou o $date para d/m/Y
+   
+
+
+    ?>
+    <!-- End código PHP para conversão da data, para modelo brasileiro -->
+
+
+    <br>
+
 
 
     <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
@@ -564,7 +590,7 @@ $dateformated = date("d/m/Y", $date);
     <tr id="line-blue-table">
 
 
-    <form method="POST" action="../ViewFunctions/CreateDiminuir.php">
+    <form method="POST" action="CreateReserva.php">
    
 
 
@@ -585,7 +611,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="id" value="<?php echo $dado['IDPRODUTO']?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="id" value="<?php echo $dado['IDPRODUTO'];?>" autocomplete="off" required disabled /><br>
 
 
 
@@ -609,7 +635,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="Material" value="<?php echo $dado['MATERIAL']?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="Material" value="<?php echo $dado['MATERIAL'];?>" autocomplete="off" required disabled /><br>
 
 
 
@@ -634,7 +660,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="Conector" value="<?php echo $dado['CONECTOR'] ?>" autocomplete="off" required  disabled /><br>
+    <input type="text" id="blue-input-cdst" name="Conector" value="<?php echo $dado['CONECTOR'];?>" autocomplete="off" required  disabled /><br>
 
 
 
@@ -659,7 +685,32 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="Metragem" value="<?php echo $dado['METRAGEM']?> " autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="Metragem" value="<?php echo $dado['METRAGEM'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Quantidade
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Quantidade" value="<?php echo $dado['QUANTIDADE'];?> " autocomplete="off" required disabled /><br>
 
 
 
@@ -684,7 +735,81 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="Modelo" value="<?php echo $dado['MODELO']?> " autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="Modelo" value="<?php echo $dado['MODELO'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Fornecedor
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Fornecedor" value="<?php echo $dado['FORNECEDOR'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Grupo
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Fornecedor" value="<?php echo $dado['GRUPO'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Data Cadastro
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="DataCadastro" value="<?php echo $dateformated;?>" autocomplete="off" required disabled /><br>
 
 
 
@@ -709,7 +834,31 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="Fornecedor" value="<?php echo $dado['DATACENTER']?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="DataCenter" value="<?php echo $dado['DATACENTER'];?>" autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Localização
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <input type="text" id="blue-input-cdst" name="DataCenter" value="<?php echo $dado['LOCALIZACAO'];?>" autocomplete="off" required disabled /><br>
 
 
 

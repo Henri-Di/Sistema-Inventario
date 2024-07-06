@@ -1,5 +1,4 @@
 <?php
-
 // Iniciar sessão se necessário
 session_start();
 
@@ -42,7 +41,7 @@ function datasSaoValidas($dataAcrescimo) {
 $idProduto = $_POST['id'] ?? '';
 $quantidadeAcrescimo = $_POST['Acrescimo'] ?? '';
 $dataAcrescimo = $_POST['DataAcrescimo'] ?? '';
-$observacao = strtoupper($_POST['Observacao'] ?? '');
+$observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
 
 if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarData($dataAcrescimo) || !datasSaoValidas($dataAcrescimo)) {
     header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
@@ -51,8 +50,8 @@ if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarDat
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = strtoupper($_SESSION['usuarioNome']);
-$codigoPUsuario = strtoupper($_SESSION['usuarioCodigoP']);
+$nomeUsuario = mb_strtoupper($_SESSION['usuarioNome'], 'UTF-8');
+$codigoPUsuario = mb_strtoupper($_SESSION['usuarioCodigoP'], 'UTF-8');
 
 // Definir valores fixos
 $operacao = "ACRÉSCIMO";

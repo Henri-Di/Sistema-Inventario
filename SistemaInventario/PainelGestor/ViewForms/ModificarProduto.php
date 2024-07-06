@@ -499,26 +499,24 @@ $dateformated = date("d/m/Y", $date);
 
     <?php
     // Conexão e consulta ao banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
+    require_once('../../ViewConnection/ConnectionInventario.php'); 
 
     // Obter o ID do produto da URL e filtrar como número inteiro
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-    // Consulta SQL para obter os dados do produto
+    // Preparar a consulta SQL usando prepared statement
     $consulta = "SELECT 
                     p.IDPRODUTO, 
-                    p.IDMATERIAL, 
-                    p.IDCONECTOR, 
-                    p.IDMETRAGEM, 
-                    p.IDMODELO, 
-                    p.IDFORNECEDOR, 
+                    m.MATERIAL, 
+                    c.CONECTOR, 
+                    mt.METRAGEM, 
+                    mo.MODELO, 
+                    f.FORNECEDOR, 
                     p.DATACADASTRO, 
                     d.NOME AS DATACENTER, 
-                    m.MATERIAL,
-                    c.CONECTOR,
-                    mt.METRAGEM,
-                    mo.MODELO,
-                    f.FORNECEDOR
+                    e.QUANTIDADE,
+                    g.GRUPO,
+                    l.LOCALIZACAO
                 FROM 
                     PRODUTO p
                 INNER JOIN 
@@ -535,6 +533,10 @@ $dateformated = date("d/m/Y", $date);
                     MODELO mo ON p.IDMODELO = mo.IDMODELO
                 INNER JOIN 
                     FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
+                INNER JOIN 
+                    GRUPO g ON p.IDGRUPO = g.IDGRUPO
+                INNER JOIN 
+                    LOCALIZACAO l ON p.IDLOCALIZACAO = l.IDLOCALIZACAO
                 WHERE 
                     p.IDPRODUTO = ?
                 ORDER BY 
@@ -601,7 +603,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="<?php echo $produto['IDMATERIAL']; ?>"><?php echo $produto['MATERIAL']; ?></option>
+    <option id="select-option-form" value="<?php echo $produto['MATERIAL']; ?>"><?php echo $produto['MATERIAL']; ?></option>
     
 
 
@@ -660,7 +662,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="<?php echo $produto['IDCONECTOR']; ?>"><?php echo $produto['CONECTOR']; ?></option>
+    <option id="select-option-form" value="<?php echo $produto['CONECTOR']; ?>"><?php echo $produto['CONECTOR']; ?></option>
     
 
 
@@ -719,7 +721,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="<?php echo $produto['IDMETRAGEM']; ?>"><?php echo $produto['METRAGEM']; ?></option>
+    <option id="select-option-form" value="<?php echo $produto['METRAGEM']; ?>"><?php echo $produto['METRAGEM']; ?></option>
     
 
 
@@ -780,7 +782,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="<?php echo $produto['IDMODELO']; ?>"><?php echo $produto['MODELO']; ?></option>
+    <option id="select-option-form" value="<?php echo $produto['MODELO']; ?>"><?php echo $produto['MODELO']; ?></option>
     
 
 
@@ -800,6 +802,64 @@ $dateformated = date("d/m/Y", $date);
 
 
         echo '<option id="select-option-form" value="' . $row['IDMODELO'] . '">' . $row['MODELO'] . '</option>';
+    
+
+
+    }
+
+
+
+    ?>
+
+
+
+    </select>
+    
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Grupo">
+    
+
+
+    <option id="select-option-form" value="<?php echo $produto['GRUPO']; ?>"><?php echo $produto['GRUPO']; ?></option>
+    
+
+
+    <?php
+
+    // Consulta para listar os modelos
+    $consulta_grupos = "SELECT * FROM GRUPO";
+    
+
+
+    $result_grupos = mysqli_query($conn, $consulta_grupos);
+    
+
+
+    while ($row = mysqli_fetch_array($result_grupos)) {
+        
+
+
+        echo '<option id="select-option-form" value="' . $row['IDGRUPO'] . '">' . $row['GRUPO'] . '</option>';
     
 
 
@@ -839,7 +899,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="<?php echo $produto['IDFORNECEDOR']; ?>"><?php echo $produto['FORNECEDOR']; ?></option>
+    <option id="select-option-form" value="<?php echo $produto['FORNECEDOR']; ?>"><?php echo $produto['FORNECEDOR']; ?></option>
     
 
 
@@ -923,6 +983,64 @@ $dateformated = date("d/m/Y", $date);
 
     <?php } ?>
     
+
+
+    </select>
+    
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Grupo">
+    
+
+
+    <option id="select-option-form" value="<?php echo $produto['LOCALIZACAO']; ?>"><?php echo $produto['LOCALIZACAO']; ?></option>
+    
+
+
+    <?php
+
+    // Consulta para listar os modelos
+    $consulta_grupos = "SELECT * FROM LOCALIZACAO";
+    
+
+
+    $result_grupos = mysqli_query($conn, $consulta_grupos);
+    
+
+
+    while ($row = mysqli_fetch_array($result_grupos)) {
+        
+
+
+        echo '<option id="select-option-form" value="' . $row['IDLOCALIZACAO'] . '">' . $row['LOCALIZACAO'] . '</option>';
+    
+
+
+    }
+
+
+
+    ?>
+
 
 
     </select>

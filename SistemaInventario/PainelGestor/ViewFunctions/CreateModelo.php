@@ -10,11 +10,11 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
+// Converter o modelo para letras maiúsculas, lidando com caracteres acentuados
+$modelo = mb_strtoupper($modelo, 'UTF-8');
+
 // Sanitizar os dados de entrada para evitar injeção de SQL
 $modelo = $conn->real_escape_string($modelo);
-
-// Converter o modelo para letras maiúsculas
-$modelo = strtoupper($modelo);
 
 // Verificar se o modelo já existe na tabela
 $sql_check = "SELECT MODELO FROM MODELO WHERE MODELO = '$modelo'";

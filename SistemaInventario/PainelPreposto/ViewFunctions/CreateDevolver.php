@@ -69,15 +69,21 @@ try {
     }
 
     // Converter os valores para letras maiúsculas
-    $numwo = strtoupper($numwo);
-    $observacao = strtoupper($observacao);
+    $numwo = mb_strtoupper($numwo, 'UTF-8');
+    $observacao = mb_strtoupper($observacao, 'UTF-8');
+    $nomeUsuario = mb_strtoupper($_SESSION['usuarioNome'], 'UTF-8');
+    $codigoPUsuario = mb_strtoupper($_SESSION['usuarioCodigoP'], 'UTF-8');
+
+    // Definir valores fixos
+    $operacao = "DEVOLUÇÃO";
+    $situacao = "DEVOLVIDO";
 
     // Inserir dados na tabela DEVOLVER usando prepared statement
     $sqlInsertDevolucao = "INSERT INTO DEVOLVER (NUMWO, QUANTIDADE, DATADEVOLUCAO, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmtInsert = $conn->prepare($sqlInsertDevolucao);
-    $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeDevolver, $datadevolucao, $observacao, $operacao, $situacao, $idProduto, $_SESSION['usuarioId'], $_SESSION['usuarioNome'], $_SESSION['usuarioCodigoP']);
+    $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeDevolver, $datadevolucao, $observacao, $operacao, $situacao, $idProduto, $_SESSION['usuarioId'], $nomeUsuario, $codigoPUsuario);
     
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosDevolver.php?erro=Não foi possível inserir os dados na tabela DEVOLVER. Informe o departamento de TI");

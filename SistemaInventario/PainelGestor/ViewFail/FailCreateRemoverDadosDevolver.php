@@ -784,6 +784,78 @@ $dateformated = date("d/m/Y", $date);
 
 
 
+    <!-- Formulário para cadastrar Fornecedor -->
+    <form method="POST" action="../ViewFunctions/CreateGrupo.php">
+    
+    
+    
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Grupo" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
+    <!-- Formulário para cadastrar Fornecedor -->
+    <form method="POST" action="../ViewFunctions/CreateLocalizacao.php">
+    
+    
+    
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Localizacao" value="" autocomplete="off" required /><br>
+    
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar">Cadastrar <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </td>
+    
+
+
+    </form>
+
+
     </tr>
     
 
@@ -1060,6 +1132,64 @@ $dateformated = date("d/m/Y", $date);
     </td>
 
 
+    <!-- Coluna 8: Grupo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Grupo">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM GRUPO ORDER BY IDGRUPO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['GRUPO'] . '">' . $dado['GRUPO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
 
     </tr>
 
@@ -1203,6 +1333,64 @@ $dateformated = date("d/m/Y", $date);
 
 
     <option id="select-option-form" value="DTC">DTC</option>
+    
+
+
+    </select>
+    
+
+
+    </td>
+
+
+    <!-- Coluna 12: Localização -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Localizacao">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM LOCALIZACAO ORDER BY IDLOCALIZACAO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['LOCALIZACAO'] . '">' . $dado['LOCALIZACAO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
     
 
 
@@ -1547,6 +1735,64 @@ $dateformated = date("d/m/Y", $date);
 
 
     </td>
+
+
+    <!-- Coluna 7: Grupo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Grupo
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Grupo">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM GRUPO ORDER BY IDGRUPO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['GRUPO'] . '">' . $dado['GRUPO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
     
 
 
@@ -1768,6 +2014,65 @@ $dateformated = date("d/m/Y", $date);
 
 
     </div>
+
+
+
+    <!-- Coluna 6: Modelo -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+
+
+
+    Localização
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="Localizao">
+    
+
+
+    <?php
+   
+   
+
+    // Consulta ao banco de dados para listagem de modelos
+    $consulta = "SELECT * FROM LOCALIZACAO ORDER BY IDLOCALIZACAO";
+    
+
+
+    $con = mysqli_query($conn, $consulta) or die(mysqli_error());
+
+
+
+    // Loop para exibir opções
+    while ($dado = $con->fetch_array()) {
+    
+
+
+    echo '<option id="select-option-form" value="' . $dado['LOCALIZACAO'] . '">' . $dado['LOCALIZACAO'] . '</option>';
+    
+
+
+    }
+    
+
+
+    ?>
+    
+
+
+    </select>
+    
+
+
+    </td>
     
 
 
@@ -2103,3 +2408,5 @@ $dateformated = date("d/m/Y", $date);
 
     </html>
     <!-- Fim do HTML page -->
+
+

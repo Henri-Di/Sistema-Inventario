@@ -10,11 +10,11 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
+// Converter o valor para letras maiúsculas, lidando com caracteres acentuados
+$conector = mb_strtoupper($conector, 'UTF-8');
+
 // Sanitizar os dados de entrada para evitar injeção de SQL
 $conector = $conn->real_escape_string($conector);
-
-// Converter o valor para letras maiúsculas
-$conector = strtoupper($conector);
 
 // Verificar se o conector já existe na tabela
 $sql_check = "SELECT CONECTOR FROM CONECTOR WHERE CONECTOR = '$conector'";
