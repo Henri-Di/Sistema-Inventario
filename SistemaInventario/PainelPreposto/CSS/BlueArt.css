@@ -218,7 +218,7 @@ img {
   background-size: 85%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: center; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  opacity: 0.2; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
+  opacity: 0.3; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
 }

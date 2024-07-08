@@ -149,7 +149,7 @@
 
 
 
-    <div id="blue-line-title-btn-painel"  style="width:47%;margin-left:26%;">
+    <div id="blue-line-title-btn-painel"  style="width:66%;margin-left:17%;">
 
 
 
@@ -161,7 +161,7 @@
     
 
 
-    <div class="container-fluid" style="margin-top:1%;margin-left:25%;">    
+    <div class="container-fluid" style="margin-top:1%;margin-left:16%;">    
     
     <p style="text-align:left;">Confirmo a saída do produto citado abaixo, para realização de transferência entre datacenters.</p>
     
@@ -336,9 +336,34 @@ if ($stmt = $conn->prepare($sql)) {
                     <div id="blue-title-listar">Assinatura Liberação</div>
                     <input type="text" id="blue-input-cdst"  value="" disabled/>
                     </td>
+                    </tr>
+                    
+                    <tr>
+                    <td id="colun-blue-table">
+                    <div id="blue-title-listar">Assinatura Portador</div>
+                    <input type="text" id="blue-input-cdst"  value="" disabled/>
+                    </td>
+
+                    <td id="colun-blue-table">
+                    <div id="blue-title-listar">Assinatura Vigilante</div>
+                    <input type="text" id="blue-input-cdst"  value="" disabled/>
+                    </td>
+
+                    
+                    <td id="colun-blue-table">
+                    <div id="blue-title-listar">Observação</div>
+                    <input type="text" id="blue-input-cdst"  value="" disabled/>
+                    </td>
 
 
-                </tr>
+                    <td id="colun-blue-table">
+                    <div id="blue-title-listar">Operação</div>
+                    <input type="text" id="blue-input-cdst"  value="SAÍDA - TRANSFERÊNCIA" disabled/>
+                    </td>
+
+                    </tr>
+
+
             </table>
 
             <?php 

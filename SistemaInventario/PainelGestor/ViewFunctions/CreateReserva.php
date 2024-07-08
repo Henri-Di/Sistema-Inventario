@@ -56,8 +56,8 @@ $nomeUsuario = $_SESSION['usuarioNome'];
 $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 
 // Definir valores fixos
-$operacao = "Reservar";
-$situacao = "Reservado";
+$operacao = "RESERVAR";
+$situacao = "RESERVADO";
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
@@ -132,3 +132,5 @@ try {
     $conn->close();
 }
 ?>
+
+

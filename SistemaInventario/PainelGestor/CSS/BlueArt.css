@@ -244,10 +244,10 @@ img {
   width: 100%;
   height: 100%;
   background-image: url('../../Images/Caixa.png'); /* Substitua pelo caminho da sua imagem */
-  background-size: 80%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
+  background-size: 50%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: center; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  opacity: 0.1; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
+  opacity: 0.2; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
 }
@@ -892,7 +892,7 @@ img {
   
      /* Estilo para o contêiner da tabela auxiliar de cadastro */
   #blue-table-cadastro-auxiliar-print {
-    width: 65%; /* Largura total */
+    width: 80%; /* Largura total */
     margin-top: -1%; /* Margem superior */
     table-layout: auto; /* Ajustar a largura das células automaticamente */
   }
@@ -1096,31 +1096,32 @@ img {
   margin-left: -1%; /* Ajuste de margem esquerda */
 }
 
-#blue-btn-print{
-  margin-left:0%;
-  width:10%;
-  outline:none;
-  color:#005ce6;
-  border:1px solid #005ce6;
-  background-color:#ffffff;
-  font-size:11px;
-  font-weight:bold;
+/* Estilo para o botão de impressão */
+#blue-btn-print {
+  margin-left: 0%; /* Margem à esquerda */
+  width: 10%; /* Largura do botão */
+  outline: none; /* Remover contorno ao focar */
+  color: #005ce6; /* Cor do texto */
+  border: 1px solid #005ce6; /* Borda sólida */
+  background-color: #ffffff; /* Cor de fundo */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
   transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
 }
 
-
-#blue-btn-print:hover{
-  background-color:#005ce6;
-  color:#ffffff;
-  opacity:0.7;
+/* Estilo de hover para o botão de impressão */
+#blue-btn-print:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do texto ao passar o mouse */
+  opacity: 0.7; /* Opacidade ao passar o mouse */
 }
 
-#btn-blue-print-log-transferencia{
-  background-color:transparent;
-  border:none;
-  font-size: 10px;
-  color:#005ce6;  
-  margin-top:5px;
-  margin-left:30px;
-
+/* Estilo para o botão de impressão de log de transferência */
+#btn-blue-print-log-transferencia {
+  background-color: transparent; /* Cor de fundo transparente */
+  border: none; /* Sem borda */
+  font-size: 10px; /* Tamanho da fonte */
+  color: #005ce6; /* Cor do texto */
+  margin-top: 5px; /* Margem superior */
+  margin-left: 30px; /* Margem à esquerda */
 }
