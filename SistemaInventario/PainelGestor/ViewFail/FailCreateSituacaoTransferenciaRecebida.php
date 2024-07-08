@@ -2283,19 +2283,19 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option value="1">Gestor</option>
+    <option value="Gestor">Gestor</option>
 
 
 
-    <option value="2">Preposto</option>
+    <option value="Preposto">Preposto</option>
 
 
 
-    <option value="3">Analista</option>
+    <option value="Analista">Analista</option>
 
 
 
-    <option value="4">Técnico</option>
+    <option value="Técnico">Técnico</option>
 
 
 

@@ -2099,6 +2099,238 @@ $dateformated = date("d/m/Y", $date);
     </form>
 
 
+    <!-- Título da seção de cadastro de produto -->
+    <div id="blue-line-title-btn-painel">
+    
+
+
+    <p id="blue-title-btn-painel">Cadastro de Usuário  <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
+    
+
+
+    </div>
+
+
+
+    <br>
+
+
+    
+    <!-- Tabela para formulário de cadastro -->
+    <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
+    
+
+
+    <form method="POST" action="../ViewFunctions/CreateNovoUsuario.php">
+    
+
+
+    <!-- Linha da tabela -->
+    <tr id="line-blue-table">
+    
+
+
+    <!-- Coluna 1 -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Nome Usuário
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="NomeUsuario" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+
+    <!-- Coluna 2 -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Código Usuário
+    
+
+
+    </div>
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoUsuario" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 3: Material -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Senha
+    
+
+
+    </div>
+    
+
+
+    <input type="password" id="blue-input-cdst" name="SenhaUsuario" value="" autocomplete="off" required />
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 4: Conector -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+    
+    E-mail 
+    
+
+
+    </div>
+    
+
+    <input type="text" id="blue-input-cdst" name="EmailUsuario" value="" autocomplete="off" required />
+    
+    
+
+
+    </td>
+
+
+    <!-- Coluna 5: Metragem -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+   DataCenter
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="DataCenter">
+    
+
+
+    <option value="CTC">CTC</option>
+
+
+
+    <option value="DTC">DTC</option>
+
+
+
+    </select>
+    
+
+
+    </td>
+
+
+
+    <!-- Coluna 5: Metragem -->
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Nivel de Acesso
+    
+
+
+    </div>
+    
+
+
+    <select id="select-form" name="NiveldeAcesso">
+    
+
+
+    <option value="Gestor">Gestor</option>
+
+
+
+    <option value="Preposto">Preposto</option>
+
+
+
+    <option value="Analista">Analista</option>
+
+
+
+    <option value="Técnico">Técnico</option>
+
+
+
+    </select>
+    
+
+
+    </td>
+    
+
+
+    </td>
+    
+
+
+    </tr>
+
+
+
+    </table>
+
+
+
+    <!-- Botão de submit -->
+    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></button>
+    
+
+
+    </form>
+
     
     <!-- Início do container footer-page -->
     <div class="container-fluid" id="footer-page">
