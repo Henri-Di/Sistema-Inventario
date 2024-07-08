@@ -798,7 +798,7 @@ img {
   }
 
   #blue-table-cadastro-auxiliar td {
-    padding: 5px; /* Espaçamento interno */
+    padding: 5.5px; /* Espaçamento interno */
     overflow: hidden; /* Esconder conteúdo excedente */
     text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
     white-space: nowrap; /* Não quebrar linhas */

@@ -136,7 +136,7 @@
 
 
 	<!-- Title page -->
-    <title>Sistema de Inventário - Relatório Fornecedor</title>	
+    <title>Sistema de Inventário - Relatório Usuário</title>	
     
 
 
@@ -200,22 +200,18 @@
 
 
     <!-- Start container row content -->
-    <div class="row content">
+    <div class="row content"> 
 
 
-
+    
     <!-- Start container col-sm-3 sidenav -->
     <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
-
 
     <!-- Start logo page -->
     <h2 id="logo-blue">Inventário de Material<i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
     <!-- End logo page -->
 
-
-    
     <img src="../../Images/images.png" class="logo">
-
 
     <!-- Start menu-link page -->
     <ul class="nav nav-pills nav-stacked">
@@ -243,12 +239,6 @@
 
     </ul>
     <!-- End menu-link page -->
-    
-
-
-    <br>
-    <!-- End menu-link page -->
-
 
 
     </div>
@@ -284,6 +274,8 @@
     <br>
 
 
+    <br>
+
     
     <style>
     
@@ -302,7 +294,7 @@
 
 
 
-    color: #f0f0f0;
+    color: #ffffff;
     
 
 
@@ -490,7 +482,7 @@ $dateformated = date("d/m/Y", $date);
 
 
     <!-- Start form search material -->
-    <form class="example"  method="POST" action="SearchProduto.php">
+    <form class="example"  method="POST" action="../ViewRelatorio/SearchUsuario.php">
     
 
 
@@ -518,7 +510,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <p id="blue-title-btn-painel">Relatório Metragem <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Relatório Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
 
 
 
@@ -535,28 +527,27 @@ $dateformated = date("d/m/Y", $date);
 
    <?php
 
-    // Conexão e consulta ao banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
+// Consulta para obter todos os dados dos usuários
+$consulta = "
+    SELECT 
+        IDUSUARIO, 
+        NOME, 
+        CODIGOP, 
+        EMAIL, 
+        DATACENTER, 
+        NIVEL_ACESSO
+    FROM 
+        USUARIO
+    ORDER BY 
+        IDUSUARIO";
+
+if ($resultado = $conn->query($consulta)) {
+    if ($resultado->num_rows > 0) {
+        while ($row = $resultado->fetch_assoc()) { ?>
 
 
-    $consulta = "SELECT * FROM MODELO ORDER BY IDMODELO ";
 
-
-
-    $resultado = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
-    
-
-
-    ?>
-
-
-
-    <!-- Start código PHP para repetição de listagem -->
-    <?php while($dado = mysqli_fetch_array($resultado)) { ?>
-
-
-
-    <table  class="table table-bordered" id="blue-table-cadastro-auxiliars">
+    <table  class="table table-bordered" id="blue-table-cadastro-auxiliar">
 
 
 
@@ -572,7 +563,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $dado['IDFORNECEDOR']; ?></p>   
+    <p id="blue-text-table-exibicao"><?php echo $row['IDUSUARIO']; ?></p>   
 
 
 
@@ -584,16 +575,79 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <p id="blue-title-listar-exibicao">Fornecedor</p>
+    <p id="blue-title-listar-exibicao">Nome Analista</p>
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $dado['FORNECEDOR']; ?></p>
+    <p id="blue-text-table-exibicao"><?php echo $row['NOME']; ?></p>
 
 
 
     </td>
 
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">Código Analista</p>
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $row['CODIGOP']; ?></p>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">E-mail</p>
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $row['EMAIL']; ?></p>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">DataCenter</p>
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $row['DATACENTER']; ?></p>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">Nivel de Acesso</p> 
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $row['NIVEL_ACESSO']; ?></p>
+
+
+
+    </td>
+    
 
 
     <td id="colun-blue-table">
@@ -604,7 +658,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarFonecedor.php?id=<?php echo $dado['IDFORNECEDOR'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarProduto.php?id=<?php echo $row['IDUSUARIO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
 
 
 
@@ -619,13 +673,14 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteFornecedor.php?id=<?php echo $dado['IDFORNECEDOR'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteProduto.php?id=<?php echo $row['IDUSUARIO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
 
 
 
     </td>
 
 
+    
     </tr>
 
 
@@ -633,6 +688,14 @@ $dateformated = date("d/m/Y", $date);
     </table>
 
 
+
+    <?php } ?>
+
+
+
+    <?php } ?>
+
+    
 
     <?php } ?>
 
@@ -652,12 +715,10 @@ $dateformated = date("d/m/Y", $date);
 
 
     <p>Caixa Econômica Federal - Centralizadora de Suporte de Tecnologia da Informação CESTI <i class="	fa fa-gears" id="group-icon-footer"></i></p>
-    
 
 
     </div>
     <!-- End container text footer-page -->    
-
 
     
     <div class="container-fluid" style="display: flex; justify-content: center; align-items: center; margin-top: -15px;">

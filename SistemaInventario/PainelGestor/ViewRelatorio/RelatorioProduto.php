@@ -233,6 +233,10 @@
 
 
 
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    
+
+
     </ul>
     <!-- End menu-link page -->
 

@@ -136,7 +136,7 @@
 
 
 	<!-- Title page -->
-    <title>Sistema de Inventário - Relatório Fornecedor</title>	
+    <title>Sistema de Inventário - Relatório Produto</title>	
     
 
 
@@ -200,22 +200,18 @@
 
 
     <!-- Start container row content -->
-    <div class="row content">
+    <div class="row content"> 
 
 
-
+    
     <!-- Start container col-sm-3 sidenav -->
     <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
-
 
     <!-- Start logo page -->
     <h2 id="logo-blue">Inventário de Material<i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
     <!-- End logo page -->
 
-
-    
     <img src="../../Images/images.png" class="logo">
-
 
     <!-- Start menu-link page -->
     <ul class="nav nav-pills nav-stacked">
@@ -243,12 +239,6 @@
 
     </ul>
     <!-- End menu-link page -->
-    
-
-
-    <br>
-    <!-- End menu-link page -->
-
 
 
     </div>
@@ -284,6 +274,8 @@
     <br>
 
 
+    <br>
+
     
     <style>
     
@@ -302,7 +294,7 @@
 
 
 
-    color: #f0f0f0;
+    color: #ffffff;
     
 
 
@@ -490,7 +482,7 @@ $dateformated = date("d/m/Y", $date);
 
 
     <!-- Start form search material -->
-    <form class="example"  method="POST" action="SearchProduto.php">
+    <form class="example"  method="POST" action="../ViewRelatorio/SearchUsuario.php">
     
 
 
@@ -518,7 +510,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <p id="blue-title-btn-painel">Relatório Metragem <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Relatório Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
 
 
 
@@ -533,30 +525,41 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-   <?php
+<!-- Start código PHP search material -->
+<?php
 
-    // Conexão e consulta ao banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
+// Conexão e consulta ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
+
+$search = $_POST['search'];
+
+// Protege contra SQL Injection escapando os caracteres especiais no input do usuário
+$search = mysqli_real_escape_string($conn, $search);
+
+// Ajusta a consulta SQL para pesquisar em múltiplos campos da tabela USUARIO
+$result_search = "
+SELECT * 
+FROM USUARIO 
+WHERE IDUSUARIO LIKE '%$search%' 
+OR NOME LIKE '%$search%' 
+OR CODIGOP LIKE '%$search%' 
+OR EMAIL LIKE '%$search%' 
+OR DATACENTER LIKE '%$search%' 
+OR NIVEL_ACESSO LIKE '%$search%'";
+
+$resultado_search = mysqli_query($conn, $result_search);
+
+?>
+
+<!--  Start If de verificação do search encaminhado -->
+<?php if ($resultado_search) { ?>
+
+<!--  Start repetição do search encaminhado -->   
+<?php while ($rows_search = mysqli_fetch_array($resultado_search)) { ?>
 
 
-    $consulta = "SELECT * FROM MODELO ORDER BY IDMODELO ";
 
-
-
-    $resultado = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
-    
-
-
-    ?>
-
-
-
-    <!-- Start código PHP para repetição de listagem -->
-    <?php while($dado = mysqli_fetch_array($resultado)) { ?>
-
-
-
-    <table  class="table table-bordered" id="blue-table-cadastro-auxiliars">
+    <table  class="table table-bordered" id="blue-table-cadastro-auxiliar">
 
 
 
@@ -572,7 +575,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $dado['IDFORNECEDOR']; ?></p>   
+    <p id="blue-text-table-exibicao"><?php echo $rows_search['IDUSUARIO']; ?></p>   
 
 
 
@@ -584,16 +587,79 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <p id="blue-title-listar-exibicao">Fornecedor</p>
+    <p id="blue-title-listar-exibicao">Nome Analista</p>
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $dado['FORNECEDOR']; ?></p>
+    <p id="blue-text-table-exibicao"><?php echo $rows_search['NOME']; ?></p>
 
 
 
     </td>
 
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">Código Analista</p>
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $rows_search['CODIGOP']; ?></p>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">E-mail</p>
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $rows_search['EMAIL']; ?></p>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">DataCenter</p>
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $rows_search['DATACENTER']; ?></p>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">Nivel de Acesso</p> 
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $rows_search['NIVEL_ACESSO']; ?></p>
+
+
+
+    </td>
+    
 
 
     <td id="colun-blue-table">
@@ -604,7 +670,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarFonecedor.php?id=<?php echo $dado['IDFORNECEDOR'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarUsuario.php?id=<?php echo $rows_search['IDUSUARIO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
 
 
 
@@ -619,13 +685,14 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteFornecedor.php?id=<?php echo $dado['IDFORNECEDOR'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteUsuario.php?id=<?php echo $rows_search['IDUSUARIO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
 
 
 
     </td>
 
 
+    
     </tr>
 
 
@@ -638,6 +705,10 @@ $dateformated = date("d/m/Y", $date);
 
 
 
+    <?php } ?>
+
+
+    
     </div>    
 
 
@@ -652,12 +723,10 @@ $dateformated = date("d/m/Y", $date);
 
 
     <p>Caixa Econômica Federal - Centralizadora de Suporte de Tecnologia da Informação CESTI <i class="	fa fa-gears" id="group-icon-footer"></i></p>
-    
 
 
     </div>
     <!-- End container text footer-page -->    
-
 
     
     <div class="container-fluid" style="display: flex; justify-content: center; align-items: center; margin-top: -15px;">

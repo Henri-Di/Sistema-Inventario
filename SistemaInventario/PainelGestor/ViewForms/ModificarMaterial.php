@@ -222,22 +222,28 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo <i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-
-
-
-    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-
-
-
-    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar <i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+   
 
     
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto <i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+
+
+    
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal <i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+
+
+
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário <i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    
+
+
     </ul>
+    <!-- End menu-link page -->
     
 
 
@@ -502,7 +508,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <form method="POST" class="example" action="CreateModificaMaterial.php">
+    <form method="POST" class="example" action="../ViewFunctions/CreateModificaMaterial.php">
 
 
     <!--  Start código PHP para realização de listagem dos materiais -->
@@ -538,7 +544,6 @@ $dateformated = date("d/m/Y", $date);
 
     <tr id="line-blue-table">
 
-
     
     <td id="colun-blue-table">   
     
@@ -553,47 +558,17 @@ $dateformated = date("d/m/Y", $date);
 
 
     </div>
+
+
     
+    <input type="text" name="id" id="blue-input-cdst" value="<?php echo $dado['IDMATERIAL']; ?>" disabled/>
 
 
-    <input type="text" id="blue-input-cdst" value="<?php echo $dado['IDMATERIAL']; ?>" name="id" disabled>
-
+    
+    <input type="hidden" name="id" id="blue-input-cdst" value="<?php echo $dado['IDMATERIAL']; ?>"/>
 
 
     </td>
-
-
-    <?php } ?>
-
-
-
-    <!--  Start código PHP para realização de listagem dos materiais -->
-    <?php 
-
-
-
-    // Conexão e consulta ao banco de dados
-    require_once('../../ViewConnection/ConnectionInventario.php');
-
-
-
-    $id = filter_input(INPUT_GET,'id', FILTER_SANITIZE_NUMBER_INT);
-
-
-
-    $consulta = "SELECT * FROM MATERIAL WHERE IDMATERIAL='$id'";
-
-
-
-    $con = mysqli_query($conn,$consulta) or die (mysqli_error());
-
-
-
-    ?> 
-    <!--  End código PHP para realização de listagem dos materiais -->
-
-    <!-- Start código PHP para repetição de listagem -->
-    <?php while($dado = $con->fetch_array()) { ?> 
 
 
 
@@ -613,7 +588,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" value="<?php echo $dado['MATERIAL']; ?>" name="Material"/>
+    <input type="text" name="Material" id="blue-input-cdst" value="<?php echo $dado['MATERIAL']; ?>"/>
 
 
 

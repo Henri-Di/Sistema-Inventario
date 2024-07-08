@@ -283,7 +283,7 @@
 
 
     <br>
-
+   
 
 
     <style>
@@ -298,19 +298,21 @@
     
 
 
-    background-color: #ff0000;
+    background-color: #00b300;
     
 
 
     color: #f0f0f0;
+    
 
     
 
     font-size: 14px;
-    
 
 
     }
+
+
 
     .closebtn {
     
@@ -364,6 +366,8 @@
 
     </style>
     
+
+
     <div class="alert">
 
 
@@ -372,14 +376,13 @@
     
 
 
-    Não foi possível realizar o cadastro. O grupo já está cadastrado  <i class='fa fa-times-circle'></i>
+    A alteração foi realizada com sucesso no cadastro do material  <i class='fa fa-check-circle'></i>
     
 
-    
+
     </div>
 
 
-    
     <style>
     
 

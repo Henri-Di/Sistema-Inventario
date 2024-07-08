@@ -303,12 +303,13 @@
 
 
     color: #f0f0f0;
-
     
+
+
 
     font-size: 14px;
     
-
+    
 
     }
 
@@ -364,6 +365,8 @@
 
     </style>
     
+
+    
     <div class="alert">
 
 
@@ -372,14 +375,13 @@
     
 
 
-    Não foi possível realizar o cadastro. O grupo já está cadastrado  <i class='fa fa-times-circle'></i>
+    Não foi possivel realizar a alteração no cadastro do material  <i class='fa fa-times-circle'></i>
     
 
     
     </div>
 
 
-    
     <style>
     
 
