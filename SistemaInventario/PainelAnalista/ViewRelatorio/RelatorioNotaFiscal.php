@@ -272,7 +272,7 @@
     
 
 
-    <button id="blue-btn-sign-out" onclick="window.location.href='SairSistema.php';"><i class="fa fa-sign-out"></i></button>
+    <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
 
     
 

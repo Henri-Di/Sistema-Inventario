@@ -1037,10 +1037,10 @@ if ($stmt = $conn->prepare($sql)) {
                             case 'PENDENTE':
                                 $color = '#ff6600';
                                 break;
-                            case 'RECEBIDO':
+                            case 'CONFIRMADA':
                                 $color = '#009900';
                                 break;
-                            case 'RECUSADO':
+                            case 'RECUSADA':
                                 $color = '#ff0000';
                                 break;
     

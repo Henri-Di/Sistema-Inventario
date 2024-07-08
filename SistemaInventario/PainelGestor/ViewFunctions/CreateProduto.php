@@ -117,20 +117,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idGrupo = getIdOrInsert($conn, 'GRUPO', 'GRUPO', 'IDGRUPO', strtoupper($grupo));
         $idLocalizacao = getIdOrInsert($conn, 'LOCALIZACAO', 'LOCALIZACAO', 'IDLOCALIZACAO', strtoupper($localizacao));
 
-        // Verificar se um produto com os mesmos detalhes já existe no mesmo datacenter
+        // Verificar se um produto com os mesmos detalhes, exceto fornecedor e modelo, já existe no mesmo datacenter
         $check_sql = "SELECT p.* FROM PRODUTO p
                       WHERE p.IDMATERIAL = '$idMaterial'
                       AND p.IDCONECTOR = '$idConector'
                       AND p.IDMETRAGEM = '$idMetragem'
-                      AND p.IDMODELO = '$idModelo'
-                      AND p.IDFORNECEDOR = '$idFornecedor'
                       AND p.IDDATACENTER = '$idDataCenter'
                       AND p.IDGRUPO = '$idGrupo'
-                      AND p.IDLOCALIZACAO = '$idLocalizacao'";
+                      AND p.IDLOCALIZACAO = '$idLocalizacao'
+                      AND p.IDFORNECEDOR = '$idFornecedor'
+                      AND p.IDMODELO = '$idModelo'";
         $result = mysqli_query($conn, $check_sql);
 
         if (mysqli_num_rows($result) > 0) {
-            // Se o produto já existe, redirecionar para a página de falha
+            // Se o produto já existe com os mesmos detalhes (inclusive fornecedor e modelo), redirecionar para a página de falha
             header("Location: ../ViewFail/FailCreateProdutoExistente.php?erro=Não foi possível realizar o cadastro. Produto já cadastrado");
             exit(); // Termina a execução do script após redirecionamento
         } else {

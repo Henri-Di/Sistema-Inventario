@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -125,15 +124,20 @@ function cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material,
             $idLocalizacao = cadastrarNovaLocalizacao($conn, $localizacao);
         }
 
+        // Verifica se o produto já existe
         $idProduto = recuperarIdProdutoExistente($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $idDatacenter, $idGrupo, $idLocalizacao);
 
         if ($idProduto) {
+            // Atualiza o estoque existente
             atualizarEstoqueExistente($conn, $idProduto, $quantidade);
         } else {
+            // Cria um novo produto
             $idProduto = cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter, $idGrupo, $idLocalizacao);
+            // Insere o estoque inicial
             inserirEstoqueInicial($conn, $idProduto, $quantidade);
         }
 
+        // Insere a nota fiscal
         $stmt = $conn->prepare("INSERT INTO NOTAFISCAL (NUMNOTAFISCAL, VALORNOTAFISCAL, MATERIAL, CONECTOR, METRAGEM, MODELO, GRUPO, QUANTIDADE, FORNECEDOR, DATARECEBIMENTO, DATACADASTRO, DATACENTER, IDPRODUTO, IDDATACENTER, FILEPATH, LOCALIZACAO) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssssssssiiss", $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $grupo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $idProduto, $idDatacenter, $filePath, $localizacao);
         $stmt->execute();
@@ -325,7 +329,11 @@ function recuperarIdProdutoExistente($conn, $idMaterial, $idConector, $idMetrage
     $stmt->fetch();
     $stmt->close();
 
-    return $idProduto;
+    if ($idProduto === null) {
+        return null;
+    } else {
+        return $idProduto;
+    }
 }
 
 function cadastrarNovoProduto($conn, $idMaterial, $idConector, $idMetragem, $idModelo, $idFornecedor, $dataCadastro, $idDatacenter, $idGrupo, $idLocalizacao) {
@@ -352,7 +360,6 @@ function inserirEstoqueInicial($conn, $idProduto, $quantidade) {
     $stmt->close();
 }
 
-// Receber dados do formulário
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numNotaFiscal = sanitize($conn, $_POST['NumNotaFiscal']);
     $valorNotaFiscal = sanitize($conn, $_POST['ValorNotaFiscal']);
@@ -368,11 +375,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dataCenter = sanitize($conn, $_POST['DataCenter']);
     $localizacao = sanitize($conn, $_POST['Localizacao']);
 
-    $filePath = processarUploadArquivo($_FILES['NotaFiscalFile']);
+    $file = $_FILES['NotaFiscalFile'];
+
+    $filePath = processarUploadArquivo($file);
 
     cadastrarNotaFiscal($conn, $numNotaFiscal, $valorNotaFiscal, $material, $conector, $metragem, $modelo, $grupo, $quantidade, $fornecedor, $dataRecebimento, $dataCadastro, $dataCenter, $filePath, $localizacao);
 } else {
-    header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Ocorreu um erro ao processar o formulário. Tente novamente");
+    header("Location: ../ViewFail/FailCreateNotaFiscal.php?erro=Requisição inválida. Refaça a operação e tente novamente");
     exit();
 }
 ?>

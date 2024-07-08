@@ -346,7 +346,7 @@
 
 
     
-    <button id="blue-btn-sign-out" onclick="window.location.href='SairSistema.php';"><i class="fa fa-sign-out"></i></button>
+    <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
 
 
     <br>
@@ -621,6 +621,8 @@ SELECT
     FORNECEDOR.FORNECEDOR AS FORNECEDOR, 
     PRODUTO.DATACADASTRO, 
     DATACENTER.NOME AS DATACENTER, 
+    GRUPO.GRUPO AS GRUPO, 
+    LOCALIZACAO.LOCALIZACAO AS LOCALIZACAO,
     ESTOQUE.QUANTIDADE 
 FROM 
     PRODUTO
@@ -638,6 +640,10 @@ JOIN
     MODELO ON PRODUTO.IDMODELO = MODELO.IDMODELO
 JOIN 
     FORNECEDOR ON PRODUTO.IDFORNECEDOR = FORNECEDOR.IDFORNECEDOR
+JOIN 
+    GRUPO ON PRODUTO.IDGRUPO = GRUPO.IDGRUPO
+JOIN 
+    LOCALIZACAO ON PRODUTO.IDLOCALIZACAO = LOCALIZACAO.IDLOCALIZACAO
 WHERE 
     PRODUTO.IDPRODUTO LIKE '%$search%' 
     OR MATERIAL.MATERIAL LIKE '%$search%' 
@@ -646,6 +652,8 @@ WHERE
     OR MODELO.MODELO LIKE '%$search%' 
     OR FORNECEDOR.FORNECEDOR LIKE '%$search%' 
     OR DATACENTER.NOME LIKE '%$search%' 
+    OR GRUPO.GRUPO LIKE '%$search%' 
+    OR LOCALIZACAO.LOCALIZACAO LIKE '%$search%' 
     OR ESTOQUE.QUANTIDADE LIKE '%$search%'";
 
 $stmt = $conn->prepare($result_search);

@@ -58,13 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['CodigoP']) && isset($_
                 exit(); // Termina a execução do script após o redirecionamento
             } else {
                 // Senha incorreta
-                $_SESSION['loginErro'] = "<p style='color:red;font-weight:bold;margin-left:40%;font-size:12px;'>Credenciais inválidas!</p>";
+                $_SESSION['loginErro'] = "<p style='color:red;font-weight:bold;margin-left:32%;font-size:12px;'>Credenciais inválidas!</p>";
                 header("Location: ../Index.php");
                 exit(); // Termina a execução do script após o redirecionamento
             }
         } else {
             // Usuário não encontrado
-            $_SESSION['loginErro'] = "<p style='color:red;font-weight:bold;margin-left:40%;font-size:12px;'>Credenciais inválidas!</p>";
+            $_SESSION['loginErro'] = "<p style='color:red;font-weight:bold;margin-left:32%;font-size:12px;'>Credenciais inválidas!</p>";
             header("Location: ../Index.php");
             exit(); // Termina a execução do script após o redirecionamento
         }
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['CodigoP']) && isset($_
         $stmt->close();
     } else {
         // Mensagem de erro em caso de falha na preparação da consulta
-        $_SESSION['loginErro'] = "<p style='color:red;font-weight:bold;margin-left:40%;font-size:12px;'>Erro no servidor. Tente novamente mais tarde.</p>";
+        $_SESSION['loginErro'] = "<p style='color:red;font-weight:bold;margin-left:32%;font-size:12px;'>Erro no servidor. Tente novamente mais tarde.</p>";
         header("Location: ../Index.php");
         exit(); // Termina a execução do script após o redirecionamento
     }

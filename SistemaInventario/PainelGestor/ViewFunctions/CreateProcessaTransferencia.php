@@ -72,7 +72,7 @@ try {
         // Atualizar a situação da transferência para 'RECEBIDO'
         $sqlUpdateAceitar = "UPDATE TRANSFERENCIA SET SITUACAO = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdateAceitar);
-        $situacao = mb_strtoupper('Recebido', 'UTF-8');
+        $situacao = mb_strtoupper('Confirmada', 'UTF-8');
         $stmtUpdate->bind_param("si", $situacao, $idTransferencia);
         $stmtUpdate->execute();
 
@@ -112,7 +112,7 @@ try {
         // Atualizar a situação da transferência para 'RECUSADO'
         $sqlUpdateRecusar = "UPDATE TRANSFERENCIA SET SITUACAO = ? WHERE ID = ?";
         $stmtUpdate = $conn->prepare($sqlUpdateRecusar);
-        $situacao = mb_strtoupper('Recusado', 'UTF-8');
+        $situacao = mb_strtoupper('Recusada', 'UTF-8');
         $stmtUpdate->bind_param("si", $situacao, $idTransferencia);
         $stmtUpdate->execute();
 

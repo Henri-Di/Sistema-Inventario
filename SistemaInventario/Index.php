@@ -53,10 +53,12 @@
     <!-- End top page-->
 
     <!-- Start body page -->
-    <body style="margin:0;font-family:'Sofia Sans Extra Condensed';">
+    <body  class="blue-body-index" style="font-family:'Sofia Sans Extra Condensed';">
 
-    <!-- Start container animate-bottom -->
     <br>
+
+
+    
     <br>
 
     <!-- Start logo page -->
@@ -65,10 +67,11 @@
     
     <br>
     <br>
+    
 
     <!-- Start container -->
-    <div class="container-fluid" style="margin-left:15%;">
-
+    <div class="container" style="margin-left:0%;">
+    <img src="./Images/images.png" class="logo">
     <!-- Start formulario de login index -->
     <form class="needs-validation" name="AcessoRestrito" id="blue-form-login" method="POST" action="./ViewLogin/LoginUser.php" novalidate>
 

@@ -2248,7 +2248,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <div class="container-fluid" style="display: flex; justify-content: center; align-items: center; margin-top: -15px;">
+    <div class="container-fluid" style="display: flex; justify-content: center; align-items: center; margin-top: -5px;">
     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 192.756 192.756" style="border:none;">
         <g fill-rule="evenodd" clip-rule="evenodd">
             <path fill="#fff" d="M0 0h192.756v192.756H0V0z"/>

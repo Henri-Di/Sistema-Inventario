@@ -6,19 +6,18 @@
 
 /* Estilo de fundo para o corpo da página */
 body {
-  background-color: #ffffff;
-
+  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
 }
 
 /* Estilo de fundo para um menu lateral escondido em telas pequenas */
 #blue-sidenav-hidden-xs {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
 }
 
 /* Estilo para um container principal, ajustando margem superior e fundo */
 #blue-col-sm-9 {
   margin-top: -20px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
 }
 
 /* Estilo para todas as imagens */
@@ -31,9 +30,9 @@ img {
 
 /* Estilo para a logo */
 .logo {
-  max-width: 50px; /* Define a largura máxima para a logo */
+  max-width: 60px; /* Define a largura máxima para a logo */
   height: auto; /* Mantém a altura proporcional à largura */
-  margin-top: -12%; /* Ajusta a margem superior para posicionamento */
+  margin-top: -15%; /* Ajusta a margem superior para posicionamento */
   margin-left: 50%; /* Ajusta a margem esquerda para centralizar */
   transform: translateX(-50%); /* Centraliza horizontalmente */
   filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
@@ -215,8 +214,8 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../../Images/IconCaixa.png'); /* Substitua pelo caminho da sua imagem */
-  background-size: 50%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
+  background-image: url('../../Images/Caixa.png'); /* Substitua pelo caminho da sua imagem */
+  background-size: 85%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: center; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Evita repetição da imagem */
   opacity: 0.2; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
@@ -371,29 +370,6 @@ img {
   }
 }
 
-/* Estilo para botão de retorno nas páginas de sucesso de cadastro */
-#link-sucess-return {
-  width: 100%; /* Define a largura como 100% do contêiner */
-  height: auto; /* Define a altura automática */
-  background-color: transparent; /* Define o fundo como transparente */
-  border: 1px solid #005ce6; /* Define a borda */
-  padding: 6px; /* Define o padding */
-  font-size: 15px; /* Define o tamanho da fonte */
-  color: #005ce6; /* Define a cor do texto */
-  margin-left: 1%; /* Adiciona uma margem à esquerda de 1% */
-  cursor: pointer; /* Define o cursor como pointer */
-  border-radius: 3px; /* Define bordas arredondadas */
-  text-decoration: none; /* Remove a decoração do texto (sublinhado) */
-  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
-}
-
-/* Efeito hover para botão de retorno */
-#link-sucess-return:hover {
-  background-color: #005ce6; /* Define a cor de fundo ao passar o mouse */
-  color: #ffffff; /* Define a cor do texto ao passar o mouse */
-  opacity: 0.7; /* Define a opacidade ao passar o mouse */
-}
-
 /* Container para pesquisa */
 #blue-search {
   padding: 0; /* Remove o padding */
@@ -505,27 +481,7 @@ img {
   background-color: transparent; /* Fundo transparente */
   color: #5c5c8a; /* Cor do texto ao passar o mouse */
 }
-  
-/* Estilo para o botão na tabela de listagem dos produtos */
-#myBtn {
-  background-color: transparent; /* Fundo transparente */
-  border: none; /* Sem borda */
-  cursor: pointer; /* Cursor de ponteiro ao passar */
-  color: #005ce6; /* Cor do texto */
-  font-size: 14px; /* Tamanho da fonte */
-  border-radius: 4px; /* Borda arredondada */
-  text-align: center; /* Alinhamento central do texto */
-  font-weight: bold; /* Texto em negrito */
-  font-family: 'Sofia Sans Extra Condensed'; /* Fonte personalizada */
-  transition: color ease 0.5s; /* Transição suave da cor */
-}
-  
-/* Efeito hover para o botão na tabela de listagem dos produtos */
-#myBtn:hover {
-  background-color: transparent; /* Fundo transparente */
-  color: #5c5c8a; /* Cor do texto ao passar o mouse */
-}
-  
+    
 /* Estilo para o título de listagem */
 #blue-title-listar {
   background-color: transparent; /* Fundo transparente */
@@ -737,29 +693,6 @@ img {
     opacity: 0.7; /* Opacidade reduzida */
   }
   
-  /* Estilo para o botão de relatório diferente na sessão de relatórios do painel administrativo */
-  #blue-btn-relatorio-painel-diferent {
-    width: 18.5%; /* Largura do botão */
-    height: auto; /* Altura automática */
-    padding: 5px; /* Espaçamento interno */
-    background-color: transparent; /* Fundo transparente */
-    color: #005ce6; /* Cor do texto */
-    font-weight: bold; /* Texto em negrito */
-    font-size: 13px; /* Tamanho da fonte */
-    margin-left: -77.5%; /* Margem esquerda negativa para posicionamento */
-    margin-top: 1%; /* Margem superior */
-    border-radius: 5px; /* Borda arredondada */
-    border: 1px solid #005ce6; /* Borda sólida azul */
-    transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  }
-  
-  /* Efeito hover para o botão de relatório diferente na sessão de relatórios do painel administrativo */
-  #blue-btn-relatorio-painel-diferent:hover {
-    background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-    color: #ffffff; /* Cor do texto branco */
-    opacity: 0.7; /* Opacidade reduzida */
-  }
-  
   /* Estilo para o botão de tabela de cadastro de produto */
 #blue-btn-table-cadastro-produto {
   background-color: transparent; /* Fundo transparente */
@@ -893,6 +826,88 @@ img {
     white-space: nowrap; /* Não quebrar linhas */
   }
 
+    /* Media Queries para dispositivos menores */
+    @media (max-width: 1200px) {
+      #blue-table-cadastro-auxiliars {
+        table-layout: fixed; /* Fixar a largura das células */
+      }
+      #blue-table-cadastro-auxiliars td {
+        width: 100%; /* Largura fixa para cada célula em telas menores */
+      }
+    }
+  
+    @media (max-width: 992px) {
+      #blue-table-cadastro-auxiliars td {
+        width: 100%; /* Largura total para cada célula em telas pequenas */
+        display: block; /* Exibir cada célula como bloco */
+      }
+    }
+  
+    @media (max-width: 768px) {
+      #blue-table-cadastro-auxiliars td {
+        width: 100%; /* Largura total para cada célula em telas muito pequenas */
+        display: block; /* Exibir cada célula como bloco */
+        padding: 5px; /* Espaçamento interno menor */
+      }
+    }
+  
+    @media (max-width: 576px) {
+      #blue-table-cadastro-auxiliars td {
+        width: 100%; /* Largura total para cada célula em telas muito pequenas */
+        display: block; /* Exibir cada célula como bloco */
+        padding: 5px; /* Espaçamento interno menor */
+        font-size: 12px; /* Tamanho de fonte menor */
+      }
+    }
+  
+     /* Estilo para o contêiner da tabela auxiliar de cadastro */
+  #blue-table-cadastro-auxiliar-print {
+    width: 90%; /* Largura total */
+    margin-top: -1%; /* Margem superior */
+    table-layout: auto; /* Ajustar a largura das células automaticamente */
+  }
+
+  #blue-table-cadastro-auxiliar-print td {
+    padding: 5px; /* Espaçamento interno */
+    overflow: hidden; /* Esconder conteúdo excedente */
+    text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
+    white-space: nowrap; /* Não quebrar linhas */
+  }
+
+  /* Media Queries para dispositivos menores */
+  @media (max-width: 1200px) {
+    #blue-table-cadastro-auxiliar-print {
+      table-layout: fixed; /* Fixar a largura das células */
+    }
+    #blue-table-cadastro-auxiliar-print td {
+      width: 100%; /* Largura fixa para cada célula em telas menores */
+    }
+  }
+
+  @media (max-width: 992px) {
+    #blue-table-cadastro-auxiliar-print td {
+      width: 100%; /* Largura total para cada célula em telas pequenas */
+      display: block; /* Exibir cada célula como bloco */
+    }
+  }
+
+  @media (max-width: 768px) {
+    #blue-table-cadastro-auxiliar-print td {
+      width: 100%; /* Largura total para cada célula em telas muito pequenas */
+      display: block; /* Exibir cada célula como bloco */
+      padding: 5px; /* Espaçamento interno menor */
+    }
+  }
+
+  @media (max-width: 576px) {
+    #blue-table-cadastro-auxiliar-print td {
+      width: 100%; /* Largura total para cada célula em telas muito pequenas */
+      display: block; /* Exibir cada célula como bloco */
+      padding: 5px; /* Espaçamento interno menor */
+      font-size: 12px; /* Tamanho de fonte menor */
+    }
+  }
+
   /* Estilo para o botão de cadastro auxiliar */
 #blue-btn-cadastro-auxiliar {
   background-color: transparent; /* Fundo transparente */
@@ -914,72 +929,6 @@ img {
   color: #f0f0f0; /* Cor do texto branco */
   opacity: 0.7; /* Opacidade reduzida */
   }
-
-  /* Estilo para a div na qual a tabela está inserida */
-  .blue-table-scroll {
-    overflow-y: auto; /* Rolagem vertical automática */
-    max-height: 350px; /* Altura máxima da div */
-  }
-  
-  /* Estilo para a tabela que precisa de rolagem horizontal */
-  #blue-table-cadastro {
-    width: 100%; /* Largura total */
-    margin-top: -1%; /* Margem superior */
-    border-collapse: collapse; /* Colapsar bordas da tabela */
-  }
-  
-  /* Estilo para as células da tabela */
-  #blue-table-cadastro td {
-    padding: 10px; /* Espaçamento interno */
-    border: 1px solid #dddddd; /* Borda das células */
-    text-align: left; /* Alinhamento do texto */
-  }
-
-  /* Estilo para a barra de rolagem horizontal */
-  .blue-table-scroll-horizontal {
-    overflow-x: auto; /* Rolagem horizontal automática */
-    max-width: 100%; /* Largura máxima da div */
-  }
-  
-  /* Estilo para a div que envolve a tabela de rolagem horizontal */
-  .blue-table-scroll-container {
-    width: 100%; /* Largura total */
-    margin: 0 auto; /* Centralizar a div */
-  }
-  
-  /* Estilo para as células da tabela */
-  #blue-table-cadastro td {
-    padding: 10px; /* Espaçamento interno */
-    border: 1px solid #dddddd; /* Borda das células */
-    text-align: left; /* Alinhamento do texto */
-  }
-  
-  /* Estilo para a tabela que precisa de rolagem horizontal */
-  #blue-table-cadastro {
-    width: 100%; /* Largura total */
-    margin-top: -1%; /* Margem superior */
-    border-collapse: collapse; /* Colapsar bordas da tabela */
-  }
-  
-  /* Estilo para as células da tabela */
-  #blue-table-cadastro td {
-    padding: 10px; /* Espaçamento interno */
-    border: 1px solid #dddddd; /* Borda das células */
-    text-align: left; /* Alinhamento do texto */
-  }
-  
-  /* Estilo para a barra de rolagem horizontal */
-  .blue-table-scroll-horizontal {
-    overflow-x: auto; /* Rolagem horizontal automática */
-    max-width: 100%; /* Largura máxima da div */
-  }
-  
-  /* Estilo para a div que envolve a tabela de rolagem horizontal */
-  .blue-table-scroll-container {
-    width: 100%; /* Largura total */
-    margin: 0 auto; /* Centralizar a div */
-  }
-
 
   /* Estilo para o contêiner que envolve o campo de arquivo */
 .custom-file-upload {
@@ -1043,7 +992,7 @@ img {
 
 /* Estilo para o ícone 'Upload' */
 #blue-icon-upload {
-  margin-left: 36%; /* Margem à esquerda para posicionar o ícone */
+  margin-left: 30%; /* Margem à esquerda para posicionar o ícone */
 }
 
 /* Estilo para o ícone 'Relatório de Produto' */
@@ -1095,7 +1044,7 @@ img {
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
   font-size: 11px; /* Tamanho da fonte reduzido */
-  transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
   flex: 1; /* Ocupa espaço igualmente dentro do container flexível */
   max-width: 10%; /* Largura máxima para garantir que 9 botões caibam na mesma linha */
   text-align: center; /* Centralizar texto */
@@ -1115,4 +1064,33 @@ img {
   justify-content: flex-start; /* Alinhamento à esquerda */
   flex-wrap: wrap; /* Quebra de linha automática */
   margin-left: -1%; /* Ajuste de margem esquerda */
+}
+
+#blue-btn-print{
+  margin-left:45%;
+  width:10%;
+  outline:none;
+  color:#005ce6;
+  border:1px solid #005ce6;
+  background-color:#ffffff;
+  font-size:11px;
+  font-weight:bold;
+  transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
+}
+
+
+#blue-btn-print:hover{
+  background-color:#005ce6;
+  color:#ffffff;
+  opacity:0.7;
+}
+
+#btn-blue-print-log-transferencia{
+  background-color:transparent;
+  border:none;
+  font-size: 10px;
+  color:#005ce6;  
+  margin-top:5px;
+  margin-left:20px;
+
 }

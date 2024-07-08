@@ -1013,7 +1013,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <option id="select-option-form" value="Aceitar">ACEITAR</option>
+    <option id="select-option-form" value="Aceitar">CONFIRMAR</option>
     
 
 
@@ -1150,10 +1150,10 @@ $sql = "SELECT
                         case 'PENDENTE':
                             $color = '#ff6600';
                             break;
-                        case 'RECEBIDO':
+                        case 'CONFIRMADA':
                             $color = '#009900';
                             break;
-                        case 'RECUSADO':
+                        case 'RECUSADA':
                             $color = '#ff0000';
                             break;
     }  
@@ -1463,6 +1463,29 @@ $sql = "SELECT
 
 
     <input type="text" id="blue-input-cdst" name="CódigoAnalista" value="<?php echo $row['CODIGOP'];?>" autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+
+
+
+    <div id="blue-title-listar" style="padding:0.45px;">
+    
+
+
+    Imprimir Saída
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+    <button type="button"  id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/DocumentoSaidaTransferencia.php?id=<?php echo $row['ID'];?>';" ><i class="	fa fa-print"></i></button><br>
 
 
 

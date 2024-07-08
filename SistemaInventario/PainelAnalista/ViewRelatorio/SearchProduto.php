@@ -346,7 +346,7 @@
 
 
     
-    <button id="blue-btn-sign-out" onclick="window.location.href='SairSistema.php';"><i class="fa fa-sign-out"></i></button>
+    <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
 
 
     <br>
@@ -622,12 +622,6 @@ $dateformated = date("d/m/Y", $date);
     }
 
     // Obtém o termo de pesquisa enviado pelo formulário
-    $search = $_POST['search'];
-
-    // Protege contra SQL Injection escapando os caracteres especiais no input do usuário
-    $search = mysqli_real_escape_string($conn, $search);
-    
-    // Ajusta a consulta SQL para pesquisar em múltiplos campos nas tabelas relacionadas e filtrar pelo datacenter do usuário
     $result_search = "
     SELECT 
         PRODUTO.IDPRODUTO, 
@@ -638,6 +632,8 @@ $dateformated = date("d/m/Y", $date);
         FORNECEDOR.FORNECEDOR AS FORNECEDOR, 
         PRODUTO.DATACADASTRO, 
         DATACENTER.NOME AS DATACENTER, 
+        GRUPO.GRUPO AS GRUPO, 
+        LOCALIZACAO.LOCALIZACAO AS LOCALIZACAO,
         ESTOQUE.QUANTIDADE 
     FROM 
         PRODUTO
@@ -655,16 +651,21 @@ $dateformated = date("d/m/Y", $date);
         MODELO ON PRODUTO.IDMODELO = MODELO.IDMODELO
     JOIN 
         FORNECEDOR ON PRODUTO.IDFORNECEDOR = FORNECEDOR.IDFORNECEDOR
+    JOIN 
+        GRUPO ON PRODUTO.IDGRUPO = GRUPO.IDGRUPO
+    JOIN 
+        LOCALIZACAO ON PRODUTO.IDLOCALIZACAO = LOCALIZACAO.IDLOCALIZACAO
     WHERE 
-        (PRODUTO.IDPRODUTO LIKE '%$search%' 
+        PRODUTO.IDPRODUTO LIKE '%$search%' 
         OR MATERIAL.MATERIAL LIKE '%$search%' 
         OR CONECTOR.CONECTOR LIKE '%$search%' 
         OR METRAGEM.METRAGEM LIKE '%$search%' 
         OR MODELO.MODELO LIKE '%$search%' 
         OR FORNECEDOR.FORNECEDOR LIKE '%$search%' 
         OR DATACENTER.NOME LIKE '%$search%' 
-        OR ESTOQUE.QUANTIDADE LIKE '%$search%')
-        AND DATACENTER.NOME = ?";
+        OR GRUPO.GRUPO LIKE '%$search%' 
+        OR LOCALIZACAO.LOCALIZACAO LIKE '%$search%' 
+        OR ESTOQUE.QUANTIDADE LIKE '%$search%'";
 
     if ($stmt = $conn->prepare($result_search)) {
         $stmt->bind_param("s", $datacenterUsuario);
