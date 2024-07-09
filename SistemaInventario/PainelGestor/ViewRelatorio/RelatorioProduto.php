@@ -572,15 +572,15 @@ $consulta = "
     INNER JOIN 
         DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-// Adicionar condição de datacenter se o nível de acesso não for 1
-if ($nivelAcesso != 1) {
+// Adicionar condição de datacenter se o nível de acesso não for gestor
+if ($nivelAcesso != 'GESTOR') {
     $consulta .= " WHERE d.NOME = ?";
 }
 
 $consulta .= " ORDER BY p.IDPRODUTO";
 
 if ($stmt = $conn->prepare($consulta)) {
-    if ($nivelAcesso != 1) {
+    if ($nivelAcesso != 'GESTOR') {
         $stmt->bind_param("s", $datacenterUsuario);
     }
     $stmt->execute();

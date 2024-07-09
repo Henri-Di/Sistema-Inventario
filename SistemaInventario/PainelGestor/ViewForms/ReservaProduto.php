@@ -1064,7 +1064,7 @@ $dateformated = date("d/m/Y", $date);
     </table>
 
 
-    <button type="submit" id="blue-btn-cdst">Reservar Produto  <i class="fa fa-star"></i></button>
+    <button type="submit" id="blue-btn-table-cadastro-produto">Reservar Produto  <i class="fa fa-star"></i></button>
 
 
 

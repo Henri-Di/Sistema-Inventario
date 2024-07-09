@@ -2264,7 +2264,6 @@ $dateformated = date("d/m/Y", $date);
     </td>
 
 
-
     <!-- Coluna 5: Metragem -->
     <td id="colun-blue-table">
     
@@ -2285,19 +2284,20 @@ $dateformated = date("d/m/Y", $date);
     <select id="select-form" name="NiveldeAcesso">
     
 
-    <option value="Gestor">Gestor</option>
+
+    <option value="GESTOR">Gestor</option>
 
 
 
-    <option value="Preposto">Preposto</option>
+    <option value="PREPOSTO">Preposto</option>
 
 
 
-    <option value="Analista">Analista</option>
+    <option value="ANALISTA">Analista</option>
 
 
 
-    <option value="Técnico">Técnico</option>
+    <option value="TÉCNICO">Técnico</option>
 
 
 
@@ -2309,8 +2309,28 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    </td>
+    <!-- Coluna 4: Conector -->
+    <td id="colun-blue-table">
     
+
+
+    <div id="blue-title-listar">
+    
+
+    
+    Data Cadastro 
+    
+
+
+    </div>
+    
+
+    <input type="date" id="blue-input-cdst" name="DataCadastro" value="" autocomplete="off" required />
+    
+    
+
+
+    </td>
 
 
     </tr>

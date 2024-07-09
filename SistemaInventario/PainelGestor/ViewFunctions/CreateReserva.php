@@ -39,10 +39,10 @@ function datasSaoValidas($datareserva) {
 
 // Obter e validar os dados do formulário
 $idProduto = $_POST['id'] ?? '';
-$numwo = $_POST['NumWo'] ?? '';
+$numwo = mb_strtoupper($_POST['NumWo'] ?? '', 'UTF-8');
 $quantidadeReservar = $_POST['Reservar'] ?? '';
 $datareserva = $_POST['DataReserva'] ?? '';
-$observacao = $_POST['Observacao'] ?? '';
+$observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
 
 // Validar se os campos obrigatórios foram preenchidos e se os dados são válidos
 if (empty($idProduto) || empty($numwo) || !validarQuantidade($quantidadeReservar) || !validarData($datareserva) || !datasSaoValidas($datareserva)) {
@@ -52,12 +52,12 @@ if (empty($idProduto) || empty($numwo) || !validarQuantidade($quantidadeReservar
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = $_SESSION['usuarioNome'];
-$codigoPUsuario = $_SESSION['usuarioCodigoP'];
+$nomeUsuario = mb_strtoupper($_SESSION['usuarioNome'], 'UTF-8');
+$codigoPUsuario = mb_strtoupper($_SESSION['usuarioCodigoP'], 'UTF-8');
 
 // Definir valores fixos
 $operacao = "RESERVAR";
-$situacao = "RESERVADO";
+$situacao = "PENDENTE";
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
@@ -69,7 +69,7 @@ $conn->begin_transaction();
 
 try {
     // Verificar se há reservas para o produto
-    $sqlVerificaReserva = "SELECT RESERVADO FROM ESTOQUE WHERE IDPRODUTO = ?";
+    $sqlVerificaReserva = "SELECT RESERVADO_TRANSFERENCIA FROM ESTOQUE WHERE IDPRODUTO = ?";
     $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
     $stmtVerificaReserva->bind_param("i", $idProduto);
     $stmtVerificaReserva->execute();
@@ -83,7 +83,7 @@ try {
     $sqlInsertReserva = "INSERT INTO RESERVA (NUMWO, QUANTIDADE, DATARESERVA, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sqlInsertReserva);
-    $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeReservar, $datareserva, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
+    $stmtInsert->bind_param("sissssiiss", $numwo, $quantidadeReservar, $datareserva, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosReserva.php?erro=Não foi possível inserir os dados na tabela RESERVA. Informe o departamento de TI");
@@ -91,7 +91,7 @@ try {
     }
 
     // Atualizar a tabela ESTOQUE subtraindo a quantidade reservada
-    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE - ?, RESERVADO = RESERVADO + ? WHERE IDPRODUTO = ?";
+    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE - ?, RESERVADO_RESERVA = RESERVADO_RESERVA + ? WHERE IDPRODUTO = ?";
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
     $stmtUpdate->bind_param("iii", $quantidadeReservar, $quantidadeReservar, $idProduto);
 
@@ -132,5 +132,3 @@ try {
     $conn->close();
 }
 ?>
-
-

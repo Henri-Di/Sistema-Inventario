@@ -97,7 +97,7 @@ try {
         $stmtUpdateDestino->close();
 
         // Atualizar o estoque do produto de origem decrementando a quantidade transferida e a quantidade reservada
-        $sqlUpdateEstoqueOrigem = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE - ?, RESERVADO = RESERVADO - ? WHERE IDPRODUTO = ?";
+        $sqlUpdateEstoqueOrigem = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE - ?, RESERVADO_TRANSFERENCIA = RESERVADO_TRANSFERENCIA - ? WHERE IDPRODUTO = ?";
         $stmtUpdateOrigem = $conn->prepare($sqlUpdateEstoqueOrigem);
         $stmtUpdateOrigem->bind_param("iii", $quantidadeTransferida, $quantidadeTransferida, $idProdutoOrigem);
         $stmtUpdateOrigem->execute();
@@ -124,7 +124,7 @@ try {
         $stmtUpdate->close();
 
         // Remover a quantidade reservada do estoque do produto origem sem alterar a quantidade total
-        $sqlUpdateEstoqueOrigem = "UPDATE ESTOQUE SET RESERVADO = RESERVADO - ? WHERE IDPRODUTO = ?";
+        $sqlUpdateEstoqueOrigem = "UPDATE ESTOQUE SET RESERVADO_TRANSFERENCIA = RESERVADO_TRANSFERENCIA - ? WHERE IDPRODUTO = ?";
         $stmtUpdateOrigem = $conn->prepare($sqlUpdateEstoqueOrigem);
         $stmtUpdateOrigem->bind_param("ii", $quantidadeTransferida, $idProdutoOrigem);
         $stmtUpdateOrigem->execute();
@@ -147,7 +147,7 @@ try {
 
         // Se não houver outras transferências pendentes, definir o reservado como 0
         if ($countPendentes == 0) {
-            $sqlResetReservado = "UPDATE ESTOQUE SET RESERVADO = 0 WHERE IDPRODUTO = ?";
+            $sqlResetReservado = "UPDATE ESTOQUE SET RESERVADO_TRANSFERENCIA = 0 WHERE IDPRODUTO = ?";
             $stmtResetReservado = $conn->prepare($sqlResetReservado);
             $stmtResetReservado->bind_param("i", $idProdutoOrigem);
             $stmtResetReservado->execute();

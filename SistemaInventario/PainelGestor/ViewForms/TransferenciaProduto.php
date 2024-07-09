@@ -1073,7 +1073,7 @@ $dateformated = date("d/m/Y", $date);
     </table>
 
 
-    <button type="submit" id="blue-btn-cdst">Transferir Produto  <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></button>
+    <button type="submit" id="blue-btn-table-cadastro-produto">Transferir Produto  <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></button>
 
 
 

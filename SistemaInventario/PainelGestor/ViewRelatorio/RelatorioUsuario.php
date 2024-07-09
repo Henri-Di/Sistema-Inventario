@@ -535,7 +535,8 @@ $consulta = "
         CODIGOP, 
         EMAIL, 
         DATACENTER, 
-        NIVEL_ACESSO
+        NIVEL_ACESSO,
+        DATACADASTRO
     FROM 
         USUARIO
     ORDER BY 
@@ -543,7 +544,17 @@ $consulta = "
 
 if ($resultado = $conn->query($consulta)) {
     if ($resultado->num_rows > 0) {
-        while ($row = $resultado->fetch_assoc()) { ?>
+        while ($row = $resultado->fetch_assoc()) { 
+            
+        $date = strtotime($row['DATACADASTRO']);
+            // $data agora é uma inteiro timestamp
+         
+         
+         
+        $dateformated = date("d/m/Y", $date);
+            // date() formatou o $date para d/m/Y
+    
+    ?>
 
 
 
@@ -643,6 +654,21 @@ if ($resultado = $conn->query($consulta)) {
 
 
     <p id="blue-text-table-exibicao"><?php echo $row['NIVEL_ACESSO']; ?></p>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+
+
+
+    <p id="blue-title-listar-exibicao">Data Cadastro</p> 
+
+
+
+    <p id="blue-text-table-exibicao"><?php echo $dateformated; ?></p>
 
 
 

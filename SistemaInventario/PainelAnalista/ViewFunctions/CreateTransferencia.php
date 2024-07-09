@@ -56,7 +56,7 @@ $conn->begin_transaction();
 
 try {
     // Obter informações do produto de origem
-    $sqlProdutoOrigem = "SELECT IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, e.QUANTIDADE, e.RESERVADO, p.IDDATACENTER 
+    $sqlProdutoOrigem = "SELECT IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, e.QUANTIDADE, e.RESERVADO_TRANSFERENCIA, p.IDDATACENTER 
                          FROM PRODUTO p
                          INNER JOIN ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
                          WHERE p.IDPRODUTO = ?";
@@ -87,7 +87,8 @@ try {
     }
 
     if ($idDataCenterOrigem == $idDatacenterDestino) {
-        throw new Exception('O produto de destino não pode ser igual ao produto de origem');
+        header("Location: ../ViewFail/FailCreateProdutoOrigemDestino.php?erro=O produto de destino não pode ser igual ao produto de origem da transferência ");
+        exit();
     }
 
     // Verificar se existe um produto de destino compatível no datacenter de destino
@@ -134,7 +135,7 @@ try {
         exit();
     }
 
-    // Atualizar o campo RESERVADO no estoque do produto de origem
+    // Atualizar o campo RESERVADO_TRANSFERENCIA no estoque do produto de origem
     $sqlTotalReservado = "SELECT SUM(QUANTIDADE) 
                           FROM TRANSFERENCIA 
                           WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
@@ -149,34 +150,29 @@ try {
         $totalReservado = 0;
     }
 
-    $sqlUpdateEstoque = "UPDATE ESTOQUE SET RESERVADO = ? WHERE IDPRODUTO = ?";
+    $reservadoAtual += $totalReservado;
+
+    $sqlUpdateEstoque = "UPDATE ESTOQUE SET RESERVADO_TRANSFERENCIA = ? WHERE IDPRODUTO = ?";
     $stmtUpdateEstoque = $conn->prepare($sqlUpdateEstoque);
-    $stmtUpdateEstoque->bind_param("ii", $totalReservado, $idProdutoOrigem);
+    $stmtUpdateEstoque->bind_param("ii", $reservadoAtual, $idProdutoOrigem);
+
     if (!$stmtUpdateEstoque->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizarReservado.php?erro=Não foi possível atualizar o campo RESERVADO na tabela ESTOQUE");
+        header("Location: ../ViewFail/FailCreateAtualizarEstoque.php?erro=Não foi possível atualizar o estoque do produto de origem. Informe o departamento de TI");
         exit();
     }
 
-    // Commit da transação
     $conn->commit();
 
-    // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateTransferencia.php?sucesso=A transferência foi realizada com sucesso. Aguarde a confirmação do datacenter de destino");
+    header("Location: ../ViewSucess/SucessCreateTransferencia.php");
     exit();
-
 } catch (Exception $e) {
-    // Rollback da transação em caso de erro
     $conn->rollback();
-    header("Location: ../ViewFail/FailCreateTransferencia.php?erro=Não foi possível criar a transferência do produto. Refaça a operação e tente novamente");
+    header("Location: ../ViewFail/FailCreateTransferenciaErroGeral.php?erro=Ocorreu um erro durante o processo de transferência. Informe o departamento de TI");
     exit();
 } finally {
-    // Fechar statements e conexão
-    if (isset($stmtInsert)) {
-        $stmtInsert->close();
-    }
-    if (isset($stmtUpdateEstoque)) {
-        $stmtUpdateEstoque->close();
-    }
+    $stmtInsert->close();
+    $stmtTotalReservado->close();
+    $stmtUpdateEstoque->close();
     $conn->close();
 }
 ?>

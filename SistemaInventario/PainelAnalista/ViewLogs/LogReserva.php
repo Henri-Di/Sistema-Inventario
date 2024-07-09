@@ -227,17 +227,19 @@
 
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+   
 
-
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
-    
+
+
     </ul>
+    <!-- End menu-link page -->
     
 
 
@@ -955,8 +957,9 @@ $dateformated = date("d/m/Y", $date);
     <div class="container-fluid" style="width:100%;height:56%;overflow-y:auto;overflow-x:hidden;margin-top:1%;">    
     
 
-
+    
     <br>
+
 
 
     <!-- Start código PHP para consulta dados material -->
@@ -1005,6 +1008,19 @@ $dateformated = date("d/m/Y", $date);
    
 
 
+    // Determinar a cor do texto com base na situação
+                    $color = '';
+                    switch ($dado['SITUACAO']) {
+                        case 'PENDENTE':
+                            $color = '#ff6600';
+                            break;
+                        case 'CONCLUÍDA':
+                            $color = '#009900';
+                            break;
+                        case 'CANCELADA':
+                            $color = '#ff0000';
+                            break;
+                        }
     ?>
     <!-- End código PHP para conversão da data, para modelo brasileiro -->
      
@@ -1017,8 +1033,37 @@ $dateformated = date("d/m/Y", $date);
     <tr id="line-blue-table-hover">
 
 
-    <form method="POST" action="">
+    <form method="POST" action="../ViewFunctions/CreateAcaoReserva.php">
    
+
+
+    <input type="hidden" id="blue-input-cdst" name="idReserva" value="<?php echo $dado['ID'];?>" autocomplete="off"/>
+
+
+
+    <td id="colun-blue-table">   
+    
+    
+    
+    <div id="blue-title-listar">
+    
+
+
+    Código Reserva
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <input type="text" id="blue-input-cdst" name="idReserva" value="<?php echo $dado['ID'];?>" autocomplete="off" required disabled />
+
+
+
+    </td>
+
 
 
     <td id="colun-blue-table">   
@@ -1038,7 +1083,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="NumWo" value="<?php echo $dado['NUMWO'];?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="NumWo" value="<?php echo $dado['NUMWO'];?>" autocomplete="off" required disabled />
 
 
 
@@ -1063,7 +1108,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="QuantidadeReserva" value="<?php echo $dado['QUANTIDADE'];?> " autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="QuantidadeReserva" value="<?php echo $dado['QUANTIDADE'];?> " autocomplete="off" required disabled />
 
 
 
@@ -1088,7 +1133,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="DataReserva" value="<?php echo $dateformated;?> " autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="DataReserva" value="<?php echo $dateformated;?> " autocomplete="off" required disabled />
 
 
 
@@ -1113,7 +1158,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="ObservacaoReserva" value="<?php echo $dado['OBSERVACAO'];?> " autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="ObservacaoReserva" value="<?php echo $dado['OBSERVACAO'];?> " autocomplete="off" required disabled />
 
 
 
@@ -1139,7 +1184,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="Situacao" value="<?php echo $dado['SITUACAO'];?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="Situacao" value="<?php echo $dado['SITUACAO'];?>" autocomplete="off" style="color: <?php echo $color; ?>;" required disabled />
 
 
 
@@ -1163,7 +1208,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="Analista" value="<?php echo $dado['NOME'];?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="Analista" value="<?php echo $dado['NOME'];?>" autocomplete="off" required disabled />
 
 
 
@@ -1187,7 +1232,67 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="CodigoAnalista" value="<?php echo $dado['CODIGOP'];?>" autocomplete="off" required disabled /><br>
+    <input type="text" id="blue-input-cdst" name="CodigoAnalista" value="<?php echo $dado['CODIGOP'];?>" autocomplete="off" required disabled />
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Ação Reserva
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <select id="select-form" name="AcaoReserva">
+    
+
+
+    <option value="CONCLUÍDA">CONCLUÍDA</option>
+
+
+
+    <option value="CANCELADA">CANCELADA</option>
+
+
+
+    </select>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Confirmar Ação
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <button type="submit" id="blue-btn-cadastro-auxiliar" >Confirmar</button>
 
 
 

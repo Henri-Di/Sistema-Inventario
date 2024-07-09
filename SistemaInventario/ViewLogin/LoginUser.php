@@ -7,13 +7,13 @@ require_once("../ViewConnection/ConnectionInventario.php");
 
 // Função para redirecionar com base no nível de acesso
 function redirecionarPorNivelAcesso($nivelAcesso) {
-    if ($nivelAcesso == 1) {
+    if ($nivelAcesso == 'GESTOR') {
         header("Location: ../PainelGestor/ViewForms/PainelAdministrativo.php");
         exit();
-    } elseif ($nivelAcesso == 2) {
+    } elseif ($nivelAcesso == 'PREPOSTO') {
         header("Location: ../PainelPreposto/ViewForms/PainelPresposto.php");
         exit();
-    } elseif ($nivelAcesso == 3) {
+    } elseif ($nivelAcesso == 'ANALISTA') {
         header("Location: ../PainelAnalista/ViewForms/PainelAnalista.php");
         exit();
     }

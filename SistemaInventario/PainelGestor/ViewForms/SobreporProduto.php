@@ -1048,7 +1048,7 @@ $dateformated = date("d/m/Y", $date);
     </table>
 
 
-    <button type="submit" id="blue-btn-cdst">Sobrepor Produto  <i class="fa fa-refresh" id="blue-icon-btn-painel"></i></button>
+    <button type="submit" id="blue-btn-table-cadastro-produto">Sobrepor Produto  <i class="fa fa-refresh" id="blue-icon-btn-painel"></i></button>
 
 
 

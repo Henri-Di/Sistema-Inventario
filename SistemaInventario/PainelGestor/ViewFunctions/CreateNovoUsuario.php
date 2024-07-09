@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['NomeUsuario'], $_POST[
     $senha = password_hash($_POST['SenhaUsuario'], PASSWORD_DEFAULT); // Hasheando a senha
     $email = filter_input(INPUT_POST, 'EmailUsuario', FILTER_SANITIZE_EMAIL);
     $datacenter = mb_strtoupper(filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_SPECIAL_CHARS), 'UTF-8');
-    $nivel_acesso = filter_input(INPUT_POST, 'NiveldeAcesso', FILTER_SANITIZE_NUMBER_INT);
+    $nivel_acesso = filter_input(INPUT_POST, 'NiveldeAcesso', FILTER_SANITIZE_SPECIAL_CHARS);
+    $datacadastro = date('Y-m-d'); // Data atual no formato 'YYYY-MM-DD'
 
     // Verificar se o usuário ou e-mail já existem no banco de dados
     $stmt = $conn->prepare("SELECT * FROM USUARIO WHERE CODIGOP = ? OR EMAIL = ?");
@@ -29,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['NomeUsuario'], $_POST[
             exit(); // Termina a execução do script após redirecionamento
         } else {
             // Inserir o novo usuário no banco de dados com PRIMEIRO_LOGIN = 1
-            $stmt = $conn->prepare("INSERT INTO USUARIO (NOME, CODIGOP, SENHA, EMAIL, DATACENTER, NIVEL_ACESSO, PRIMEIRO_LOGIN) VALUES (?, ?, ?, ?, ?, ?, 1)");
+            $stmt = $conn->prepare("INSERT INTO USUARIO (NOME, CODIGOP, SENHA, EMAIL, DATACENTER, NIVEL_ACESSO, DATACADASTRO, PRIMEIRO_LOGIN) VALUES (?, ?, ?, ?, ?, ?, ?, 1)");
             if ($stmt) {
-                $stmt->bind_param("sssssi", $nome, $codigo, $senha, $email, $datacenter, $nivel_acesso);
+                $stmt->bind_param("sssssss", $nome, $codigo, $senha, $email, $datacenter, $nivel_acesso, $datacadastro);
                 if ($stmt->execute()) {
                     $_SESSION['message'] = "Usuário criado com sucesso.";
                     header("Location: ../ViewSucess/SucessCreateUsuario.php?sucesso=O cadastro do usuário foi realizado com sucesso");

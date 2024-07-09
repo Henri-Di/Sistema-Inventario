@@ -368,33 +368,36 @@
 require_once('../../ViewConnection/ConnectionInventario.php');
 
 $sql = "SELECT 
-T.*, 
-DC_DESTINO.NOME AS NOME_DATACENTER_DESTINO,
-DC_ORIGEM.NOME AS NOME_DATACENTER_ORIGEM,
-MAT_ORIGEM.MATERIAL AS NOME_MATERIAL_ORIGEM,
-MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
-MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
-MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO
-FROM 
-TRANSFERENCIA T
-JOIN 
-PRODUTO P_ORIGEM ON T.IDPRODUTO_ORIGEM = P_ORIGEM.IDPRODUTO
-JOIN 
-PRODUTO P_DESTINO ON T.IDPRODUTO_DESTINO = P_DESTINO.IDPRODUTO
-JOIN 
-MATERIAL MAT_ORIGEM ON P_ORIGEM.IDMATERIAL = MAT_ORIGEM.IDMATERIAL
-JOIN 
-METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
-JOIN 
-MATERIAL MAT_DESTINO ON P_DESTINO.IDMATERIAL = MAT_DESTINO.IDMATERIAL
-JOIN 
-METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
-JOIN 
-DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
-JOIN 
-DATACENTER DC_ORIGEM ON P_ORIGEM.IDDATACENTER = DC_ORIGEM.IDDATACENTER
-WHERE 
-T.SITUACAO = 'Pendente'";
+            T.*, 
+            DC_DESTINO.NOME AS NOME_DATACENTER_DESTINO,
+            DC_ORIGEM.NOME AS NOME_DATACENTER_ORIGEM,
+            MAT_ORIGEM.MATERIAL AS NOME_MATERIAL_ORIGEM,
+            MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
+            MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
+            MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO,
+            U.NOME AS NOME_USUARIO
+        FROM 
+            TRANSFERENCIA T
+        JOIN 
+            PRODUTO P_ORIGEM ON T.IDPRODUTO_ORIGEM = P_ORIGEM.IDPRODUTO
+        JOIN 
+            PRODUTO P_DESTINO ON T.IDPRODUTO_DESTINO = P_DESTINO.IDPRODUTO
+        JOIN 
+            MATERIAL MAT_ORIGEM ON P_ORIGEM.IDMATERIAL = MAT_ORIGEM.IDMATERIAL
+        JOIN 
+            METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
+        JOIN 
+            MATERIAL MAT_DESTINO ON P_DESTINO.IDMATERIAL = MAT_DESTINO.IDMATERIAL
+        JOIN 
+            METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
+        JOIN 
+            DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
+        JOIN 
+            DATACENTER DC_ORIGEM ON P_ORIGEM.IDDATACENTER = DC_ORIGEM.IDDATACENTER
+        JOIN 
+            USUARIO U ON T.IDUSUARIO = U.IDUSUARIO
+        WHERE 
+            T.SITUACAO = 'Pendente'";
 
 
 
@@ -457,6 +460,7 @@ $dateformated = date("d/m/Y", $date);
 <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Site Destino</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER_DESTINO'] . "</div></td>" ?>  
 <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Transferência</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
 <?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['OBSERVACAO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Analista</div> <div id='blue-input-cdst-alert'>" . $row['NOME_USUARIO'] . "</div></td>" ?> 
 <?php echo "</tr>";?> 
 <?php echo "</table>";?>        
 

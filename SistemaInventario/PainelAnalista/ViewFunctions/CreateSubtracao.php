@@ -80,7 +80,7 @@ $conn->begin_transaction();
 
 try {
     // Verificar se há reservas para o produto
-    $sqlVerificaReserva = "SELECT RESERVADO FROM ESTOQUE WHERE IDPRODUTO = ?";
+    $sqlVerificaReserva = "SELECT RESERVADO_TRANSFERENCIA FROM ESTOQUE WHERE IDPRODUTO = ?";
     $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
     $stmtVerificaReserva->bind_param("i", $idProduto);
     $stmtVerificaReserva->execute();

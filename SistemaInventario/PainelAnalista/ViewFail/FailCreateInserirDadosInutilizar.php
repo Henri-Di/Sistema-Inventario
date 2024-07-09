@@ -570,7 +570,6 @@ $dateformated = date("d/m/Y", $date);
 <?php } ?>
 
 
-
 </div>
 
     
