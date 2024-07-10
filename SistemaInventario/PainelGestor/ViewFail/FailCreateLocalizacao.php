@@ -578,6 +578,8 @@ $dateformated = date("d/m/Y", $date);
 
 </div>
 
+
+
     
     <!-- Título da seção de cadastros auxiliares -->
     <div id="blue-line-title-btn-painel">

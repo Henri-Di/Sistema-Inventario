@@ -484,6 +484,106 @@ $dateformated = date("d/m/Y", $date);
 </div>
 
 
+<div class="alerts" style="display: none;" id="transferAlerts">
+
+
+
+<?php 
+
+
+// Conexão e consulta ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
+
+$sql = "SELECT 
+            R.*, 
+            DC.NOME AS NOME_DATACENTER,
+            MAT.MATERIAL AS NOME_MATERIAL,
+            MET.METRAGEM AS METRAGEM_PRODUTO,
+            U.NOME AS NOME_USUARIO,
+            E.QUANTIDADE AS QUANTIDADE_TOTAL,
+            E.RESERVADO_RESERVA AS QUANTIDADE_RESERVADA,
+            R.OBSERVACAO
+        FROM 
+            RESERVA R
+        JOIN 
+            PRODUTO P ON R.IDPRODUTO = P.IDPRODUTO
+        JOIN 
+            MATERIAL MAT ON P.IDMATERIAL = MAT.IDMATERIAL
+        JOIN 
+            METRAGEM MET ON P.IDMETRAGEM = MET.IDMETRAGEM
+        JOIN 
+            DATACENTER DC ON P.IDDATACENTER = DC.IDDATACENTER
+        JOIN 
+            USUARIO U ON R.IDUSUARIO = U.IDUSUARIO
+        JOIN 
+            ESTOQUE E ON P.IDPRODUTO = E.IDPRODUTO
+        WHERE 
+            R.SITUACAO = 'Pendente'";
+
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) { 
+
+
+
+echo "<script>document.getElementById('transferAlerts').style.display = 'block';</script>";
+
+
+$date = strtotime($row['DATARESERVA']);
+// $data agora é uma inteiro timestamp
+
+
+
+$dateformated = date("d/m/Y", $date);
+// date() formatou o $date para d/m/Y
+
+
+
+?>
+<!-- End código PHP para conversão da data, para modelo brasileiro -->
+<span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span> 
+
+
+
+<!-- Título da seção de cadastros auxiliares -->
+<div id="blue-line-title-btn-painel-alert">
+
+
+
+<p id="blue-title-btn-painel-alert">Reserva Pendente  <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+
+
+
+</div>
+
+
+<?php echo "<table class='table table-bordered' id='blue-table-cadastro-auxiliar' style='margin-top:1%;'>";?>
+<?php echo "<tr id='line-blue-table-alert'>";?>       
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Código Reserva</div>  <div id='blue-input-cdst-alert'>"   . $row['ID'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Nº WO</div> <div id='blue-input-cdst-alert'>" . $row['NUMWO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto</div> <div id='blue-input-cdst-alert'>" . $row['NOME_MATERIAL'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Metragem</div> <div id='blue-input-cdst-alert'>" . $row['METRAGEM_PRODUTO'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Reservada</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE_RESERVADA'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Total</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE_TOTAL'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>DataCenter</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER'] . "</div></td>" ?>  
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Reserva</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['NOME_USUARIO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Analista</div> <div id='blue-input-cdst-alert'>" . $row['NOME_USUARIO'] . "</div></td>" ?> 
+<?php echo "</tr>";?> 
+<?php echo "</table>";?>        
+
+
+
+<?php } ?>
+
+
+
+<?php } ?>
+
+
+</div>
+
     <div id="blue-line-title-btn-painel">
 
 

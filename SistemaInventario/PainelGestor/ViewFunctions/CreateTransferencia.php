@@ -82,7 +82,7 @@ try {
     $stmtDatacenterDestino->close();
 
     if (!$idDatacenterDestino) {
-        header("Location: ../ViewFail/FailCreateDatacenterDestinoNaoEncontrado.php?erro=O datacenter de destino não foi encontrado");
+        header("Location: ../ViewFail/FailCreateDatacenterDestinoNãoEncontrado.php?erro=O datacenter de destino não foi encontrado");
         exit();
     }
 

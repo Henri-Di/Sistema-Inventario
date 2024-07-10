@@ -9,7 +9,7 @@ unset($_SESSION['usuarioCodigoP']);
 unset($_SESSION['usuarioSenha']);
 
 // Definir mensagem de deslogado
-$_SESSION['logindeslogado'] = "<p style='color:red;font-weight:bold;margin-left:32%;font-size:12px;'>Sessão encerrada!</p>";
+$_SESSION['logindeslogado'] = "<p style='color:red;font-weight:bold;margin-left:32%;font-size:12px;'>Sessão encerrada</p>";
 
 // Redirecionar o usuário para a página de login
 header("Location: ../Index.php");
