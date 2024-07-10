@@ -1058,7 +1058,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="idReserva" value="<?php echo $dado['ID'];?>" autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="Codigo" value="<?php echo $dado['ID'];?>" autocomplete="off" required disabled />
 
 
 

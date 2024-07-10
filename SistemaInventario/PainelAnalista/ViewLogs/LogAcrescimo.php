@@ -1022,6 +1022,30 @@ $dateformated = date("d/m/Y", $date);
     <form method="POST" action="">
 
 
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Código Acréscimo
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoAcrescimo" value="<?php echo $dado['ID'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
 
     <td id="colun-blue-table">
     

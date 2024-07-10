@@ -1033,6 +1033,31 @@ $dateformated = date("d/m/Y", $date);
     
 
 
+    Código Inutilização
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoInutilizacao" value="<?php echo $dado['ID'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
     Quantidade Inutilizada
     
 

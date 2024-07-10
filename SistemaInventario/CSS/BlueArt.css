@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+/* Estilo de fundo para o corpo da página */
+body {
+  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
+}
+
+
 
 body{
   cursor: context-menu; /* Cursor de contexto */
@@ -28,6 +34,7 @@ body::before {
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
 }
 
+
 /* Estilo para todas as imagens */
 img {
   max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do contêiner */
@@ -46,6 +53,89 @@ img {
   filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
 }
 
+/* Estilo para o logo da página */
+#logo-blue {
+  color: #005ce6; /* Cor do texto */
+  font-size: 2rem; /* Tamanho da fonte responsivo */
+  font-weight: bold; /* Negrito */
+  text-align: center; /* Centraliza o texto */
+  margin: 15px 0; /* Margem superior e inferior */
+}
+
+/* Estilo para o ícone do logo da página */
+#blue-icon-logo {
+  color: #005ce6; /* Cor do texto */
+  font-size: 1.5rem; /* Tamanho da fonte responsivo */
+  margin-left: 5px; /* Espaçamento à esquerda */
+}
+
+/* Estilo para o subtítulo da página */
+#blue-sub-title-page {
+  font-size: 16px; /* Tamanho da fonte */
+  color: #005ce6; /* Cor do texto */
+  text-align: center; /* Centraliza o texto */
+}
+
+/* Estilo para os links da barra de navegação */
+#menu-blue {
+  color: #005ce6; /* Cor do texto */
+  width: 85%; /* Largura do link */
+  font-weight: bold; /* Negrito */
+  font-size: 12px; /* Tamanho da fonte */
+  border: 1px solid #005ce6; /* Borda ao redor do link */
+  text-align: center; /* Centraliza o texto */
+  margin-left: 4%; /* Espaçamento à esquerda */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Efeito hover para os links da barra de navegação */
+#menu-blue:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do texto ao passar o mouse */
+  font-weight: bold; /* Negrito */
+  opacity: 0.7; /* Transparência ao passar o mouse */
+}
+
+/* Estilo para os itens de lista da barra de navegação */
+#list-blue {
+  background-color: transparent; /* Fundo transparente */
+  border-radius: 5px; /* Bordas arredondadas */
+  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+}
+
+/* Efeito hover para os itens de lista da barra de navegação */
+#list-blue:hover {
+  background-color: #ffffff; /* Cor de fundo ao passar o mouse */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  #menu-blue {
+    width: 90%; /* Ajusta a largura do link */
+    margin-left: 2%; /* Ajusta o espaçamento à esquerda */
+    font-size: 13px; /* Ajusta o tamanho da fonte */
+    border-width: 1px; /* Ajusta a largura da borda */
+    padding: 8px; /* Ajusta o padding */
+  }
+
+  #menu-blue:hover {
+    font-size: 13px; /* Ajusta o tamanho da fonte ao passar o mouse */
+  }
+
+  #list-blue {
+    padding: 8px 0; /* Ajusta o padding dos itens da lista */
+  }
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+  #menu-blue {
+    width: 95%; /* Ajusta a largura do link */
+    margin-left: 2.5%; /* Ajusta o espaçamento à esquerda */
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+    padding: 6px; /* Ajusta o padding */
+  }
+}
 
 /* Estilo para o formulário de login do usuário */
 #blue-form-login {
@@ -81,70 +171,6 @@ img {
 }
 
 /* Efeito hover para o botão de login do usuário */
-#blue-btn-login:hover {
-  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
-  color: #ffffff; /* Cor do texto ao passar o mouse */
-  opacity: 0.7; /* Transparência ao passar o mouse */
-}
-
-/* Estilo para o logo da página */
-#logo-blue {
-  color: #005ce6; /* Cor do texto */
-  font-size: 2rem; /* Tamanho da fonte responsivo */
-  font-weight: bold; /* Negrito */
-  text-align: center; /* Centraliza o texto */
-  margin: 15px 0; /* Margem superior e inferior */
-}
-
-/* Estilo para o ícone do logo da página */
-#blue-icon-logo {
-  color: #005ce6; /* Cor do texto */
-  font-size: 1.5rem; /* Tamanho da fonte responsivo */
-  margin-left: 5px; /* Espaçamento à esquerda */
-}
-
-
-/* Estilo para o subtítulo da página */
-#blue-sub-title-page {
-  font-size: 16px; /* Tamanho da fonte */
-  color: #005ce6; /* Cor do texto */
-  text-align: center; /* Centraliza o texto */
-}
-
-/* Estilo para o formulário de login do usuário */
-#blue-form-login {
-  margin-left: 33%; /* Ajusta a margem à esquerda para centralizar */
-}
-
-/* Estilo para o campo de entrada de login do usuário */
-#blue-input-login {
-  width: 28%; /* Largura do campo de entrada */
-  height: auto; /* Altura automática */
-  outline: none; /* Remove a borda de foco padrão */
-  font-size: 12px; /* Tamanho da fonte */
-  font-weight: bold; /* Negrito */
-  background-color: transparent; /* Cor de fundo */
-  color: #5c5c8a; /* Cor do texto */
-  border-top: none; /* Remove a borda superior */
-  border-right: none; /* Remove a borda direita */
-  border-left: none; /* Remove a borda esquerda */
-  border-bottom: 1px solid #005ce6; /* Define a borda inferior */
-}
-
-/* Estilo para o botão de login do usuário */
-#blue-btn-login {
-  background-color: transparent; /* Fundo transparente */
-  border: 1px solid #005ce6; /* Borda do botão */
-  color: #005ce6; /* Cor do texto */
-  font-size: 11px; /* Tamanho da fonte */
-  font-weight: bold; /* Negrito */
-  width: 28%; /* Largura do botão */
-  padding: 1px; /* Padding */
-  border-radius: 5px; /* Bordas arredondadas */
-  transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
-}
-
-/* Efeito hover para bo otão de login do usuário */
 #blue-btn-login:hover {
   background-color: #005ce6; /* Cor de fundo ao passar o mouse */
   color: #ffffff; /* Cor do texto ao passar o mouse */
@@ -619,7 +645,7 @@ img {
   
   /* Estilo para o ícone dos botões na sessão de reservas do painel administrativo */
   #blue-icon-btn-painel {
-    font-size: 9px; /* Tamanho da fonte */
+    font-size: 11px; /* Tamanho da fonte */
   }
   
   /* Estilo para o container que envolve os botões na sessão de reservas do painel administrativo */
@@ -722,7 +748,7 @@ img {
   #blue-table-cadastro-auxiliar {
     width: 100%; /* Largura total */
     margin-top: -1%; /* Margem superior */
-    table-layout: auto; /* Ajustar a largura das células automaticamente */
+    table-layout: fixed; /* Ajustar a largura das células fixa */
   }
 
   #blue-table-cadastro-auxiliar td {
@@ -730,6 +756,7 @@ img {
     overflow: hidden; /* Esconder conteúdo excedente */
     text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
     white-space: nowrap; /* Não quebrar linhas */
+    min-width:200px;
   }
 
   /* Media Queries para dispositivos menores */
@@ -819,7 +846,7 @@ img {
   
      /* Estilo para o contêiner da tabela auxiliar de cadastro */
   #blue-table-cadastro-auxiliar-print {
-    width: 90%; /* Largura total */
+    width: 80%; /* Largura total */
     margin-top: -1%; /* Margem superior */
     table-layout: auto; /* Ajustar a largura das células automaticamente */
   }
@@ -1001,7 +1028,7 @@ img {
   margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
-  font-size: 11px; /* Tamanho da fonte reduzido */
+  font-size: 12px; /* Tamanho da fonte reduzido */
   transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
   flex: 1; /* Ocupa espaço igualmente dentro do container flexível */
   max-width: 10%; /* Largura máxima para garantir que 9 botões caibam na mesma linha */
@@ -1024,31 +1051,32 @@ img {
   margin-left: -1%; /* Ajuste de margem esquerda */
 }
 
-#blue-btn-print{
-  margin-left:45%;
-  width:10%;
-  outline:none;
-  color:#005ce6;
-  border:1px solid #005ce6;
-  background-color:#ffffff;
-  font-size:11px;
-  font-weight:bold;
+/* Estilo para o botão de impressão */
+#blue-btn-print {
+  margin-left: 0%; /* Margem à esquerda */
+  width: 10%; /* Largura do botão */
+  outline: none; /* Remover contorno ao focar */
+  color: #005ce6; /* Cor do texto */
+  border: 1px solid #005ce6; /* Borda sólida */
+  background-color: #ffffff; /* Cor de fundo */
+  font-size: 11px; /* Tamanho da fonte */
+  font-weight: bold; /* Negrito */
   transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
 }
 
-
-#blue-btn-print:hover{
-  background-color:#005ce6;
-  color:#ffffff;
-  opacity:0.7;
+/* Estilo de hover para o botão de impressão */
+#blue-btn-print:hover {
+  background-color: #005ce6; /* Cor de fundo ao passar o mouse */
+  color: #ffffff; /* Cor do texto ao passar o mouse */
+  opacity: 0.7; /* Opacidade ao passar o mouse */
 }
 
-#btn-blue-print-log-transferencia{
-  background-color:transparent;
-  border:none;
-  font-size: 10px;
-  color:#005ce6;  
-  margin-top:5px;
-  margin-left:20px;
-
+/* Estilo para o botão de impressão de log de transferência */
+#btn-blue-print-log-transferencia {
+  background-color: transparent; /* Cor de fundo transparente */
+  border: none; /* Sem borda */
+  font-size: 10px; /* Tamanho da fonte */
+  color: #005ce6; /* Cor do texto */
+  margin-top: 5px; /* Margem superior */
+  margin-left: 30px; /* Margem à esquerda */
 }

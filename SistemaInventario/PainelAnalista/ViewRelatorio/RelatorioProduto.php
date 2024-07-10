@@ -546,6 +546,7 @@ if ($stmt = $conn->prepare($consultaUsuario)) {
     $stmt->close();
 }
 
+
 // Consulta para obter os produtos
 $consulta = "
     SELECT 
@@ -575,22 +576,24 @@ $consulta = "
     INNER JOIN 
         DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-// Adicionar condição de datacenter se o nível de acesso não for 1
-if ($nivelAcesso != 1) {
+// Adicionar condição de datacenter se o nível de acesso não for gestor
+if ($nivelAcesso != 'GESTOR') {
     $consulta .= " WHERE d.NOME = ?";
 }
 
 $consulta .= " ORDER BY p.IDPRODUTO";
 
 if ($stmt = $conn->prepare($consulta)) {
-    if ($nivelAcesso != 1) {
+    if ($nivelAcesso != 'GESTOR') {
         $stmt->bind_param("s", $datacenterUsuario);
     }
     $stmt->execute();
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
-        while ($row = $resultado->fetch_assoc()) { ?>
+        while ($row = $resultado->fetch_assoc()) {
+            // Definir a cor do texto com base na quantidade
+            $quantidadeCor = $row['QUANTIDADE'] > 0 ? '#009900' : '#ff0000'; ?>
 
 
 
@@ -689,7 +692,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $row['QUANTIDADE']; ?></p>
+    <p id="blue-text-table-exibicao" style="color:<?php echo $quantidadeCor; ?>;"><?php echo $row['QUANTIDADE']; ?></p>
 
 
 

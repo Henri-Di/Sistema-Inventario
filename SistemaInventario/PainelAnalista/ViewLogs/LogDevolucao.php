@@ -1030,6 +1030,31 @@ $dateformated = date("d/m/Y", $date);
     
 
 
+    Código Devolução
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoDevolucao" value="<?php echo $dado['ID'];?>" autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">   
+    
+    
+    
+    <div id="blue-title-listar">
+    
+
+
     Nº WO
     
 

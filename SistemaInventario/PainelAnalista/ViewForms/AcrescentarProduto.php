@@ -1046,7 +1046,7 @@ $dateformated = date("d/m/Y", $date);
     </table>
 
 
-    <button type="submit" id="blue-btn-cdst">Acrescentar Produto  <i class="fa fa-level-up" id="blue-icon-btn-painel"></i></button>
+    <button type="submit" id="blue-btn-table-cadastro-produto">Acrescentar Produto  <i class="fa fa-level-up" id="blue-icon-btn-painel"></i></button>
 
 
 

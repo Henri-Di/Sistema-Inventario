@@ -524,7 +524,6 @@ $dateformated = date("d/m/Y", $date);
    <br>
 
 
-
    <?php
 
 // Obter o ID do usuário a partir da sessão
@@ -542,6 +541,7 @@ if ($stmt = $conn->prepare($consultaUsuario)) {
     $stmt->fetch();
     $stmt->close();
 }
+
 
 // Consulta para obter os produtos
 $consulta = "
@@ -587,7 +587,10 @@ if ($stmt = $conn->prepare($consulta)) {
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
-        while ($row = $resultado->fetch_assoc()) { ?>
+        while ($row = $resultado->fetch_assoc()) {
+            // Definir a cor do texto com base na quantidade
+            $quantidadeCor = $row['QUANTIDADE'] > 0 ? '#009900' : '#ff0000';
+?>
 
 
 
@@ -686,7 +689,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $row['QUANTIDADE']; ?></p>
+    <p id="blue-text-table-exibicao" style="color: <?php echo $quantidadeCor; ?>;"><?php echo $row['QUANTIDADE']; ?></p>
 
 
 

@@ -1061,7 +1061,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="idReserva" value="<?php echo $dado['ID'];?>" autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="Codigo" value="<?php echo $dado['ID'];?>" autocomplete="off"  disabled />
 
 
 
@@ -1086,7 +1086,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="NumWo" value="<?php echo $dado['NUMWO'];?>" autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="NumWo" value="<?php echo $dado['NUMWO'];?>" autocomplete="off"  disabled />
 
 
 
@@ -1111,7 +1111,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="QuantidadeReserva" value="<?php echo $dado['QUANTIDADE'];?> " autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="QuantidadeReserva" value="<?php echo $dado['QUANTIDADE'];?> " autocomplete="off"  disabled />
 
 
 
@@ -1136,7 +1136,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="DataReserva" value="<?php echo $dateformated;?> " autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="DataReserva" value="<?php echo $dateformated;?> " autocomplete="off"  disabled />
 
 
 
@@ -1161,7 +1161,7 @@ $dateformated = date("d/m/Y", $date);
     
 
 
-    <input type="text" id="blue-input-cdst" name="ObservacaoReserva" value="<?php echo $dado['OBSERVACAO'];?> " autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="ObservacaoReserva" value="<?php echo $dado['OBSERVACAO'];?> " autocomplete="off"  disabled />
 
 
 
@@ -1187,7 +1187,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="Situacao" value="<?php echo $dado['SITUACAO'];?>" autocomplete="off" style="color: <?php echo $color; ?>;" required disabled />
+    <input type="text" id="blue-input-cdst" name="Situacao" value="<?php echo $dado['SITUACAO'];?>" autocomplete="off" style="color: <?php echo $color; ?>;"  disabled />
 
 
 
@@ -1211,7 +1211,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="Analista" value="<?php echo $dado['NOME'];?>" autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="Analista" value="<?php echo $dado['NOME'];?>" autocomplete="off"  disabled />
 
 
 
@@ -1235,7 +1235,7 @@ $dateformated = date("d/m/Y", $date);
 
 
 
-    <input type="text" id="blue-input-cdst" name="CodigoAnalista" value="<?php echo $dado['CODIGOP'];?>" autocomplete="off" required disabled />
+    <input type="text" id="blue-input-cdst" name="CodigoAnalista" value="<?php echo $dado['CODIGOP'];?>" autocomplete="off"  disabled />
 
 
 

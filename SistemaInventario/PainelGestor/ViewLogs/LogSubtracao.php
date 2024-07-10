@@ -1025,6 +1025,32 @@ $dateformated = date("d/m/Y", $date);
     <form method="POST" action="">
 
 
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Código Diminuição
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoDiminuicao" value="<?php echo $dado['ID'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
     <td id="colun-blue-table">
     
 
@@ -1047,6 +1073,8 @@ $dateformated = date("d/m/Y", $date);
 
 
     </td>
+
+
 
     <td id="colun-blue-table">
     

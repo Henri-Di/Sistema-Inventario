@@ -1058,7 +1058,7 @@ $dateformated = date("d/m/Y", $date);
     </table>
 
 
-    <button type="submit" id="blue-btn-cdst">Devolver Produto  <i class="fa fa-exchange"></i></button>
+    <button type="submit" id="blue-btn-table-cadastro-produto">Devolver Produto  <i class="fa fa-exchange"></i></button>
 
 
 
