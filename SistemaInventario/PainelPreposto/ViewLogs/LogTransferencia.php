@@ -1049,7 +1049,9 @@ $sql = "SELECT
             MAT_ORIGEM.MATERIAL AS NOME_MATERIAL_ORIGEM,
             MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
             MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
-            MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO
+            MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO,
+            MOD_ORIGEM.MODELO AS MODELO_PRODUTO_ORIGEM,
+            MOD_DESTINO.MODELO AS MODELO_PRODUTO_DESTINO
         FROM 
             TRANSFERENCIA T
         JOIN 
@@ -1064,6 +1066,10 @@ $sql = "SELECT
             METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
         JOIN 
             METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
+        JOIN 
+            MODELO MOD_ORIGEM ON P_ORIGEM.IDMODELO = MOD_ORIGEM.IDMODELO
+        JOIN 
+            MODELO MOD_DESTINO ON P_DESTINO.IDMODELO = MOD_DESTINO.IDMODELO
         JOIN 
             DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
         JOIN 
@@ -1239,6 +1245,30 @@ $sql = "SELECT
 
 
     <input type="text" id="blue-input-cdst" name="QuantidadeTransferida" value="<?php echo $row['QUANTIDADE'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td> 
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Modelo
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Modelo" value="<?php echo $row['MODELO_PRODUTO_ORIGEM'];?> " autocomplete="off" required disabled /><br>
 
 
 

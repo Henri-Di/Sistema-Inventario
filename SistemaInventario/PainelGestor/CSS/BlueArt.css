@@ -980,7 +980,7 @@ img {
 #blue-button-nova-senha {
   width: 20%; /* Largura do botão */
   height: auto; /* Altura automática */
-  background-color:#ffffff; /* Cor de fundo do botão */
+  background-color: transparent; /* Cor de fundo do botão */
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
   margin-left: -40%; /* Margem à esquerda negativa para reposicionar */
@@ -1046,7 +1046,7 @@ img {
 #blue-btn-relatorio-auxiliar-blue {
   width: 10%; /* Largura do botão */
   height: auto; /* Altura automática */
-  background-color: #ffffff; /* Define a cor de fundo como branco*/
+  background-color: transparent; /* Define a cor de fundo como branco*/
   outline: none; /* Sem contorno ao focar */
   margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
   border-radius: 3px; /* Borda arredondada */
