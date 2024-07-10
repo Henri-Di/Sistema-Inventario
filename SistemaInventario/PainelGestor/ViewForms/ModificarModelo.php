@@ -278,8 +278,19 @@
 
 
 
+    <div class="container-fluid">
+    
+
+
     <!-- Botão de sair -->
     <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
+  
+
+    <!-- Nome do usuário -->
+    <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome'];?></p>
+    
+
+    </div>
 
     
     <br>

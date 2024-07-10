@@ -721,8 +721,9 @@ img {
 
 /* Estilo para o botão de logout */
 #blue-btn-sign-out {
-  width: 5%; /* Largura */
+  width: 0%; /* Largura */
   height: auto; /* Altura automática */
+  padding:0;
   float: right; /* Alinhamento à direita */
   background-color: transparent; /* Fundo transparente */
   border: none; /* Sem borda */
@@ -766,6 +767,14 @@ img {
     width: 20%; /* Aumenta a largura para telas muito pequenas */
     font-size: 6px; /* Diminui o tamanho da fonte para se ajustar */
   }
+}
+
+
+  #blue-text-session-user{
+    float: right;
+    font-size: 12px;
+    margin-top: -2px; 
+    margin-right: 10px;
 }
 
   /* Estilo para o contêiner da tabela auxiliar de cadastro */
