@@ -111,11 +111,11 @@
 
 
      <!-- Título da seção de cadastros auxiliares -->
-    <div id="blue-line-title-btn-painel" style="width:41%;margin-left:31%;">
+    <div id="blue-line-title-btn-painel" style="width:30%;margin-left:49%;">
     
 
 
-    <img src="../Images/images.png" class="logo" style="margin-left:0%;">
+    <img src="../Images/images.png" class="logo2" style="margin-left:0%;">
 
 
 
@@ -126,7 +126,7 @@
     </div>
 
 
-    <div class="container-fluid" style="margin-left:30%;margin-top:1%;">
+    <div class="container-fluid" style="margin-left:48%;margin-top:1%;">
 
 
     <!-- Formulário para cadastrar  -->

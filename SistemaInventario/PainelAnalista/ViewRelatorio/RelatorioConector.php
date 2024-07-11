@@ -375,7 +375,6 @@
 // Conexão ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
-// Consulta SQL
 $sql = "SELECT 
             T.*, 
             DC_DESTINO.NOME AS NOME_DATACENTER_DESTINO,
@@ -384,6 +383,8 @@ $sql = "SELECT
             MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
             MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
             MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO,
+            MO_ORIGEM.MODELO AS NOME_MODELO_ORIGEM,
+            MO_DESTINO.MODELO AS NOME_MODELO_DESTINO,
             U.NOME AS NOME_USUARIO,
             DATE_FORMAT(T.DATA_TRANSFERENCIA, '%d/%m/%Y') AS DATA_FORMATADA
         FROM 
@@ -397,9 +398,13 @@ $sql = "SELECT
         JOIN 
             METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
         JOIN 
+            MODELO MO_ORIGEM ON P_ORIGEM.IDMODELO = MO_ORIGEM.IDMODELO
+        JOIN 
             MATERIAL MAT_DESTINO ON P_DESTINO.IDMATERIAL = MAT_DESTINO.IDMATERIAL
         JOIN 
             METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
+        JOIN 
+            MODELO MO_DESTINO ON P_DESTINO.IDMODELO = MO_DESTINO.IDMODELO
         JOIN 
             DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
         JOIN 
@@ -446,15 +451,19 @@ if ($result === false) {
                         <div id="blue-input-cdst-alert"><?php echo $row['METRAGEM_PRODUTO_DESTINO']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Modelo</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MODELO_ORIGEM']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Quantidade Transferida</div>
                         <div id="blue-input-cdst-alert"><?php echo $row['QUANTIDADE']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Site Origem</div>
+                        <div id="blue-title-listar-alert">Datacenter Origem</div>
                         <div id="blue-input-cdst-alert"><?php echo $row['NOME_DATACENTER_ORIGEM']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Site Destino</div>
+                        <div id="blue-title-listar-alert">Datacenter Destino</div>
                         <div id="blue-input-cdst-alert"><?php echo $row['NOME_DATACENTER_DESTINO']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
@@ -493,7 +502,6 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 // Nome do usuário da sessão atual
 $nomeUsuarioSessao = $_SESSION['usuarioNome'];
 
-// Consulta SQL
 $sql = "SELECT 
             R.*, 
             DC.NOME AS NOME_DATACENTER,
@@ -503,7 +511,8 @@ $sql = "SELECT
             E.QUANTIDADE AS QUANTIDADE_TOTAL,
             E.RESERVADO_RESERVA AS QUANTIDADE_RESERVADA,
             R.OBSERVACAO,
-            DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA
+            DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA,
+            MO.MODELO AS NOME_MODELO
         FROM 
             RESERVA R
         JOIN 
@@ -518,6 +527,8 @@ $sql = "SELECT
             USUARIO U ON R.IDUSUARIO = U.IDUSUARIO
         JOIN 
             ESTOQUE E ON P.IDPRODUTO = E.IDPRODUTO
+        JOIN 
+            MODELO MO ON P.IDMODELO = MO.IDMODELO
         WHERE 
             R.SITUACAO = 'Pendente'
             AND U.NOME = '" . $conn->real_escape_string($nomeUsuarioSessao) . "'";
@@ -558,6 +569,10 @@ if ($result === false) {
                     <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Metragem</div>
                         <div id="blue-input-cdst-alert">{$row['METRAGEM_PRODUTO']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Modelo</div>
+                        <div id="blue-input-cdst-alert">{$row['NOME_MODELO']}</div>
                     </td>
                     <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Quantidade Reservada</div>

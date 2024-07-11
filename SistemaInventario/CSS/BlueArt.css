@@ -53,6 +53,17 @@ img {
   filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
 }
 
+
+/* Estilo para a logo */
+.logo2 {
+  max-width: 70px; /* Define a largura máxima para a logo */
+  height: auto; /* Mantém a altura proporcional à largura */
+  margin-top: -19%; /* Ajusta a margem superior para posicionamento */
+  margin-left: 70%; /* Ajusta a margem esquerda para centralizar */
+  transform: translateX(-50%); /* Centraliza horizontalmente */
+  filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
+}
+
 /* Estilo para o logo da página */
 #logo-blue {
   color: #005ce6; /* Cor do texto */
