@@ -719,84 +719,120 @@ $dateformated = date("d/m/Y", $date);
     <br>
 
 
-    
-<!-- Start código PHP search material -->
-<?php
+    <?php
+
 // Conexão com o banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
+// Obter o ID do usuário a partir da sessão
+$idUsuario = $_SESSION['usuarioId'] ?? '';
+
+// Sanitizar o ID do usuário para evitar injeção de SQL
+$idUsuario = $conn->real_escape_string($idUsuario);
+
+// Consulta para obter o datacenter e nível de acesso do usuário
+$consultaUsuario = "SELECT DATACENTER, NIVEL_ACESSO FROM USUARIO WHERE IDUSUARIO = ?";
+if ($stmt = $conn->prepare($consultaUsuario)) {
+    $stmt->bind_param("i", $idUsuario);
+    $stmt->execute();
+    $stmt->bind_result($datacenterUsuario, $nivelAcesso);
+    $stmt->fetch();
+    $stmt->close();
+}
+
 // Obtém o termo de pesquisa enviado pelo formulário
 $search = $_POST['search'] ?? '';
-
 // Protege contra SQL Injection escapando os caracteres especiais no input do usuário
 $search = mysqli_real_escape_string($conn, $search);
 
-// Ajusta a consulta SQL para pesquisar em múltiplos campos nas tabelas relacionadas sem filtrar pelo datacenter do usuário
-$result_search = "
-SELECT 
-    PRODUTO.IDPRODUTO, 
-    MATERIAL.MATERIAL AS MATERIAL, 
-    CONECTOR.CONECTOR AS CONECTOR, 
-    METRAGEM.METRAGEM AS METRAGEM, 
-    MODELO.MODELO AS MODELO, 
-    FORNECEDOR.FORNECEDOR AS FORNECEDOR, 
-    PRODUTO.DATACADASTRO, 
-    DATACENTER.NOME AS DATACENTER, 
-    GRUPO.GRUPO AS GRUPO, 
-    LOCALIZACAO.LOCALIZACAO AS LOCALIZACAO,
-    ESTOQUE.QUANTIDADE 
-FROM 
-    PRODUTO
-JOIN 
-    ESTOQUE ON PRODUTO.IDPRODUTO = ESTOQUE.IDPRODUTO 
-JOIN 
-    DATACENTER ON PRODUTO.IDDATACENTER = DATACENTER.IDDATACENTER 
-JOIN 
-    MATERIAL ON PRODUTO.IDMATERIAL = MATERIAL.IDMATERIAL
-JOIN 
-    CONECTOR ON PRODUTO.IDCONECTOR = CONECTOR.IDCONECTOR
-JOIN 
-    METRAGEM ON PRODUTO.IDMETRAGEM = METRAGEM.IDMETRAGEM
-JOIN 
-    MODELO ON PRODUTO.IDMODELO = MODELO.IDMODELO
-JOIN 
-    FORNECEDOR ON PRODUTO.IDFORNECEDOR = FORNECEDOR.IDFORNECEDOR
-JOIN 
-    GRUPO ON PRODUTO.IDGRUPO = GRUPO.IDGRUPO
-JOIN 
-    LOCALIZACAO ON PRODUTO.IDLOCALIZACAO = LOCALIZACAO.IDLOCALIZACAO
-WHERE 
-    PRODUTO.IDPRODUTO LIKE '%$search%' 
-    OR MATERIAL.MATERIAL LIKE '%$search%' 
-    OR CONECTOR.CONECTOR LIKE '%$search%' 
-    OR METRAGEM.METRAGEM LIKE '%$search%' 
-    OR MODELO.MODELO LIKE '%$search%' 
-    OR FORNECEDOR.FORNECEDOR LIKE '%$search%' 
-    OR DATACENTER.NOME LIKE '%$search%' 
-    OR GRUPO.GRUPO LIKE '%$search%' 
-    OR LOCALIZACAO.LOCALIZACAO LIKE '%$search%' 
-    OR ESTOQUE.QUANTIDADE LIKE '%$search%'";
+// Consulta para obter os produtos
+$consulta = "
+    SELECT 
+        p.IDPRODUTO, 
+        m.MATERIAL, 
+        c.CONECTOR, 
+        met.METRAGEM, 
+        mdo.MODELO, 
+        f.FORNECEDOR, 
+        p.DATACADASTRO, 
+        d.NOME AS NOME_DATACENTER, 
+        e.QUANTIDADE
+    FROM 
+        PRODUTO p
+    INNER JOIN 
+        MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
+    INNER JOIN 
+        CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
+    INNER JOIN 
+        METRAGEM met ON p.IDMETRAGEM = met.IDMETRAGEM
+    INNER JOIN 
+        MODELO mdo ON p.IDMODELO = mdo.IDMODELO
+    INNER JOIN 
+        FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
+    INNER JOIN 
+        ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
+    INNER JOIN 
+        DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-$stmt = $conn->prepare($result_search);
-$stmt->execute();
-$resultado_search = $stmt->get_result();
+// Adicionar condição de datacenter se o nível de acesso não for gestor ou preposto
+if ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') {
+    $consulta .= " WHERE d.NOME = ?";
+}
 
-// Verifica se há resultados e os exibe
-if ($resultado_search->num_rows > 0) {
-    while ($row = $resultado_search->fetch_assoc()) {
+// Adiciona a condição de pesquisa, se houver um termo de pesquisa
+if (!empty($search)) {
+    $consulta .= ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') ? " AND " : " WHERE ";
+    $consulta .= " (p.IDPRODUTO LIKE '%$search%' 
+    OR m.MATERIAL LIKE '%$search%' 
+    OR c.CONECTOR LIKE '%$search%' 
+    OR met.METRAGEM LIKE '%$search%' 
+    OR mdo.MODELO LIKE '%$search%' 
+    OR f.FORNECEDOR LIKE '%$search%' 
+    OR d.NOME LIKE '%$search%' 
+    OR e.QUANTIDADE LIKE '%$search%')";
+}
 
-   $date = strtotime($row['DATACADASTRO']);
-   // $data agora é uma inteiro timestamp
-   
+$consulta .= " ORDER BY p.IDPRODUTO";
 
+if ($stmt = $conn->prepare($consulta)) {
+    if ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') {
+        $stmt->bind_param("s", $datacenterUsuario);
+    }
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
-   $dateformated = date("d/m/Y", $date);
-   // date() formatou o $date para d/m/Y
+    if ($resultado->num_rows > 0) {
+        while ($row = $resultado->fetch_assoc()) {
+            // Verificar se o produto está em transferência pendente ou reserva
+            $idProduto = $row['IDPRODUTO'];
+            $query_verifica_pendencia = "SELECT COUNT(*) AS pendencias FROM TRANSFERENCIA WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_pendencia = $conn->prepare($query_verifica_pendencia);
+            $stmt_pendencia->bind_param("i", $idProduto);
+            $stmt_pendencia->execute();
+            $result_pendencia = $stmt_pendencia->get_result();
+            $row_pendencia = $result_pendencia->fetch_assoc();
+            $pendencias_transferencia = $row_pendencia['pendencias'];
 
+            $query_verifica_reserva = "SELECT COUNT(*) AS reservas FROM RESERVA WHERE IDPRODUTO = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_reserva = $conn->prepare($query_verifica_reserva);
+            $stmt_reserva->bind_param("i", $idProduto);
+            $stmt_reserva->execute();
+            $result_reserva = $stmt_reserva->get_result();
+            $row_reserva = $result_reserva->fetch_assoc();
+            $reservas_pendentes = $row_reserva['reservas'];
 
-
-   ?>
-   <!-- End código PHP para conversão da data, para modelo brasileiro -->
+            // Definir a cor do texto com base na quantidade e nas pendências
+            $quantidadeCor = '#ffa500'; // Laranja por padrão
+            if ($row['QUANTIDADE'] > 0) {
+                if ($pendencias_transferencia > 0 || $reservas_pendentes > 0) {
+                    $quantidadeCor = '#ff6600'; // Laranja se houver pendências
+                } else {
+                    $quantidadeCor = '#009900'; // Verde se não houver pendências
+                }
+            } else {
+                $quantidadeCor = '#ff0000'; // Vermelho se a quantidade for zero
+            }
+?>
 
 
         
@@ -879,7 +915,7 @@ if ($resultado_search->num_rows > 0) {
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $row['QUANTIDADE']; ?></p>
+    <p id="blue-text-table-exibicao" style="color: <?php echo $quantidadeCor; ?>;"><?php echo $row['QUANTIDADE']; ?></p>
 
 
 
@@ -910,7 +946,7 @@ if ($resultado_search->num_rows > 0) {
 
 
 
-    <div id="blue-optios-config-dados" onclick="window.location.href='?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-eye" id="blue-icon-relatorio-produto"></i></div> 
+    <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DetalharProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-eye" id="blue-icon-relatorio-produto"></i></div> 
   
 
     </td>
@@ -1073,6 +1109,12 @@ if ($resultado_search->num_rows > 0) {
 
     
     </div>
+    
+    
+
+    <?php } ?>
+    
+
     
 
 
