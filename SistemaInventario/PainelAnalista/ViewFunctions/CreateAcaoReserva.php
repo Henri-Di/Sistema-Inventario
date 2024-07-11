@@ -68,11 +68,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
-        // Se a reserva for cancelada, devolver a quantidade ao estoque
+        // Se a reserva for cancelada, devolver a quantidade ao estoque e zerar o reservado_reserva
         if ($acaoReserva === 'CANCELADA') {
-            $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ?, RESERVADO_RESERVA = RESERVADO_RESERVA - ? WHERE IDPRODUTO = ?";
+            $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ?, RESERVADO_RESERVA = 0 WHERE IDPRODUTO = ?";
             $stmtUpdateEstoque = $conn->prepare($sqlUpdateEstoque);
-            $stmtUpdateEstoque->bind_param("iii", $quantidadeReservada, $quantidadeReservada, $idProduto);
+            $stmtUpdateEstoque->bind_param("ii", $quantidadeReservada, $idProduto);
+
+            if (!$stmtUpdateEstoque->execute()) {
+                header("Location: ../ViewFail/FailCreateUpdateEstoqueReserva.php?erro=Não foi possível atualizar o estoque do produto da reserva. Refaça a operação e tente novamente");
+                exit();
+            }
+        } elseif ($acaoReserva === 'CONCLUIDA') {
+            // Se a reserva for concluída, apenas zerar o reservado_reserva
+            $sqlUpdateEstoque = "UPDATE ESTOQUE SET RESERVADO_RESERVA = 0 WHERE IDPRODUTO = ?";
+            $stmtUpdateEstoque = $conn->prepare($sqlUpdateEstoque);
+            $stmtUpdateEstoque->bind_param("i", $idProduto);
 
             if (!$stmtUpdateEstoque->execute()) {
                 header("Location: ../ViewFail/FailCreateUpdateEstoqueReserva.php?erro=Não foi possível atualizar o estoque do produto da reserva. Refaça a operação e tente novamente");
