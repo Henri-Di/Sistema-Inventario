@@ -277,7 +277,6 @@
     <div class="well" id="well-zero"><br>
 
 
-
     <div class="container-fluid">
     
 
@@ -287,10 +286,11 @@
   
 
     <!-- Nome do usuário -->
-    <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome'];?></p>
+    <p id="blue-text-session-user">GESTOR - <?php echo $_SESSION['usuarioNome'];?></p>
     
 
     </div>
+
 
 
     <br>
