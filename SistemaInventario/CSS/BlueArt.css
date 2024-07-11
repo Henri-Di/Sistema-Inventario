@@ -45,10 +45,10 @@ img {
 
 /* Estilo para a logo */
 .logo {
-  max-width: 45px; /* Define a largura máxima para a logo */
+  max-width: 70px; /* Define a largura máxima para a logo */
   height: auto; /* Mantém a altura proporcional à largura */
-  margin-top: -8%; /* Ajusta a margem superior para posicionamento */
-  margin-left: 36%; /* Ajusta a margem esquerda para centralizar */
+  margin-top: -11%; /* Ajusta a margem superior para posicionamento */
+  margin-left: 70%; /* Ajusta a margem esquerda para centralizar */
   transform: translateX(-50%); /* Centraliza horizontalmente */
   filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
 }
@@ -56,16 +56,17 @@ img {
 /* Estilo para o logo da página */
 #logo-blue {
   color: #005ce6; /* Cor do texto */
-  font-size: 2rem; /* Tamanho da fonte responsivo */
+  font-size: 3.5rem; /* Tamanho da fonte responsivo */
   font-weight: bold; /* Negrito */
   text-align: center; /* Centraliza o texto */
-  margin: 15px 0; /* Margem superior e inferior */
+  margin: 45px 0; /* Margem superior e inferior */
+  margin-left: 25%;
 }
 
 /* Estilo para o ícone do logo da página */
 #blue-icon-logo {
   color: #005ce6; /* Cor do texto */
-  font-size: 1.5rem; /* Tamanho da fonte responsivo */
+  font-size: 2.5rem; /* Tamanho da fonte responsivo */
   margin-left: 5px; /* Espaçamento à esquerda */
 }
 
@@ -139,15 +140,16 @@ img {
 
 /* Estilo para o formulário de login do usuário */
 #blue-form-login {
-  margin-left: 33%; /* Ajusta a margem à esquerda para centralizar */
+  margin-top: -1%;
+  margin-left: 65%; /* Ajusta a margem à esquerda para centralizar */
 }
 
 /* Estilo para o campo de entrada de login do usuário */
 #blue-input-login {
-  width: 28%; /* Largura do campo de entrada */
+  width: 70%; /* Largura do campo de entrada */
   height: auto; /* Altura automática */
   outline: none; /* Remove a borda de foco padrão */
-  font-size: 12px; /* Tamanho da fonte */
+  font-size: 14px; /* Tamanho da fonte */
   font-weight: bold; /* Negrito */
   background-color: transparent; /* Cor de fundo */
   color: #5c5c8a; /* Cor do texto */
@@ -162,7 +164,7 @@ img {
   background-color: transparent; /* Fundo transparente */
   border: 1px solid #005ce6; /* Borda do botão */
   color: #005ce6; /* Cor do texto */
-  font-size: 11px; /* Tamanho da fonte */
+  font-size: 14px; /* Tamanho da fonte */
   font-weight: bold; /* Negrito */
   width: 28%; /* Largura do botão */
   padding: 1px; /* Padding */

@@ -62,7 +62,7 @@
     <br>
 
     <!-- Start logo page -->
-    <h2 id="logo-blue">Inventário de Material <i class="fa fa-cubes" style="color:#005ce6;font-size:15px;margin-left:0px;"></i></h2><br>
+    <h2 id="logo-blue">Inventário de Material <i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
     <!-- End logo page -->
     
     <br>
