@@ -156,7 +156,7 @@ try {
     }
 
     // Inserir registro no log de transferência
-    $acaoLog = mb_strtoupper($acao === 'Aceitar' ? 'Recebido' : 'Recusado', 'UTF-8');
+    $acaoLog = mb_strtoupper($acao === 'Aceitar' ? 'Confirmada' : 'Recusada', 'UTF-8');
     $sqlInsertLog = "INSERT INTO TRANSFERENCIA_LOG (IDTRANSFERENCIA, IDUSUARIO, NOME, CODIGOP, ACAO, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO) 
                      VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmtInsertLog = $conn->prepare($sqlInsertLog);

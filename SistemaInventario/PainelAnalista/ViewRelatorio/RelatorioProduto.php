@@ -696,15 +696,15 @@ $consulta = "
     INNER JOIN 
         DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-// Adicionar condição de datacenter se o nível de acesso não for gestor
-if ($nivelAcesso != 'GESTOR') {
+// Adicionar condição de datacenter se o nível de acesso não for gestor ou preposto
+if ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') {
     $consulta .= " WHERE d.NOME = ?";
 }
 
 $consulta .= " ORDER BY p.IDPRODUTO";
 
 if ($stmt = $conn->prepare($consulta)) {
-    if ($nivelAcesso != 'GESTOR') {
+    if ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') {
         $stmt->bind_param("s", $datacenterUsuario);
     }
     $stmt->execute();
@@ -712,8 +712,37 @@ if ($stmt = $conn->prepare($consulta)) {
 
     if ($resultado->num_rows > 0) {
         while ($row = $resultado->fetch_assoc()) {
-            // Definir a cor do texto com base na quantidade
-            $quantidadeCor = $row['QUANTIDADE'] > 0 ? '#009900' : '#ff0000'; ?>
+            // Verificar se o produto está em transferência pendente ou reserva
+            $idProduto = $row['IDPRODUTO'];
+            $query_verifica_pendencia = "SELECT COUNT(*) AS pendencias FROM TRANSFERENCIA WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_pendencia = $conn->prepare($query_verifica_pendencia);
+            $stmt_pendencia->bind_param("i", $idProduto);
+            $stmt_pendencia->execute();
+            $result_pendencia = $stmt_pendencia->get_result();
+            $row_pendencia = $result_pendencia->fetch_assoc();
+            $pendencias_transferencia = $row_pendencia['pendencias'];
+
+            $query_verifica_reserva = "SELECT COUNT(*) AS reservas FROM RESERVA WHERE IDPRODUTO = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_reserva = $conn->prepare($query_verifica_reserva);
+            $stmt_reserva->bind_param("i", $idProduto);
+            $stmt_reserva->execute();
+            $result_reserva = $stmt_reserva->get_result();
+            $row_reserva = $result_reserva->fetch_assoc();
+            $reservas_pendentes = $row_reserva['reservas'];
+
+            // Definir a cor do texto com base na quantidade e nas pendências
+            $quantidadeCor = '#ffa500'; // Laranja por padrão
+            if ($row['QUANTIDADE'] > 0) {
+                if ($pendencias_transferencia > 0 || $reservas_pendentes > 0) {
+                    $quantidadeCor = '#ff6600'; // Laranja se houver pendências
+                } else {
+                    $quantidadeCor = '#009900'; // Verde se não houver pendências
+                }
+            } else {
+                $quantidadeCor = '#ff0000'; // Vermelho se a quantidade for zero
+            }
+
+?>
 
 
 

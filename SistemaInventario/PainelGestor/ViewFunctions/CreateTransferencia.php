@@ -13,9 +13,9 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 // Inicializa variáveis com os dados do formulário
 $idProdutoOrigem = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 $quantidadeTransferencia = filter_input(INPUT_POST, 'QuantidadeTransferencia', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-$dataTransferencia = filter_input(INPUT_POST, 'DataTransferencia', FILTER_SANITIZE_STRING);
-$idDataCenterDestino = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_STRING);
-$observacao = mb_strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING), 'UTF-8'); // Convertendo para maiúsculas com suporte a UTF-8
+$dataTransferencia = filter_input(INPUT_POST, 'DataTransferencia', FILTER_SANITIZE_SPECIAL_CHARS);
+$idDataCenterDestino = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_SPECIAL_CHARS);
+$observacao = mb_strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHARS), 'UTF-8'); // Convertendo para maiúsculas com suporte a UTF-8
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
@@ -25,6 +25,13 @@ $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 // Definir valores fixos
 $operacao = "TRANSFERÊNCIA";
 $situacao = "PENDENTE"; // A transferência começa como "Pendente"
+
+
+// Verificar se o campo observação excede 35 caracteres
+if (mb_strlen($observacao, 'UTF-8') > 35) {
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    exit();
+}
 
 // Verifica se há campos vazios
 if (empty($idProdutoOrigem) || empty($quantidadeTransferencia) || empty($dataTransferencia) || empty($idDataCenterDestino) || empty($observacao)) {

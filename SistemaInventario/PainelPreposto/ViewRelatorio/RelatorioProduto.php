@@ -687,15 +687,15 @@ $consulta = "
     INNER JOIN 
         DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-// Adicionar condição de datacenter se o nível de acesso não for gestor
-if ($nivelAcesso != 'GESTOR') {
+// Adicionar condição de datacenter se o nível de acesso não for gestor ou preposto
+if ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') {
     $consulta .= " WHERE d.NOME = ?";
 }
 
 $consulta .= " ORDER BY p.IDPRODUTO";
 
 if ($stmt = $conn->prepare($consulta)) {
-    if ($nivelAcesso != 'GESTOR') {
+    if ($nivelAcesso != 'GESTOR' && $nivelAcesso != 'PREPOSTO') {
         $stmt->bind_param("s", $datacenterUsuario);
     }
     $stmt->execute();
@@ -733,7 +733,6 @@ if ($stmt = $conn->prepare($consulta)) {
                 $quantidadeCor = '#ff0000'; // Vermelho se a quantidade for zero
             }
 
-            // Agora você pode usar $quantidadeCor na sua tabela HTML para definir a cor do texto
 ?>
 
 

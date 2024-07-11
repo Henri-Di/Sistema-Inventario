@@ -44,6 +44,12 @@ $quantidadeReservar = $_POST['Reservar'] ?? '';
 $datareserva = $_POST['DataReserva'] ?? '';
 $observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
 
+// Verificar se o campo observação excede 35 caracteres
+if (mb_strlen($observacao, 'UTF-8') > 35) {
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    exit();
+}
+
 // Validar se os campos obrigatórios foram preenchidos e se os dados são válidos
 if (empty($idProduto) || empty($numwo) || !validarQuantidade($quantidadeReservar) || !validarData($datareserva) || !datasSaoValidas($datareserva)) {
     header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente ");

@@ -13,10 +13,16 @@ if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset
 
 // Obter os dados do formulário
 $idProduto = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-$numwo = filter_input(INPUT_POST, 'NumWo', FILTER_SANITIZE_STRING);
+$numwo = filter_input(INPUT_POST, 'NumWo', FILTER_SANITIZE_SPECIAL_CHARS);
 $quantidadeDevolver = filter_input(INPUT_POST, 'Devolvida', FILTER_SANITIZE_NUMBER_INT);
-$datadevolucao = filter_input(INPUT_POST, 'DataDevolucao', FILTER_SANITIZE_STRING);
-$observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_STRING);
+$datadevolucao = filter_input(INPUT_POST, 'DataDevolucao', FILTER_SANITIZE_SPECIAL_CHARS);
+$observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHARS);
+
+// Verificar se o campo observação excede 35 caracteres
+if (mb_strlen($observacao, 'UTF-8') > 35) {
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    exit();
+}
 
 // Verificar se os dados obrigatórios estão preenchidos
 if (!$idProduto || !$numwo || !$quantidadeDevolver || !$datadevolucao) {

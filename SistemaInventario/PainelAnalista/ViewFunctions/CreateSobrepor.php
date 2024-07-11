@@ -41,7 +41,13 @@ function datasSaoValidas($dataSobrepor) {
 $idProduto = $_POST['id'] ?? '';
 $quantidadeSobrepor = $_POST['Sobrepor'] ?? '';
 $dataSobrepor = $_POST['DataSobrepor'] ?? '';
-$observacao = $_POST['Observacao'] ?? '';
+$observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
+
+// Verificar se o campo observação excede 35 caracteres
+if (mb_strlen($observacao, 'UTF-8') > 35) {
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    exit();
+}
 
 // Validar se os campos obrigatórios foram preenchidos e se os dados são válidos
 if (empty($idProduto) || !validarQuantidade($quantidadeSobrepor) || !validarData($dataSobrepor) || !datasSaoValidas($dataSobrepor)) {
@@ -51,12 +57,12 @@ if (empty($idProduto) || !validarQuantidade($quantidadeSobrepor) || !validarData
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = $_SESSION['usuarioNome'];
-$codigoPUsuario = $_SESSION['usuarioCodigoP'];
+$nomeUsuario = mb_strtoupper($_SESSION['usuarioNome'], 'UTF-8');
+$codigoPUsuario = mb_strtoupper($_SESSION['usuarioCodigoP'], 'UTF-8');
 
 // Definir valores fixos
-$operacao = "Sobrepor";
-$situacao = "Alteração";
+$operacao = "SOBREPOR";
+$situacao = "SOBREPOSIÇÃO";
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
@@ -82,7 +88,7 @@ try {
     $sqlInsertSobrepor = "INSERT INTO SOBREPOR (QUANTIDADE, DATASOBREPOR, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sqlInsertSobrepor);
-    $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, strtoupper($operacao), strtoupper($situacao), $idProduto, $idUsuario, strtoupper($nomeUsuario), $codigoPUsuario);
+    $stmtInsert->bind_param("isssssiis", $quantidadeSobrepor, $dataSobrepor, $observacao, strtoupper($operacao), strtoupper($situacao), $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosSobrepor.php?erro=Não foi possível inserir os dados na tabela SOBREPOR. Informe o departamento de TI");

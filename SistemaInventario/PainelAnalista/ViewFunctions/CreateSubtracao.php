@@ -24,8 +24,14 @@ $nomeUsuario = $_SESSION['usuarioNome'];
 $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 
 // Definir valores fixos
-$operacao = "Subtração";
-$situacao = "Diminuido";
+$operacao = "SUBTRAÇÃO";
+$situacao = "DIMINUIDO";
+
+// Verificar se o campo observação excede 35 caracteres
+if (mb_strlen($observacao, 'UTF-8') > 35) {
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    exit();
+}
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {

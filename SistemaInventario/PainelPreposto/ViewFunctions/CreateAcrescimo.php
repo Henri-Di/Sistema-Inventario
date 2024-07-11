@@ -43,6 +43,14 @@ $quantidadeAcrescimo = $_POST['Acrescimo'] ?? '';
 $dataAcrescimo = $_POST['DataAcrescimo'] ?? '';
 $observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
 
+
+// Verificar se o campo observação excede 35 caracteres
+if (mb_strlen($observacao, 'UTF-8') > 35) {
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    exit();
+}
+
+
 if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarData($dataAcrescimo) || !datasSaoValidas($dataAcrescimo)) {
     header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
     exit();
