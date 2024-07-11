@@ -221,22 +221,28 @@
     <ul class="nav nav-pills nav-stacked">
 
 
-    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+    <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelPreposto.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+   
 
-
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
+
+
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
     
+
+
     </ul>
+    <!-- End menu-link page -->
     
 
 
@@ -271,8 +277,20 @@
 
 
 
+    <div class="container-fluid">
+    
+
+
     <!-- Botão de sair -->
     <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
+  
+
+    <!-- Nome do usuário -->
+    <p id="blue-text-session-user">PREPOSTO - <?php echo $_SESSION['usuarioNome'];?></p>
+    
+
+    </div>
+
     
 
 
@@ -358,120 +376,231 @@
   
     <div class="alerts" style="display: none;" id="transferAlert">
 
-
-
-<?php 
-
-
-
-// Conexão e consulta ao banco de dados
+<?php
+// Conexão ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
+// Consulta SQL
 $sql = "SELECT 
-T.*, 
-DC_DESTINO.NOME AS NOME_DATACENTER_DESTINO,
-DC_ORIGEM.NOME AS NOME_DATACENTER_ORIGEM,
-MAT_ORIGEM.MATERIAL AS NOME_MATERIAL_ORIGEM,
-MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
-MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
-MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO
-FROM 
-TRANSFERENCIA T
-JOIN 
-PRODUTO P_ORIGEM ON T.IDPRODUTO_ORIGEM = P_ORIGEM.IDPRODUTO
-JOIN 
-PRODUTO P_DESTINO ON T.IDPRODUTO_DESTINO = P_DESTINO.IDPRODUTO
-JOIN 
-MATERIAL MAT_ORIGEM ON P_ORIGEM.IDMATERIAL = MAT_ORIGEM.IDMATERIAL
-JOIN 
-METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
-JOIN 
-MATERIAL MAT_DESTINO ON P_DESTINO.IDMATERIAL = MAT_DESTINO.IDMATERIAL
-JOIN 
-METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
-JOIN 
-DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
-JOIN 
-DATACENTER DC_ORIGEM ON P_ORIGEM.IDDATACENTER = DC_ORIGEM.IDDATACENTER
-WHERE 
-T.SITUACAO = 'Pendente'";
-
-
+            T.*, 
+            DC_DESTINO.NOME AS NOME_DATACENTER_DESTINO,
+            DC_ORIGEM.NOME AS NOME_DATACENTER_ORIGEM,
+            MAT_ORIGEM.MATERIAL AS NOME_MATERIAL_ORIGEM,
+            MET_ORIGEM.METRAGEM AS METRAGEM_PRODUTO_ORIGEM,
+            MAT_DESTINO.MATERIAL AS NOME_MATERIAL_DESTINO,
+            MET_DESTINO.METRAGEM AS METRAGEM_PRODUTO_DESTINO,
+            U.NOME AS NOME_USUARIO,
+            DATE_FORMAT(T.DATA_TRANSFERENCIA, '%d/%m/%Y') AS DATA_FORMATADA
+        FROM 
+            TRANSFERENCIA T
+        JOIN 
+            PRODUTO P_ORIGEM ON T.IDPRODUTO_ORIGEM = P_ORIGEM.IDPRODUTO
+        JOIN 
+            PRODUTO P_DESTINO ON T.IDPRODUTO_DESTINO = P_DESTINO.IDPRODUTO
+        JOIN 
+            MATERIAL MAT_ORIGEM ON P_ORIGEM.IDMATERIAL = MAT_ORIGEM.IDMATERIAL
+        JOIN 
+            METRAGEM MET_ORIGEM ON P_ORIGEM.IDMETRAGEM = MET_ORIGEM.IDMETRAGEM
+        JOIN 
+            MATERIAL MAT_DESTINO ON P_DESTINO.IDMATERIAL = MAT_DESTINO.IDMATERIAL
+        JOIN 
+            METRAGEM MET_DESTINO ON P_DESTINO.IDMETRAGEM = MET_DESTINO.IDMETRAGEM
+        JOIN 
+            DATACENTER DC_DESTINO ON P_DESTINO.IDDATACENTER = DC_DESTINO.IDDATACENTER
+        JOIN 
+            DATACENTER DC_ORIGEM ON P_ORIGEM.IDDATACENTER = DC_ORIGEM.IDDATACENTER
+        JOIN 
+            USUARIO U ON T.IDUSUARIO = U.IDUSUARIO
+        WHERE 
+            T.SITUACAO = 'Pendente'";
 
 $result = $conn->query($sql);
 
+if ($result === false) {
+    echo "Erro na consulta: " . $conn->error;
+} else {
+    if ($result->num_rows > 0) {
+        echo "<script>document.getElementById('transferAlert').style.display = 'block';</script>";
 
+        while ($row = $result->fetch_assoc()) {
+            // Conversão da data para formato brasileiro
+            $dateformated = $row['DATA_FORMATADA'];
+?>
+            <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
 
-if ($result->num_rows > 0) { 
+            <div id="blue-line-title-btn-painel-alert">
+                <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-warning" id="blue-icon-btn-painel"></i></p>
+            </div>
 
+            <table class="table table-bordered" id="blue-table-cadastro-auxiliar" style="margin-top:1%;">
+                <tr id="line-blue-table-alert">
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Código Saída</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['ID']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Produto Origem</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MATERIAL_ORIGEM']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Produto Destino</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MATERIAL_DESTINO']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Metragem</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['METRAGEM_PRODUTO_DESTINO']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Quantidade Transferida</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['QUANTIDADE']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Site Origem</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_DATACENTER_ORIGEM']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Site Destino</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_DATACENTER_DESTINO']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Data Transferência</div>
+                        <div id="blue-input-cdst-alert"><?php echo $dateformated; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Observação</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['OBSERVACAO']; ?></div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Analista</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_USUARIO']; ?></div>
+                    </td>
+                </tr>
+            </table>
 
-
-echo "<script>document.getElementById('transferAlert').style.display = 'block';</script>";
-
-
-
-while ($row = $result->fetch_assoc()) { ?>
-    
-
-<!-- Start código PHP para conversão da data, para modelo brasileiro -->
-<?php 
-
-
-
-$date = strtotime($row['DATA_TRANSFERENCIA']);
-// $data agora é uma inteiro timestamp
-
-
-
-$dateformated = date("d/m/Y", $date);
-// date() formatou o $date para d/m/Y
-
+<?php
+        }
+    } else {
+        echo "Nenhuma transferência pendente encontrada.";
+    }
+}
 
 
 ?>
-<!-- End código PHP para conversão da data, para modelo brasileiro -->
-<span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span> 
-
-
-
-<!-- Título da seção de cadastros auxiliares -->
-<div id="blue-line-title-btn-painel-alert">
-
-
-
-<p id="blue-title-btn-painel-alert">Transferência Pendente  <i class="fa fa-warning" id="blue-icon-btn-painel"></i></p>
-
-
 
 </div>
 
 
-<?php echo "<table class='table table-bordered' id='blue-table-cadastro-auxiliar' style='margin-top:1%;'>";?>
-<?php echo "<tr id='line-blue-table-alert'>";?>       
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Código Saída</div>  <div id='blue-input-cdst-alert'>"   . $row['ID'] . "</div></td>" ?>
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto Origem</div> <div id='blue-input-cdst-alert'>" . $row['NOME_MATERIAL_ORIGEM'] . "</div></td>" ?> 
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto Destino</div> <div id='blue-input-cdst-alert'>" . $row['NOME_MATERIAL_DESTINO'] . "</div></td>" ?> 
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Metragem</div> <div id='blue-input-cdst-alert'>" . $row['METRAGEM_PRODUTO_DESTINO'] . "</div></td>" ?>
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Transferida</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE'] . "</div></td>" ?>
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Site Origem</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER_ORIGEM'] . "</div></td>" ?>
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Site Destino</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER_DESTINO'] . "</div></td>" ?>  
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Transferência</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
-<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['OBSERVACAO'] . "</div></td>" ?> 
-<?php echo "</tr>";?> 
-<?php echo "</table>";?>        
+<div class="alerts" style="display: none;" id="transferAlerts">
+<?php
+// Conexão ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
+
+// Nome do usuário da sessão atual
+$nomeUsuarioSessao = $_SESSION['usuarioNome'];
+
+// Consulta SQL
+$sql = "SELECT 
+            R.*, 
+            DC.NOME AS NOME_DATACENTER,
+            MAT.MATERIAL AS NOME_MATERIAL,
+            MET.METRAGEM AS METRAGEM_PRODUTO,
+            U.NOME AS NOME_USUARIO,
+            E.QUANTIDADE AS QUANTIDADE_TOTAL,
+            E.RESERVADO_RESERVA AS QUANTIDADE_RESERVADA,
+            R.OBSERVACAO,
+            DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA
+        FROM 
+            RESERVA R
+        JOIN 
+            PRODUTO P ON R.IDPRODUTO = P.IDPRODUTO
+        JOIN 
+            MATERIAL MAT ON P.IDMATERIAL = MAT.IDMATERIAL
+        JOIN 
+            METRAGEM MET ON P.IDMETRAGEM = MET.IDMETRAGEM
+        JOIN 
+            DATACENTER DC ON P.IDDATACENTER = DC.IDDATACENTER
+        JOIN 
+            USUARIO U ON R.IDUSUARIO = U.IDUSUARIO
+        JOIN 
+            ESTOQUE E ON P.IDPRODUTO = E.IDPRODUTO
+        WHERE 
+            R.SITUACAO = 'Pendente'
+            AND U.NOME = '" . $conn->real_escape_string($nomeUsuarioSessao) . "'";
+
+// Executar consulta
+$result = $conn->query($sql);
+
+if ($result === false) {
+    echo "Erro na consulta: " . $conn->error;
+} else {
+    // Verificar se há resultados
+    if ($result->num_rows > 0) {
+        echo "<script>document.getElementById('transferAlerts').style.display = 'block';</script>";
+
+        // Exibir os resultados
+        while ($row = $result->fetch_assoc()) {
+            echo <<<HTML
+            <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
+
+            <div id="blue-line-title-btn-painel-alert">
+                <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+            </div>
+
+            <table class="table table-bordered" id="blue-table-cadastro-auxiliar" style="margin-top:1%;">
+                <tr id="line-blue-table-alert">
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Código Reserva</div>
+                        <div id="blue-input-cdst-alert">{$row['ID']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Nº WO</div>
+                        <div id="blue-input-cdst-alert">{$row['NUMWO']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Produto</div>
+                        <div id="blue-input-cdst-alert">{$row['NOME_MATERIAL']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Metragem</div>
+                        <div id="blue-input-cdst-alert">{$row['METRAGEM_PRODUTO']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Quantidade Reservada</div>
+                        <div id="blue-input-cdst-alert">{$row['QUANTIDADE_RESERVADA']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Quantidade Total</div>
+                        <div id="blue-input-cdst-alert">{$row['QUANTIDADE_TOTAL']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">DataCenter</div>
+                        <div id="blue-input-cdst-alert">{$row['NOME_DATACENTER']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Data Reserva</div>
+                        <div id="blue-input-cdst-alert">{$row['DATA_FORMATADA']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Observação</div>
+                        <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
+                    </td>
+                    <td id="colun-blue-table-alert">
+                        <div id="blue-title-listar-alert">Analista</div>
+                        <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
+                    </td>
+                </tr>
+            </table>
+HTML;
+        }
+    } else {
+        echo "Nenhuma reserva pendente encontrada para este usuário.";
+    }
+}
 
 
-
-<?php } ?>
-
-
-
-<?php } ?>
-
-
+?>
 
 </div>
-
 
     
     <div id="blue-line-title-btn-painel">
@@ -494,35 +623,41 @@ $dateformated = date("d/m/Y", $date);
 
     // Preparar a consulta SQL usando prepared statement
     $consulta = "SELECT 
-                p.IDPRODUTO, 
-                m.MATERIAL, 
-                c.CONECTOR, 
-                mt.METRAGEM, 
-                mo.MODELO, 
-                f.FORNECEDOR, 
-                p.DATACADASTRO, 
-                d.NOME AS DATACENTER, 
-                e.QUANTIDADE
-            FROM 
-                PRODUTO p
-            INNER JOIN 
-                ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
-            INNER JOIN 
-                DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
-            INNER JOIN 
-                MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
-            INNER JOIN 
-                CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
-            INNER JOIN 
-                METRAGEM mt ON p.IDMETRAGEM = mt.IDMETRAGEM
-            INNER JOIN 
-                MODELO mo ON p.IDMODELO = mo.IDMODELO
-            INNER JOIN 
-                FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
-            WHERE 
-                p.IDPRODUTO = ?
-            ORDER BY 
-                p.IDPRODUTO";
+                    p.IDPRODUTO, 
+                    m.MATERIAL, 
+                    c.CONECTOR, 
+                    mt.METRAGEM, 
+                    mo.MODELO, 
+                    f.FORNECEDOR, 
+                    p.DATACADASTRO, 
+                    d.NOME AS DATACENTER, 
+                    e.QUANTIDADE,
+                    g.GRUPO,
+                    l.LOCALIZACAO
+                FROM 
+                    PRODUTO p
+                INNER JOIN 
+                    ESTOQUE e ON p.IDPRODUTO = e.IDPRODUTO
+                INNER JOIN 
+                    DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER
+                INNER JOIN 
+                    MATERIAL m ON p.IDMATERIAL = m.IDMATERIAL
+                INNER JOIN 
+                    CONECTOR c ON p.IDCONECTOR = c.IDCONECTOR
+                INNER JOIN 
+                    METRAGEM mt ON p.IDMETRAGEM = mt.IDMETRAGEM
+                INNER JOIN 
+                    MODELO mo ON p.IDMODELO = mo.IDMODELO
+                INNER JOIN 
+                    FORNECEDOR f ON p.IDFORNECEDOR = f.IDFORNECEDOR
+                INNER JOIN 
+                    GRUPO g ON p.IDGRUPO = g.IDGRUPO
+                INNER JOIN 
+                    LOCALIZACAO l ON p.IDLOCALIZACAO = l.IDLOCALIZACAO
+                WHERE 
+                    p.IDPRODUTO = ?
+                ORDER BY 
+                    p.IDPRODUTO";
 
     // Inicializar o statement
     $stmt = $conn->prepare($consulta);
@@ -548,26 +683,22 @@ $dateformated = date("d/m/Y", $date);
 
     <!-- Start código PHP para repetição de listagem -->
     <?php while($dado = $resultado->fetch_assoc()) { ?>
+    
 
 
-   <!-- Start código PHP para conversão da data, para modelo brasileiro -->
-   <?php 
+    <?php
+    $date = strtotime($dado['DATACADASTRO']);
+    // $data agora é uma inteiro timestamp
+
+
+
+    $dateformated = date("d/m/Y", $date);
+    // date() formatou o $date para d/m/Y
    
 
 
-   $date = strtotime($dado['DATACADASTRO']);
-   // $data agora é uma inteiro timestamp
-
-
-
-   $dateformated = date("d/m/Y", $date);
-   // date() formatou o $date para d/m/Y
-   
-
-
-   ?>
-   <!-- End código PHP para conversão da data, para modelo brasileiro -->
-
+    ?>
+    <!-- End código PHP para conversão da data, para modelo brasileiro -->
 
 
     <br>
@@ -758,6 +889,31 @@ $dateformated = date("d/m/Y", $date);
     </td>
 
 
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Grupo
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="Fornecedor" value="<?php echo $dado['GRUPO'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
     <td id="colun-blue-table">
     
 
@@ -801,6 +957,30 @@ $dateformated = date("d/m/Y", $date);
 
 
     <input type="text" id="blue-input-cdst" name="DataCenter" value="<?php echo $dado['DATACENTER'];?>" autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Localização
+    
+
+
+    </div>
+    <!-- End container title input form -->
+
+
+
+    <input type="text" id="blue-input-cdst" name="DataCenter" value="<?php echo $dado['LOCALIZACAO'];?>" autocomplete="off" required disabled /><br>
 
 
 
@@ -965,6 +1145,31 @@ $dateformated = date("d/m/Y", $date);
 
 
     <form method="POST" action="">
+
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    Código Inutilização
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoInutilizacao" value="<?php echo $dado['ID'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
 
 
 

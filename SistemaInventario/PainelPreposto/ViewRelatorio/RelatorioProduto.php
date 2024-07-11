@@ -207,12 +207,17 @@
     <!-- Start container col-sm-3 sidenav -->
     <div class="col-sm-3 sidenav hidden-xs" id="blue-sidenav-hidden-xs">    
 
+
+
     <!-- Start logo page -->
     <h2 id="logo-blue">Inventário de Material<i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
     <!-- End logo page -->
 
+
     <img src="../../Images/images.png" class="logo">
 
+
+    
     <!-- Start menu-link page -->
     <ul class="nav nav-pills nav-stacked">
 
@@ -222,16 +227,21 @@
 
 
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+   
 
-
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
 
-
+    
     <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
 
+
+
+    <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
     
+
+
     </ul>
     <!-- End menu-link page -->
 
@@ -262,12 +272,20 @@
 
 
 
+    <div class="container-fluid">
+    
+
+
+    <!-- Botão de sair -->
     <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
+  
 
+    <!-- Nome do usuário -->
+    <p id="blue-text-session-user">PREPOSTO - <?php echo $_SESSION['usuarioNome'];?></p>
+    
 
-
-    <br>
-
+    </div>
+    
 
     <br>
 
@@ -470,6 +488,108 @@ $dateformated = date("d/m/Y", $date);
 </div>
 
 
+<div class="alerts" style="display: none;" id="transferAlerts">
+
+
+
+<?php 
+
+
+// Conexão e consulta ao banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php');
+
+$sql = "SELECT 
+            R.*, 
+            DC.NOME AS NOME_DATACENTER,
+            MAT.MATERIAL AS NOME_MATERIAL,
+            MET.METRAGEM AS METRAGEM_PRODUTO,
+            U.NOME AS NOME_USUARIO,
+            E.QUANTIDADE AS QUANTIDADE_TOTAL,
+            E.RESERVADO_RESERVA AS QUANTIDADE_RESERVADA,
+            R.OBSERVACAO
+        FROM 
+            RESERVA R
+        JOIN 
+            PRODUTO P ON R.IDPRODUTO = P.IDPRODUTO
+        JOIN 
+            MATERIAL MAT ON P.IDMATERIAL = MAT.IDMATERIAL
+        JOIN 
+            METRAGEM MET ON P.IDMETRAGEM = MET.IDMETRAGEM
+        JOIN 
+            DATACENTER DC ON P.IDDATACENTER = DC.IDDATACENTER
+        JOIN 
+            USUARIO U ON R.IDUSUARIO = U.IDUSUARIO
+        JOIN 
+            ESTOQUE E ON P.IDPRODUTO = E.IDPRODUTO
+        WHERE 
+            R.SITUACAO = 'Pendente'";
+
+$result = mysqli_query($conn, $sql);
+
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) { 
+
+
+
+echo "<script>document.getElementById('transferAlerts').style.display = 'block';</script>";
+
+
+$date = strtotime($row['DATARESERVA']);
+// $data agora é uma inteiro timestamp
+
+
+
+$dateformated = date("d/m/Y", $date);
+// date() formatou o $date para d/m/Y
+
+
+
+?>
+<!-- End código PHP para conversão da data, para modelo brasileiro -->
+<span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span> 
+
+
+
+<!-- Título da seção de cadastros auxiliares -->
+<div id="blue-line-title-btn-painel-alert">
+
+
+
+<p id="blue-title-btn-painel-alert">Reserva Pendente  <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+
+
+
+</div>
+
+
+<?php echo "<table class='table table-bordered' id='blue-table-cadastro-auxiliar' style='margin-top:1%;'>";?>
+<?php echo "<tr id='line-blue-table-alert'>";?>       
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Código Reserva</div>  <div id='blue-input-cdst-alert'>"   . $row['ID'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Nº WO</div> <div id='blue-input-cdst-alert'>" . $row['NUMWO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Produto</div> <div id='blue-input-cdst-alert'>" . $row['NOME_MATERIAL'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Metragem</div> <div id='blue-input-cdst-alert'>" . $row['METRAGEM_PRODUTO'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Reservada</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE_RESERVADA'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Quantidade Total</div> <div id='blue-input-cdst-alert'>" . $row['QUANTIDADE_TOTAL'] . "</div></td>" ?>
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>DataCenter</div> <div id='blue-input-cdst-alert'>" . $row['NOME_DATACENTER'] . "</div></td>" ?>  
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Data Reserva</div> <div id='blue-input-cdst-alert'>"  . $dateformated . "</div></td>"?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Observação</div> <div id='blue-input-cdst-alert'>" . $row['NOME_USUARIO'] . "</div></td>" ?> 
+<?php echo "<td id='colun-blue-table-alert'><div id='blue-title-listar-alert'>Analista</div> <div id='blue-input-cdst-alert'>" . $row['NOME_USUARIO'] . "</div></td>" ?> 
+<?php echo "</tr>";?> 
+<?php echo "</table>";?>        
+
+
+
+<?php } ?>
+
+
+
+<?php } ?>
+
+
+
+</div>
+
+
 
     <!-- Start container search material -->
     <div class="container" id="blue-search">
@@ -519,7 +639,6 @@ $dateformated = date("d/m/Y", $date);
    <br>
 
 
-
    <?php
 
 // Obter o ID do usuário a partir da sessão
@@ -537,6 +656,7 @@ if ($stmt = $conn->prepare($consultaUsuario)) {
     $stmt->fetch();
     $stmt->close();
 }
+
 
 // Consulta para obter os produtos
 $consulta = "
@@ -567,22 +687,54 @@ $consulta = "
     INNER JOIN 
         DATACENTER d ON p.IDDATACENTER = d.IDDATACENTER";
 
-// Adicionar condição de datacenter se o nível de acesso não for 1
-if ($nivelAcesso != 1) {
+// Adicionar condição de datacenter se o nível de acesso não for gestor
+if ($nivelAcesso != 'GESTOR') {
     $consulta .= " WHERE d.NOME = ?";
 }
 
 $consulta .= " ORDER BY p.IDPRODUTO";
 
 if ($stmt = $conn->prepare($consulta)) {
-    if ($nivelAcesso != 1) {
+    if ($nivelAcesso != 'GESTOR') {
         $stmt->bind_param("s", $datacenterUsuario);
     }
     $stmt->execute();
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
-        while ($row = $resultado->fetch_assoc()) { ?>
+        while ($row = $resultado->fetch_assoc()) {
+            // Verificar se o produto está em transferência pendente ou reserva
+            $idProduto = $row['IDPRODUTO'];
+            $query_verifica_pendencia = "SELECT COUNT(*) AS pendencias FROM TRANSFERENCIA WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_pendencia = $conn->prepare($query_verifica_pendencia);
+            $stmt_pendencia->bind_param("i", $idProduto);
+            $stmt_pendencia->execute();
+            $result_pendencia = $stmt_pendencia->get_result();
+            $row_pendencia = $result_pendencia->fetch_assoc();
+            $pendencias_transferencia = $row_pendencia['pendencias'];
+
+            $query_verifica_reserva = "SELECT COUNT(*) AS reservas FROM RESERVA WHERE IDPRODUTO = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_reserva = $conn->prepare($query_verifica_reserva);
+            $stmt_reserva->bind_param("i", $idProduto);
+            $stmt_reserva->execute();
+            $result_reserva = $stmt_reserva->get_result();
+            $row_reserva = $result_reserva->fetch_assoc();
+            $reservas_pendentes = $row_reserva['reservas'];
+
+            // Definir a cor do texto com base na quantidade e nas pendências
+            $quantidadeCor = '#ffa500'; // Laranja por padrão
+            if ($row['QUANTIDADE'] > 0) {
+                if ($pendencias_transferencia > 0 || $reservas_pendentes > 0) {
+                    $quantidadeCor = '#ff6600'; // Laranja se houver pendências
+                } else {
+                    $quantidadeCor = '#009900'; // Verde se não houver pendências
+                }
+            } else {
+                $quantidadeCor = '#ff0000'; // Vermelho se a quantidade for zero
+            }
+
+            // Agora você pode usar $quantidadeCor na sua tabela HTML para definir a cor do texto
+?>
 
 
 
@@ -681,7 +833,7 @@ if ($stmt = $conn->prepare($consulta)) {
 
 
 
-    <p id="blue-text-table-exibicao"><?php echo $row['QUANTIDADE']; ?></p>
+    <p id="blue-text-table-exibicao" style="color: <?php echo $quantidadeCor; ?>;"><?php echo $row['QUANTIDADE']; ?></p>
 
 
 

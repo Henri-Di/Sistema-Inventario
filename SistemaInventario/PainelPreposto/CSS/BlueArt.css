@@ -323,28 +323,6 @@ img {
   transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
 }
 
-/* Estilo para botões de cadastro nos formulários */
-#blue-btn-cdst {
-  padding: 3px; /* Define o padding */
-  width: 20%; /* Define a largura como 20% do contêiner */
-  height: auto; /* Define a altura automática */
-  color: #005ce6; /* Define a cor do texto */
-  outline: none; /* Remove a borda de foco padrão */
-  background-color: transparent; /* Define o fundo como transparente */
-  border: 1px solid #005ce6; /* Define a borda */
-  border-radius: 5px; /* Define bordas arredondadas */
-  font-size: 13px; /* Define o tamanho da fonte */
-  font-family: 'Sofia Sans Extra Condensed'; /* Define a família da fonte */
-  transition: color ease 0.7s; /* Transição suave para a cor do texto */
-}
-
-/* Efeito hover para botões de cadastro nos formulários */
-#blue-btn-cdst:hover {
-  background-color: #005ce6; /* Define a cor de fundo ao passar o mouse */
-  color: #ffffff; /* Define a cor do texto ao passar o mouse */
-  opacity: 0.7; /* Define a opacidade ao passar o mouse */
-}
-
 /* Estilo para container do rodapé da página */
 #footer-page {
   background-color: #ffffff; /* Define a cor de fundo */
@@ -743,8 +721,9 @@ img {
 
 /* Estilo para o botão de logout */
 #blue-btn-sign-out {
-  width: 5%; /* Largura */
+  width: 0%; /* Largura */
   height: auto; /* Altura automática */
+  padding:0;
   float: right; /* Alinhamento à direita */
   background-color: transparent; /* Fundo transparente */
   border: none; /* Sem borda */
@@ -788,6 +767,14 @@ img {
     width: 20%; /* Aumenta a largura para telas muito pequenas */
     font-size: 6px; /* Diminui o tamanho da fonte para se ajustar */
   }
+}
+
+
+  #blue-text-session-user{
+    float: right;
+    font-size: 12px;
+    margin-top: -2px; 
+    margin-right: 10px;
 }
 
   /* Estilo para o contêiner da tabela auxiliar de cadastro */
@@ -1002,7 +989,7 @@ img {
 #blue-button-nova-senha {
   width: 20%; /* Largura do botão */
   height: auto; /* Altura automática */
-  background-color:#ffffff; /* Cor de fundo do botão */
+  background-color: transparent; /* Cor de fundo do botão */
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
   margin-left: -40%; /* Margem à esquerda negativa para reposicionar */
@@ -1068,12 +1055,12 @@ img {
 #blue-btn-relatorio-auxiliar-blue {
   width: 10%; /* Largura do botão */
   height: auto; /* Altura automática */
-  background-color: #ffffff; /* Define a cor de fundo como branco*/
+  background-color: transparent; /* Define a cor de fundo como branco*/
   outline: none; /* Sem contorno ao focar */
   margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
-  font-size: 11px; /* Tamanho da fonte reduzido */
+  font-size: 12px; /* Tamanho da fonte reduzido */
   transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
   flex: 1; /* Ocupa espaço igualmente dentro do container flexível */
   max-width: 10%; /* Largura máxima para garantir que 9 botões caibam na mesma linha */
