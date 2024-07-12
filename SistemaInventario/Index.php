@@ -55,103 +55,49 @@
     <!-- Start body page -->
     <body  class="blue-body-index" style="font-family:'Sofia Sans Extra Condensed';">
 
-    <br>
-
-
-    
-    <br>
-
-    <!-- Start logo page -->
-    <h2 id="logo-blue">Inventário de Material <i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
-    <!-- End logo page -->
-    
-    <br>
-    <br>
-    
 
     <!-- Start container -->
-    <div class="container" style="margin-left:0%;">
-    <img src="./Images/images.png" class="logo">
-    <!-- Start formulario de login index -->
-    <form class="needs-validation" name="AcessoRestrito" id="blue-form-login" method="POST" action="./ViewLogin/LoginUser.php" novalidate>
-
-    <div class="form-group">
-    <input type="text" name="CodigoP" id="blue-input-login" placeholder="Usuário" autocomplete="off" required>
-    <div class="valid-feedback"></div>
-	<div class="invalid-feedback"></div>
+<div class="container-fluid" id="blue-container-login">
+    <div class="login-wrapper">
+        <!-- Start logo page -->
+        <h2 id="logo-blue">Inventário de Material <i class="fa fa-cubes" id="blue-icon-logo"></i></h2><br>
+    <!-- End logo page -->
+        <img src="./Images/images.png" class="logo">
+        <!-- Start formulario de login index -->
+        <form class="needs-validation" name="AcessoRestrito" id="blue-form-login" method="POST" action="./ViewLogin/LoginUser.php" novalidate>
+            <div class="form-group">
+                <input type="text" name="CodigoP" id="blue-input-login" placeholder="Usuário" autocomplete="off" required>
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback"></div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group">
+                <input type="password" name="Senha" id="blue-input-login" placeholder="Senha" autocomplete="off" required>
+                <div class="valid-feedback"></div>
+                <div class="invalid-feedback"></div>
+            </div>
+            <br>
+            <button type="submit" id="blue-btn-login">Acessar</button>
+        </form>
+        <!-- End formulario de login index -->
+        <!-- Start código PHP verificação login -->
+        <p id="blue-alert-login">
+            <?php if (isset($_SESSION['loginErro'])) {
+                echo $_SESSION['loginErro'];
+                unset($_SESSION['loginErro']);
+            } ?>
+        </p>
+        <p id="blue-alert-login">
+            <?php if (isset($_SESSION['logindeslogado'])) {
+                echo $_SESSION['logindeslogado'];
+                unset($_SESSION['logindeslogado']);
+            } ?>
+        </p>
+        <!-- End código PHP verificação login -->
     </div>
-
-    <br>
-    <br>
-
-    <div class="form-group">
-    <input type="password" name="Senha" id="blue-input-login" placeholder="Senha"  autocomplete="off" required>
-    <div class="valid-feedback"></div>
-	<div class="invalid-feedback"></div>
-    </div>
-
-    <br>
-
-    <button type="submit" id="blue-btn-login">Acessar</button>
-
-    </form>
-    <!-- End formulario de login index -->
-
-    <!-- Start código PHP verificação login  -->
-	
-    <p  id="blue-alert-login">
-	
-    <?php 
-    
-    if(isset($_SESSION['loginErro'])){
-	echo $_SESSION['loginErro'];
-	unset($_SESSION['loginErro']);
-	}
-    
-    ?>
-	
-    </p>
-		
-    <p id="blue-alert-login">
-	
-    <?php 
-	
-    if(isset($_SESSION['logindeslogado'])){
-	echo $_SESSION['logindeslogado'];
-	unset($_SESSION['logindeslogado']);
-	}
-	
-    ?>
-
-	</p>
-	 <!-- End código PHP verificação login  -->
-
-    <!-- Start código PHP verificação login -->
-	<p  id="blue-alert-login">
-	
-    <?php if(isset($_SESSION['loginErro'])){
-	echo $_SESSION['loginErro'];
-	unset($_SESSION['loginErro']);
-	}?>
-	
-    </p>
-		
-	<p id="blue-alert-login">
-	
-    <?php 
-	if(isset($_SESSION['logindeslogado'])){
-	echo $_SESSION['logindeslogado'];
-	unset($_SESSION['logindeslogado']);
-	}
-	?>
-
-
-    </p>
-	<!-- End código PHP verificação login -->
-
-
-    </div>
-    <!-- End container -->
+</div>
+<!-- End container-fluid -->
     
 
 

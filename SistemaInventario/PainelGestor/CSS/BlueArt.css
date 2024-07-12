@@ -74,7 +74,7 @@ img {
 /* Estilo para o logo da página */
 #logo-blue {
   color: #005ce6; /* Cor do texto */
-  font-size: 2rem; /* Tamanho da fonte responsivo */
+  font-size: 2.5rem; /* Tamanho da fonte responsivo */
   font-weight: bold; /* Negrito */
   text-align: center; /* Centraliza o texto */
   margin: 15px 0; /* Margem superior e inferior */
@@ -83,7 +83,7 @@ img {
 /* Estilo para o ícone do logo da página */
 #blue-icon-logo {
   color: #005ce6; /* Cor do texto */
-  font-size: 1.5rem; /* Tamanho da fonte responsivo */
+  font-size: 2rem; /* Tamanho da fonte responsivo */
   margin-left: 5px; /* Espaçamento à esquerda */
 }
 
@@ -218,7 +218,7 @@ img {
   background-size: 85%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: center; /* Centraliza a imagem */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  opacity: 0.3; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
+  opacity: 0.2; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
 }
