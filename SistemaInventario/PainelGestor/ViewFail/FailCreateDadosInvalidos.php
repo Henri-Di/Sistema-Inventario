@@ -609,7 +609,7 @@ $sql = "SELECT
             MET.METRAGEM AS METRAGEM_PRODUTO,
             U.NOME AS NOME_USUARIO,
             E.QUANTIDADE AS QUANTIDADE_TOTAL,
-            E.RESERVADO_RESERVA AS QUANTIDADE_RESERVADA,
+            R.QUANTIDADE AS QUANTIDADE_RESERVADA,
             R.OBSERVACAO,
             DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA,
             MO.MODELO AS NOME_MODELO
@@ -632,7 +632,6 @@ $sql = "SELECT
         WHERE 
             R.SITUACAO = 'Pendente'
             AND U.NOME = '" . $conn->real_escape_string($nomeUsuarioSessao) . "'";
-
 // Executar consulta
 $result = $conn->query($sql);
 

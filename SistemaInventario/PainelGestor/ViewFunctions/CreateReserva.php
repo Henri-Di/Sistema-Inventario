@@ -75,7 +75,7 @@ $conn->begin_transaction();
 
 try {
     // Verificar se há reservas para o produto
-    $sqlVerificaReserva = "SELECT RESERVADO_TRANSFERENCIA FROM ESTOQUE WHERE IDPRODUTO = ?";
+    $sqlVerificaReserva = "SELECT RESERVADO_RESERVA FROM ESTOQUE WHERE IDPRODUTO = ?";
     $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
     $stmtVerificaReserva->bind_param("i", $idProduto);
     $stmtVerificaReserva->execute();
@@ -83,7 +83,8 @@ try {
     $stmtVerificaReserva->fetch();
     $stmtVerificaReserva->close();
 
-    $temReserva = $reservado > 0;
+    // Calcular a quantidade reservada atualmente para este produto
+    $quantidadeReservadaAtual = $reservado;
 
     // Inserir dados na tabela RESERVA usando prepared statement
     $sqlInsertReserva = "INSERT INTO RESERVA (NUMWO, QUANTIDADE, DATARESERVA, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
@@ -96,24 +97,27 @@ try {
         exit(); // Termina a execução do script após redirecionamento
     }
 
-    // Atualizar a tabela ESTOQUE subtraindo a quantidade reservada
-    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE - ?, RESERVADO_RESERVA = RESERVADO_RESERVA + ? WHERE IDPRODUTO = ?";
+    // Calcular a quantidade nova reservada
+    $quantidadeNovaReserva = $quantidadeReservar;
+
+    // Calcular a quantidade total de reservas para este produto
+    $quantidadeTotalReservada = $quantidadeReservadaAtual + $quantidadeNovaReserva;
+
+    // Atualizar a tabela ESTOQUE para definir a quantidade reservada corretamente
+    $sqlUpdateEstoque = "UPDATE ESTOQUE SET RESERVADO_RESERVA = ? WHERE IDPRODUTO = ?";
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
-    $stmtUpdate->bind_param("iii", $quantidadeReservar, $quantidadeReservar, $idProduto);
+    $stmtUpdate->bind_param("ii", $quantidadeTotalReservada, $idProduto);
 
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possivel atualizar o estoque do produto. Refaça a operação e tente novamente");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
         exit(); // Termina a execução do script após redirecionamento
     }
 
     // Commit da transação se todas as operações foram bem-sucedidas
     $conn->commit();
 
-    if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
-    } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
-    }
+    // Redirecionar para a página de sucesso apropriada
+    header("Location: ../ViewSucess/SucessCreateReserva.php?sucesso=Reserva criada com sucesso");
     exit();
 
 } catch (Exception $e) {

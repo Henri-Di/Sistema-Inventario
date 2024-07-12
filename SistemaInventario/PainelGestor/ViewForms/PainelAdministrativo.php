@@ -433,7 +433,7 @@ if ($result === false) {
             <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
 
             <div id="blue-line-title-btn-painel-alert">
-                <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-warning" id="blue-icon-btn-painel"></i></p>
             </div>
 
             <table class="table table-bordered" id="blue-table-cadastro-auxiliar" style="margin-top:1%;">
@@ -513,7 +513,7 @@ $sql = "SELECT
             MET.METRAGEM AS METRAGEM_PRODUTO,
             U.NOME AS NOME_USUARIO,
             E.QUANTIDADE AS QUANTIDADE_TOTAL,
-            E.RESERVADO_RESERVA AS QUANTIDADE_RESERVADA,
+            R.QUANTIDADE AS QUANTIDADE_RESERVADA,
             R.OBSERVACAO,
             DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA,
             MO.MODELO AS NOME_MODELO
