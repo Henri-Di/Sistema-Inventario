@@ -533,7 +533,7 @@ if ($result === false) {
             <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
 
             <div id="blue-line-title-btn-painel-alert">
-                <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-warning" id="blue-icon-btn-painel"></i></p>
+                <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
             </div>
 
             <table class="table table-bordered" id="blue-table-cadastro-auxiliar" style="margin-top:1%;">
@@ -715,7 +715,6 @@ HTML;
 ?>
 
 </div>
-
     
     <!-- Título da seção de cadastros auxiliares -->
     <div id="blue-line-title-btn-painel">

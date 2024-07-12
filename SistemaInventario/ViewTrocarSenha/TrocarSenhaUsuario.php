@@ -66,7 +66,7 @@
         <!-- Start formulario de login index -->
         <form class="needs-validation" name="AcessoRestrito" id="blue-form-login" method="POST" action="../ViewTrocarSenha/CreateNovaSenhaUsuario.php" novalidate>
             <div class="form-group">
-                <input type="text" name="NovaSenha" id="blue-input-login" placeholder="Nova senha" autocomplete="off" required>
+                <input type="password" name="NovaSenha" id="blue-input-login" placeholder="Nova senha" autocomplete="off" required>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
             </div>
