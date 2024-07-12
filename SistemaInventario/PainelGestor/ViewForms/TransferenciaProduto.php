@@ -444,8 +444,8 @@ if ($result === false) {
                         <div id="blue-input-cdst-alert"><?php echo $row['ID']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Produto Origem</div>
-                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MATERIAL_ORIGEM']; ?></div>
+                        <div id="blue-title-listar-alert">N° WO</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NUMWO']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Produto Destino</div>
@@ -1099,7 +1099,23 @@ HTML;
     <!-- Start código PHP para repetição de listagem -->
     <?php while($dado = $resultado->fetch_assoc()) { ?>
     
+    <td id="colun-blue-table"> 
 
+
+
+    <input id="blue-input-cdst"  name="id" type="hidden" value="<?php echo $dado['IDPRODUTO']; ?>"/>
+
+
+
+    <p id="blue-title-listar">N° WO</p> 
+        
+
+
+    <input id="blue-input-cdst" type="text" value="" name="NumWo" required autocomplete="off"/>
+        
+
+
+    </td>
         
     <td id="colun-blue-table"> 
 
@@ -1129,7 +1145,7 @@ HTML;
         
 
 
-    <input id="blue-input-cdst" type="number" value="" name="QuantidadeTransferencia" autocomplete="off" required/>
+    <input id="blue-input-cdst" type="number" value="" name="QuantidadeTransferencia" autocomplete="off" required  autocomplete="off"/>
 
 
 
@@ -1144,7 +1160,7 @@ HTML;
         
 
 
-    <input id="blue-input-cdst" type="date" value="" name="DataTransferencia" autocomplete="off" required/>
+    <input id="blue-input-cdst" type="date" value="" name="DataTransferencia" autocomplete="off" required  autocomplete="off"/>
 
 
 
@@ -1186,7 +1202,7 @@ HTML;
         
 
 
-    <input id="blue-input-cdst" type="text" value="" name="Observacao" autocomplete="off" required/>
+    <input id="blue-input-cdst" type="text" value="" name="Observacao" autocomplete="off" required  autocomplete="off"/>
 
 
 

@@ -1315,6 +1315,31 @@ $sql = "SELECT
     
 
 
+    N° WO
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="CodigoSaida" value="<?php echo $row['NUMWO'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
+
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
     Código Saída
     
 

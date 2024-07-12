@@ -16,6 +16,7 @@ $quantidadeTransferencia = filter_input(INPUT_POST, 'QuantidadeTransferencia', F
 $dataTransferencia = filter_input(INPUT_POST, 'DataTransferencia', FILTER_SANITIZE_SPECIAL_CHARS);
 $idDataCenterDestino = filter_input(INPUT_POST, 'DataCenter', FILTER_SANITIZE_SPECIAL_CHARS);
 $observacao = mb_strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHARS), 'UTF-8'); // Convertendo para maiúsculas com suporte a UTF-8
+$numWo = filter_input(INPUT_POST, 'NumWo', FILTER_SANITIZE_SPECIAL_CHARS); // Captura o valor de NUMWO
 
 // Obter os dados do usuário da sessão
 $idUsuario = $_SESSION['usuarioId'];
@@ -26,7 +27,6 @@ $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 $operacao = "TRANSFERÊNCIA";
 $situacao = "PENDENTE"; // A transferência começa como "Pendente"
 
-
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
     header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
@@ -34,7 +34,7 @@ if (mb_strlen($observacao, 'UTF-8') > 35) {
 }
 
 // Verifica se há campos vazios
-if (empty($idProdutoOrigem) || empty($quantidadeTransferencia) || empty($dataTransferencia) || empty($idDataCenterDestino) || empty($observacao)) {
+if (empty($idProdutoOrigem) || empty($quantidadeTransferencia) || empty($dataTransferencia) || empty($idDataCenterDestino) || empty($observacao) || empty($numWo)) {
     header("Location: ../ViewFail/FailCreateTransferenciaErroDados.php?erro=Existem campos vazios no formulário. Verifique e tente novamente");
     exit();
 }
@@ -94,7 +94,7 @@ try {
     }
 
     if ($idDataCenterOrigem == $idDatacenterDestino) {
-        header("Location: ../ViewFail/FailCreateProdutoOrigemDestino.php?erro=O produto de destino não pode ser igual ao produto de origem da transferência ");
+        header("Location: ../ViewFail/FailCreateProdutoOrigemDestino.php?erro=O produto de destino não pode ser igual ao produto de origem da transferência");
         exit();
     }
 
@@ -132,10 +132,10 @@ try {
     }
 
     // Inserir registro de transferência
-    $sqlInsertTransferencia = "INSERT INTO TRANSFERENCIA (QUANTIDADE, DATA_TRANSFERENCIA, IDDATACENTER, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO, IDUSUARIO, NOME, CODIGOP) 
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sqlInsertTransferencia = "INSERT INTO TRANSFERENCIA (QUANTIDADE, DATA_TRANSFERENCIA, IDDATACENTER, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO_ORIGEM, IDPRODUTO_DESTINO, IDUSUARIO, NOME, CODIGOP, NUMWO) 
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmtInsert = $conn->prepare($sqlInsertTransferencia);
-    $stmtInsert->bind_param("isssssiiiss", $quantidadeTransferencia, $dataTransferencia, $idDatacenterDestino, $observacao, $operacao, $situacao, $idProdutoOrigem, $idProdutoDestino, $idUsuario, $nomeUsuario, $codigoPUsuario);
+    $stmtInsert->bind_param("isssssiiisss", $quantidadeTransferencia, $dataTransferencia, $idDatacenterDestino, $observacao, $operacao, $situacao, $idProdutoOrigem, $idProdutoDestino, $idUsuario, $nomeUsuario, $codigoPUsuario, $numWo);
 
     if (!$stmtInsert->execute()) {
         header("Location: ../ViewFail/FailCreateInserirDadosTransferencia.php?erro=Não foi possível inserir os dados na tabela TRANSFERENCIA. Informe o departamento de TI");

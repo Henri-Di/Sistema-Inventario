@@ -444,8 +444,8 @@ if ($result === false) {
                         <div id="blue-input-cdst-alert"><?php echo $row['ID']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Produto Origem</div>
-                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MATERIAL_ORIGEM']; ?></div>
+                        <div id="blue-title-listar-alert">N° WO</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NUMWO']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Produto Destino</div>
@@ -1309,6 +1309,30 @@ $sql = "SELECT
 
 
     <form method="POST" action="">
+
+
+    <td id="colun-blue-table">
+    
+
+
+    <div id="blue-title-listar">
+    
+
+
+    N° WO
+    
+
+
+    </div>
+    <!-- End container title input form -->
+    
+
+
+    <input type="text" id="blue-input-cdst" name="NumWo" value="<?php echo $row['NUMWO'];?> " autocomplete="off" required disabled /><br>
+
+
+
+    </td>
 
 
 

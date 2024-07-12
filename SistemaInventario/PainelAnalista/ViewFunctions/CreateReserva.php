@@ -1,5 +1,4 @@
 <?php
-// Iniciar sessão se necessário
 session_start();
 
 // Verificar se os dados do usuário estão disponíveis na sessão
@@ -74,16 +73,27 @@ if ($conn->connect_error) {
 $conn->begin_transaction();
 
 try {
-    // Verificar se há reservas para o produto
-    $sqlVerificaReserva = "SELECT RESERVADO_TRANSFERENCIA FROM ESTOQUE WHERE IDPRODUTO = ?";
-    $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
-    $stmtVerificaReserva->bind_param("i", $idProduto);
-    $stmtVerificaReserva->execute();
-    $stmtVerificaReserva->bind_result($reservado);
-    $stmtVerificaReserva->fetch();
-    $stmtVerificaReserva->close();
+    // Verificar a quantidade total atual no estoque
+    $sqlVerificaEstoque = "SELECT QUANTIDADE FROM ESTOQUE WHERE IDPRODUTO = ?";
+    $stmtVerificaEstoque = $conn->prepare($sqlVerificaEstoque);
+    $stmtVerificaEstoque->bind_param("i", $idProduto);
+    $stmtVerificaEstoque->execute();
+    $stmtVerificaEstoque->bind_result($quantidadeTotal);
+    $stmtVerificaEstoque->fetch();
+    $stmtVerificaEstoque->close();
 
-    $temReserva = $reservado > 0;
+    // Calcular a nova quantidade no estoque (subtraindo a quantidade reservada)
+    $novaQuantidadeEstoque = $quantidadeTotal - $quantidadeReservar;
+
+    // Atualizar a tabela ESTOQUE com a nova quantidade no estoque
+    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = ? WHERE IDPRODUTO = ?";
+    $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
+    $stmtUpdate->bind_param("ii", $novaQuantidadeEstoque, $idProduto);
+
+    if (!$stmtUpdate->execute()) {
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        exit(); // Termina a execução do script após redirecionamento
+    }
 
     // Inserir dados na tabela RESERVA usando prepared statement
     $sqlInsertReserva = "INSERT INTO RESERVA (NUMWO, QUANTIDADE, DATARESERVA, OBSERVACAO, OPERACAO, SITUACAO, IDPRODUTO, IDUSUARIO, NOME, CODIGOP) 
@@ -96,24 +106,11 @@ try {
         exit(); // Termina a execução do script após redirecionamento
     }
 
-    // Atualizar a tabela ESTOQUE subtraindo a quantidade reservada
-    $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE - ?, RESERVADO_RESERVA = RESERVADO_RESERVA + ? WHERE IDPRODUTO = ?";
-    $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
-    $stmtUpdate->bind_param("iii", $quantidadeReservar, $quantidadeReservar, $idProduto);
-
-    if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possivel atualizar o estoque do produto. Refaça a operação e tente novamente");
-        exit(); // Termina a execução do script após redirecionamento
-    }
-
     // Commit da transação se todas as operações foram bem-sucedidas
     $conn->commit();
 
-    if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
-    } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
-    }
+    // Redirecionar para a página de sucesso apropriada
+    header("Location: ../ViewSucess/SucessCreateReserva.php?sucesso=Reserva realizada com sucesso ");
     exit();
 
 } catch (Exception $e) {

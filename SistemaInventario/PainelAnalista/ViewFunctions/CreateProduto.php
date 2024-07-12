@@ -74,12 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitizar o ID do usuário para evitar injeção de SQL
     $idUsuario = $conn->real_escape_string($idUsuario);
 
-    // Consulta para obter o datacenter do usuário
-    $consultaDatacenter = "SELECT UPPER(DATACENTER) FROM USUARIO WHERE IDUSUARIO = ?";
-    if ($stmt = $conn->prepare($consultaDatacenter)) {
+    // Consulta para obter o datacenter e o nível de acesso do usuário
+    $consultaDatacenterNivelAcesso = "SELECT UPPER(DATACENTER), NIVEL_ACESSO FROM USUARIO WHERE IDUSUARIO = ?";
+    if ($stmt = $conn->prepare($consultaDatacenterNivelAcesso)) {
         $stmt->bind_param("i", $idUsuario);
         $stmt->execute();
-        $stmt->bind_result($datacenterUsuario);
+        $stmt->bind_result($datacenterUsuario, $nivelAcesso);
         $stmt->fetch();
         $stmt->close();
     }
@@ -98,8 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Termina a execução do script após redirecionamento
     }
 
-    // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário
-    if (strtoupper($datacenterUsuario) !== strtoupper($datacenterNome)) {
+    // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário, exceto se o nível de acesso for "GESTOR"
+    if (strtoupper($nivelAcesso) !== 'GESTOR' && strtoupper($datacenterUsuario) !== strtoupper($datacenterNome)) {
         // Redirecionar para a página de falha
         header("Location: ../ViewFail/FailCreateProdutoDatacenterIncorreto.php?erro=Você não pode cadastrar um produto que seja de outro datacenter");
         exit(); // Termina a execução do script após redirecionamento

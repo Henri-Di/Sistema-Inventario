@@ -538,8 +538,8 @@ if ($result === false) {
                         <div id="blue-input-cdst-alert"><?php echo $row['ID']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Produto Origem</div>
-                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MATERIAL_ORIGEM']; ?></div>
+                        <div id="blue-title-listar-alert">N° WO</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NUMWO']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Produto Destino</div>

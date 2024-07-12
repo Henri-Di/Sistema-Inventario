@@ -444,8 +444,8 @@ if ($result === false) {
                         <div id="blue-input-cdst-alert"><?php echo $row['ID']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Produto Origem</div>
-                        <div id="blue-input-cdst-alert"><?php echo $row['NOME_MATERIAL_ORIGEM']; ?></div>
+                        <div id="blue-title-listar-alert">N° WO</div>
+                        <div id="blue-input-cdst-alert"><?php echo $row['NUMWO']; ?></div>
                     </td>
                     <td id="colun-blue-table-alert">
                         <div id="blue-title-listar-alert">Produto Destino</div>
@@ -490,125 +490,6 @@ if ($result === false) {
         }
     } else {
         echo "Nenhuma transferência pendente encontrada.";
-    }
-}
-
-
-?>
-
-</div>
-
-
-<div class="alerts" style="display: none;" id="transferAlerts">
-<?php
-// Conexão ao banco de dados
-require_once('../../ViewConnection/ConnectionInventario.php');
-
-// Nome do usuário da sessão atual
-$nomeUsuarioSessao = $_SESSION['usuarioNome'];
-
-$sql = "SELECT 
-            R.*, 
-            DC.NOME AS NOME_DATACENTER,
-            MAT.MATERIAL AS NOME_MATERIAL,
-            MET.METRAGEM AS METRAGEM_PRODUTO,
-            U.NOME AS NOME_USUARIO,
-            E.QUANTIDADE AS QUANTIDADE_TOTAL,
-            R.QUANTIDADE AS QUANTIDADE_RESERVADA,
-            R.OBSERVACAO,
-            DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA,
-            MO.MODELO AS NOME_MODELO
-        FROM 
-            RESERVA R
-        JOIN 
-            PRODUTO P ON R.IDPRODUTO = P.IDPRODUTO
-        JOIN 
-            MATERIAL MAT ON P.IDMATERIAL = MAT.IDMATERIAL
-        JOIN 
-            METRAGEM MET ON P.IDMETRAGEM = MET.IDMETRAGEM
-        JOIN 
-            DATACENTER DC ON P.IDDATACENTER = DC.IDDATACENTER
-        JOIN 
-            USUARIO U ON R.IDUSUARIO = U.IDUSUARIO
-        JOIN 
-            ESTOQUE E ON P.IDPRODUTO = E.IDPRODUTO
-        JOIN 
-            MODELO MO ON P.IDMODELO = MO.IDMODELO
-        WHERE 
-            R.SITUACAO = 'Pendente'
-            AND U.NOME = '" . $conn->real_escape_string($nomeUsuarioSessao) . "'";
-
-// Executar consulta
-$result = $conn->query($sql);
-
-if ($result === false) {
-    echo "Erro na consulta: " . $conn->error;
-} else {
-    // Verificar se há resultados
-    if ($result->num_rows > 0) {
-        echo "<script>document.getElementById('transferAlerts').style.display = 'block';</script>";
-
-        // Exibir os resultados
-        while ($row = $result->fetch_assoc()) {
-            echo <<<HTML
-            <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
-
-            <div id="blue-line-title-btn-painel-alert">
-                <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
-            </div>
-
-            <table class="table table-bordered" id="blue-table-cadastro-auxiliar" style="margin-top:1%;">
-                <tr id="line-blue-table-alert">
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Código Reserva</div>
-                        <div id="blue-input-cdst-alert">{$row['ID']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Nº WO</div>
-                        <div id="blue-input-cdst-alert">{$row['NUMWO']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Produto</div>
-                        <div id="blue-input-cdst-alert">{$row['NOME_MATERIAL']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Metragem</div>
-                        <div id="blue-input-cdst-alert">{$row['METRAGEM_PRODUTO']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Modelo</div>
-                        <div id="blue-input-cdst-alert">{$row['NOME_MODELO']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Quantidade Reservada</div>
-                        <div id="blue-input-cdst-alert">{$row['QUANTIDADE_RESERVADA']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Quantidade Total</div>
-                        <div id="blue-input-cdst-alert">{$row['QUANTIDADE_TOTAL']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">DataCenter</div>
-                        <div id="blue-input-cdst-alert">{$row['NOME_DATACENTER']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Data Reserva</div>
-                        <div id="blue-input-cdst-alert">{$row['DATA_FORMATADA']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Observação</div>
-                        <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
-                    </td>
-                    <td id="colun-blue-table-alert">
-                        <div id="blue-title-listar-alert">Analista</div>
-                        <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
-                    </td>
-                </tr>
-            </table>
-HTML;
-        }
-    } else {
-        echo "Nenhuma reserva pendente encontrada para este usuário.";
     }
 }
 

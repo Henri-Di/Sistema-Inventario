@@ -58,6 +58,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
+        // Verificar se há outras reservas pendentes para o mesmo produto
+        $sqlVerificarReservasPendentes = "SELECT COUNT(*) FROM RESERVA WHERE IDPRODUTO = ? AND SITUACAO = 'PENDENTE'";
+        $stmtVerificarReservasPendentes = $conn->prepare($sqlVerificarReservasPendentes);
+        $stmtVerificarReservasPendentes->bind_param("i", $idProduto);
+        $stmtVerificarReservasPendentes->execute();
+        $stmtVerificarReservasPendentes->bind_result($quantidadeReservasPendentes);
+        $stmtVerificarReservasPendentes->fetch();
+        $stmtVerificarReservasPendentes->close();
+
         // Atualizar a tabela RESERVA
         $sqlUpdateReserva = "UPDATE RESERVA SET SITUACAO = ?, IDUSUARIO = ?, NOME = ?, CODIGOP = ? WHERE ID = ?";
         $stmtUpdateReserva = $conn->prepare($sqlUpdateReserva);
@@ -68,8 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
-        // Se a reserva for cancelada, devolver a quantidade ao estoque e zerar o reservado_reserva
-        if ($acaoReserva === 'CANCELADA') {
+        // Se a reserva for cancelada e não houver mais reservas pendentes, devolver a quantidade ao estoque
+        if ($acaoReserva === 'CANCELADA' && $quantidadeReservasPendentes === 0) {
             $sqlUpdateEstoque = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ?, RESERVADO_RESERVA = 0 WHERE IDPRODUTO = ?";
             $stmtUpdateEstoque = $conn->prepare($sqlUpdateEstoque);
             $stmtUpdateEstoque->bind_param("ii", $quantidadeReservada, $idProduto);
@@ -79,14 +88,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit();
             }
         } elseif ($acaoReserva === 'CONCLUIDA') {
-            // Se a reserva for concluída, apenas zerar o reservado_reserva
-            $sqlUpdateEstoque = "UPDATE ESTOQUE SET RESERVADO_RESERVA = 0 WHERE IDPRODUTO = ?";
-            $stmtUpdateEstoque = $conn->prepare($sqlUpdateEstoque);
-            $stmtUpdateEstoque->bind_param("i", $idProduto);
+            // Se a reserva for concluída, apenas zerar o reservado_reserva se não houver mais reservas pendentes
+            if ($quantidadeReservasPendentes === 0) {
+                $sqlUpdateEstoque = "UPDATE ESTOQUE SET RESERVADO_RESERVA = 0 WHERE IDPRODUTO = ?";
+                $stmtUpdateEstoque = $conn->prepare($sqlUpdateEstoque);
+                $stmtUpdateEstoque->bind_param("i", $idProduto);
 
-            if (!$stmtUpdateEstoque->execute()) {
-                header("Location: ../ViewFail/FailCreateUpdateEstoqueReserva.php?erro=Não foi possível atualizar o estoque do produto da reserva. Refaça a operação e tente novamente");
-                exit();
+                if (!$stmtUpdateEstoque->execute()) {
+                    header("Location: ../ViewFail/FailCreateUpdateEstoqueReserva.php?erro=Não foi possível atualizar o estoque do produto da reserva. Refaça a operação e tente novamente");
+                    exit();
+                }
             }
         }
 
