@@ -7,18 +7,18 @@
 
 /* Estilo de fundo para o corpo da página */
 body {
-  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
+  background-color: rgba(255, 255, 255, 0.1); /* cor de fundo com opacidade */
 }
 
 /* Estilo de fundo para um menu lateral escondido em telas pequenas */
 #blue-sidenav-hidden-xs {
-  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
+  background-color: rgba(255, 255, 255, 0.1); /* cor de fundo com opacidade */
 }
 
 /* Estilo para um container principal, ajustando margem superior e fundo */
 #blue-col-sm-9 {
   margin-top: -20px;
-  background-color: rgba(255, 255, 255, 0.3); /* cor de fundo com opacidade */
+  background-color: rgba(255, 255, 255, 0.1); /* cor de fundo com opacidade */
 }
 
 /* Estilos para tornar a página responsiva */
@@ -36,24 +36,27 @@ body {
 }
 
 #row-content {
-  background-color: rgba(255, 255, 255, 0.6); /* Fundo semitransparente para melhor contraste */
+ 
   position: relative;
   z-index: 0;
-  padding-bottom: 905px; /* Adiciona espaço extra para mover a imagem para baixo */
+  image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
+  object-fit: cover; /* Mantém a proporção da imagem sem distorção */
+  padding-bottom: 979px; /* Adiciona espaço extra para mover a imagem para baixo */
 }
 
 #row-content::before {
   content: "";
   position: absolute;
   top: 0;
-  left: -4%; /* Começa do canto esquerdo da tela */
+  left: -5%; /* Começa do canto esquerdo da tela */
   width: 100%; /* Cobrir toda a largura da tela */
   height: 100%;
-  background-image: url('../../Images/ImageMenu.jpg');
-  background-size: 35vw; /* Utilizando vw para dimensionamento responsivo */
+  border-radius: 5px;
+  background-image: url('../../Images/ImageMenu4.jpg');
+  background-size: 60vw; /* Utilizando vw para dimensionamento responsivo */
   background-position: left bottom;
   background-repeat: no-repeat;
-  opacity: 0.9; /* Reduz a opacidade para não sobrepor muito o conteúdo */
+  background-attachment: fixed;
   z-index: -1;
   pointer-events: none;
 }
@@ -65,7 +68,7 @@ body {
 }
 
 .well {
-  background-color: rgba(255, 255, 255, 0.6); /* Fundo semitransparente para melhor contraste */
+  background-color: rgba(255, 255, 255, 0.80); /* Fundo semitransparente para melhor contraste */
   font-weight: bold; /* Negrito */
   border: none; /* Remove a borda */
   color: #005ce6; /* Cor do texto */
@@ -74,6 +77,9 @@ body {
   position: relative; /* Necessário para o uso do pseudo-elemento */
   z-index: 1; /* Garante que o conteúdo esteja na frente */
   margin-top: 3%;
+  image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
+  object-fit: cover; /* Mantém a proporção da imagem sem distorção */
+  padding-bottom: 8.5%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
@@ -160,7 +166,7 @@ body {
 
 /* Estilo para os links da barra de navegação */
 #menu-blue {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.75); /* Fundo semitransparente para melhor contraste */
   color: #005ce6; /* Cor do texto */
   width: 85%; /* Largura do link */
   font-weight: bold; /* Negrito */
@@ -178,7 +184,7 @@ body {
   color: #ffffff; /* Cor do texto ao passar o mouse */
   font-weight: bold; /* Negrito */
   opacity: 0.7; /* Transparência ao passar o mouse */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
 /* Estilo para os itens de lista da barra de navegação */
