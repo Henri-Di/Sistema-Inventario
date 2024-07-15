@@ -28,13 +28,18 @@ img {
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
 }
 
+/* Contêiner para a logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -50px; /* Ajusta a margem superior para posicionamento */
+}
+
 /* Estilo para a logo */
 .logo {
-  max-width: 60px; /* Define a largura máxima para a logo */
+  max-width: 18%; /* Define a largura máxima para a logo dentro do contêiner */
   height: auto; /* Mantém a altura proporcional à largura */
-  margin-top: -15%; /* Ajusta a margem superior para posicionamento */
-  margin-left: 50%; /* Ajusta a margem esquerda para centralizar */
-  transform: translateX(-50%); /* Centraliza horizontalmente */
   filter: brightness(1.1) contrast(1.1); /* Ajusta brilho e contraste */
 }
 
@@ -96,6 +101,7 @@ img {
 
 /* Estilo para os links da barra de navegação */
 #menu-blue {
+  background-color: transparent;
   color: #005ce6; /* Cor do texto */
   width: 85%; /* Largura do link */
   font-weight: bold; /* Negrito */
@@ -104,6 +110,7 @@ img {
   text-align: center; /* Centraliza o texto */
   margin-left: 4%; /* Espaçamento à esquerda */
   transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 /* Efeito hover para os links da barra de navegação */
@@ -112,6 +119,7 @@ img {
   color: #ffffff; /* Cor do texto ao passar o mouse */
   font-weight: bold; /* Negrito */
   opacity: 0.7; /* Transparência ao passar o mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 /* Estilo para os itens de lista da barra de navegação */
@@ -123,7 +131,7 @@ img {
 
 /* Efeito hover para os itens de lista da barra de navegação */
 #list-blue:hover {
-  background-color: #ffffff; /* Cor de fundo ao passar o mouse */
+  background-color: transparent; /* Cor de fundo ao passar o mouse */
 }
 
 /* Responsividade para telas menores */
@@ -197,7 +205,7 @@ img {
 
 /* Estilo para o container de documentos */
 .well {
-  background-color: #ffffff; /* Cor de fundo */
+  background-color: rgba(255, 255, 255, 0.6); /* Fundo semitransparente para melhor contraste */
   font-weight: bold; /* Negrito */
   border: none; /* Remove a borda */
   color: #005ce6; /* Cor do texto */
@@ -205,6 +213,8 @@ img {
   text-align: center; /* Centraliza o texto */
   position: relative; /* Necessário para o uso do pseudo-elemento */
   z-index: 1; /* Garante que o conteúdo esteja na frente */
+  margin-top: 3%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
 .well::before {
@@ -215,12 +225,14 @@ img {
   width: 100%;
   height: 100%;
   background-image: url('../../Images/Caixa.png'); /* Substitua pelo caminho da sua imagem */
-  background-size: 85%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
-  background-position: center; /* Centraliza a imagem */
+  background-size: 75%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
+  background-position: right center; /* Centraliza a imagem tanto horizontalmente quanto verticalmente */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  opacity: 0.2; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
+  background-attachment: fixed; /* Mantém a imagem fixa durante a rolagem */
+  opacity: 0.1; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
+  mix-blend-mode: multiply; /* Define o modo de mistura */
 }
 
 
@@ -710,6 +722,7 @@ img {
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
   transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 /* Efeito hover para o botão de tabela de cadastro de produto */
@@ -717,6 +730,7 @@ img {
   background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
   color: #f0f0f0; /* Cor do texto branco */
   opacity: 0.7; /* Opacidade reduzida */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 /* Estilo para o botão de logout */
@@ -782,6 +796,7 @@ img {
     width: 100%; /* Largura total */
     margin-top: -1%; /* Margem superior */
     table-layout: fixed; /* Ajustar a largura das células fixa */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
   }
 
   #blue-table-cadastro-auxiliar td {

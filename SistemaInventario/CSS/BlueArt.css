@@ -67,6 +67,14 @@ body::before {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
+/* Estilo para todas as imagens */
+img {
+  max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho do contêiner */
+  height: auto; /* Mantém a proporção da imagem */
+  image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
+  object-fit: cover; /* Mantém a proporção da imagem sem distorção */
+}
+
 /* Logo */
 .logo {
   max-width: 50px; /* Define a largura máxima do logo */
@@ -108,10 +116,12 @@ body::before {
   border-radius: 5px; /* Bordas arredondadas */
   cursor: pointer; /* Cursor de ponteiro ao passar sobre o botão */
   transition: background-color ease 0.5s; /* Transição suave para a cor de fundo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 #blue-btn-login:hover {
   background-color: #005ce6; /* Cor de fundo ao passar o mouse */
   color: #ffffff; /* Cor do texto ao passar o mouse */
   opacity: 0.7; /* Define a opacidade ao passar o mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
