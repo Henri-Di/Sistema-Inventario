@@ -270,7 +270,7 @@ document.oncontextmenu = function() { return false; }
                         <tr id="line-blue-table-alert">
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">Código Saída</div>
-                                <div id="blue-input-cdst-alert">{$row['ID']}; ?></div>
+                                <div id="blue-input-cdst-alert">{$row['ID']}</div>
                             </td>
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">N° WO</div>

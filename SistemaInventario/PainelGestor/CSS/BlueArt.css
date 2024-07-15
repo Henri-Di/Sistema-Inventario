@@ -41,7 +41,7 @@ body {
   z-index: 0;
   image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
-  padding-bottom: 979px; /* Adiciona espaço extra para mover a imagem para baixo */
+  padding-bottom: 900px; /* Adiciona espaço extra para mover a imagem para baixo */
 }
 
 #row-content::before {
@@ -52,8 +52,8 @@ body {
   width: 100%; /* Cobrir toda a largura da tela */
   height: 100%;
   border-radius: 5px;
-  background-image: url('../../Images/ImageMenu4.jpg');
-  background-size: 60vw; /* Utilizando vw para dimensionamento responsivo */
+  background-image: url('../../Images/ImageMenu2.jpg');
+  background-size: 35vw; /* Utilizando vw para dimensionamento responsivo */
   background-position: left bottom;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -68,7 +68,7 @@ body {
 }
 
 .well {
-  background-color: rgba(255, 255, 255, 0.80); /* Fundo semitransparente para melhor contraste */
+  background-color: rgba(255, 255, 255, 0.7); /* Fundo semitransparente para melhor contraste */
   font-weight: bold; /* Negrito */
   border: none; /* Remove a borda */
   color: #005ce6; /* Cor do texto */
@@ -79,7 +79,7 @@ body {
   margin-top: 3%;
   image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
-  padding-bottom: 8.5%;
+  padding-bottom: 2%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
@@ -937,7 +937,7 @@ img {
   /* Estilo para container do rodapé da página */
 #footer-page {
   background-color: transparent;
-  padding: 10px; /* Adiciona padding para espaçamento interno */
+  padding: 5px; /* Adiciona padding para espaçamento interno */
   margin-top: 4%; /* Adiciona uma margem superior de 4% */
   margin-bottom: 0; /* Remove a margem inferior */
   text-align: center; /* Centraliza o texto */
