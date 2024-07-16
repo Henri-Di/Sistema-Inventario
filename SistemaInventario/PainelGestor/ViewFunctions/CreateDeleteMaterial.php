@@ -1,4 +1,14 @@
 <?php
+// Iniciar sessão se necessário
+session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
@@ -12,25 +22,45 @@ if (!empty($id)) {
         die("Falha na conexão: " . $conn->connect_error);
     }
 
-    // Construir a consulta SQL para exclusão
-    $sql = "DELETE FROM MATERIAL WHERE id = '$id'";
+    // Iniciar transação para garantir atomicidade
+    $conn->begin_transaction();
 
-    // Executar a consulta SQL e verificar o resultado
-    if (mysqli_query($conn, $sql) && mysqli_affected_rows($conn) > 0) {
-        // Redirecionar para a página de sucesso
-        header("Location: ../ViewSucess/SucessCreateDeleteMaterial.php?O material foi removido com sucesso");
-        exit(); // Termina a execução do script após redirecionamento
-    } else {
-        // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreateDeleteMaterial.php?erro=Não foi possivel remover o material. Tente novamente");
-        exit(); // Termina a execução do script após redirecionamento
+    try {
+        // Construir a consulta SQL para exclusão usando prepared statements
+        $sql = "DELETE FROM MATERIAL WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+
+        // Executar a consulta SQL e verificar o resultado
+        if ($stmt->execute() && $stmt->affected_rows > 0) {
+            // Commit da transação se a exclusão for bem-sucedida
+            $conn->commit();
+            // Redirecionar para a página de sucesso
+            header("Location: ../ViewSucess/SucessCreateDeleteMaterial.php?sucesso=" . urlencode("O material foi removido com sucesso"));
+            exit();
+        } else {
+            // Rollback da transação em caso de falha
+            $conn->rollback();
+            // Redirecionar para a página de falha
+            header("Location: ../ViewFail/FailCreateDeleteMaterial.php?erro=" . urlencode("Não foi possível remover o material. Tente novamente"));
+            exit();
+        }
+    } catch (Exception $e) {
+        // Rollback da transação em caso de exceção
+        $conn->rollback();
+        // Redirecionar para a página de falha com mensagem de erro genérica
+        header("Location: ../ViewFail/FailCreateDeleteMaterial.php?erro=" . urlencode("Ocorreu um erro ao tentar remover o material. Tente novamente"));
+        exit();
+    } finally {
+        // Fechar o statement
+        $stmt->close();
     }
-
-    // Fechar a conexão
-    $conn->close();
 } else {
     // Redirecionar para a página de falha se o ID estiver vazio
-    header("Location: ../ViewFail/FailCreateDeleteMaterial.php?erro=Não foi possivel remover o material. Tente novamente");
-    exit(); // Termina a execução do script após redirecionamento
+    header("Location: ../ViewFail/FailCreateDeleteMaterial.php?erro=" . urlencode("Não foi possível remover o material. Tente novamente"));
+    exit();
 }
+
+// Fechar a conexão
+$conn->close();
 ?>

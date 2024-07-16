@@ -1,27 +1,47 @@
 <?php
 // Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
 // Verificar se os dados do usuário estão disponíveis na sessão
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
-    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
+    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=" . urlencode("O usuário não está autenticado. Realize o login novamente"));
     exit(); // Termina a execução do script após redirecionamento
 }
 
-// Obter os dados do formulário
-$idProduto = $_POST['id'] ?? '';
-$numwo = $_POST['NumWo'] ?? '';
-$quantidadeSubtracao = $_POST['Subtracao'] ?? '';
-$dataSubtracao = $_POST['DataSubtracao'] ?? '';
-$observacao = $_POST['Observacao'] ?? '';
+// Função para sanitizar os dados
+function sanitizeData($conn, $data) {
+    // Remove espaços em branco no início e no fim
+    $data = trim($data);
+    // Remove barras invertidas adicionadas automaticamente
+    $data = stripslashes($data);
+    // Escapa caracteres especiais para evitar SQL Injection
+    $data = $conn->real_escape_string($data);
+    // Converte para maiúsculas
+    $data = mb_strtoupper($data, 'UTF-8');
+    return $data;
+}
 
-// Obter os dados do usuário da sessão
-$idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = $_SESSION['usuarioNome'];
-$codigoPUsuario = $_SESSION['usuarioCodigoP'];
+// Obter os dados do formulário e sanitizá-los
+$idProduto = isset($_POST['id']) ? sanitizeData($conn, $_POST['id']) : '';
+$numwo = isset($_POST['NumWo']) ? sanitizeData($conn, $_POST['NumWo']) : '';
+$quantidadeSubtracao = isset($_POST['Subtracao']) ? sanitizeData($conn, $_POST['Subtracao']) : '';
+$dataSubtracao = isset($_POST['DataSubtracao']) ? sanitizeData($conn, $_POST['DataSubtracao']) : '';
+$observacao = isset($_POST['Observacao']) ? sanitizeData($conn, $_POST['Observacao']) : '';
+
+// Obter os dados do usuário da sessão e sanitizá-los
+$idUsuario = sanitizeData($conn, $_SESSION['usuarioId']);
+$nomeUsuario = sanitizeData($conn, $_SESSION['usuarioNome']);
+$codigoPUsuario = sanitizeData($conn, $_SESSION['usuarioCodigoP']);
 
 // Definir valores fixos
 $operacao = "SUBTRAÇÃO";
@@ -29,7 +49,7 @@ $situacao = "DIMINUIDO";
 
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
-    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=" . urlencode("O campo observação excede o limite de 35 caracteres. Refaça a operação e tente novamente"));
     exit();
 }
 
@@ -38,20 +58,10 @@ if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
-// Sanitizar os dados de entrada para evitar injeção de SQL
-$idProduto = $conn->real_escape_string($idProduto);
-$numwo = $conn->real_escape_string($numwo);
-$quantidadeSubtracao = $conn->real_escape_string($quantidadeSubtracao);
-$dataSubtracao = $conn->real_escape_string($dataSubtracao);
-$observacao = $conn->real_escape_string($observacao);
-$idUsuario = $conn->real_escape_string($idUsuario);
-$nomeUsuario = $conn->real_escape_string($nomeUsuario);
-$codigoPUsuario = $conn->real_escape_string($codigoPUsuario);
-
 // Verificar se a quantidade é positiva
 if ($quantidadeSubtracao <= 0) {
     // Se a quantidade for negativa ou zero, redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
+    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=" . urlencode("Não é permitido o registro de valores negativos no campo de quantidade"));
     exit(); // Termina a execução do script após redirecionamento
 }
 
@@ -101,10 +111,10 @@ try {
                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     $stmtInsert = $conn->prepare($sqlInsertSubtracao);
-    $stmtInsert->bind_param("sisssssiss", mb_strtoupper($numwo, 'UTF-8'), $quantidadeSubtracao, $dataSubtracao, mb_strtoupper($observacao, 'UTF-8'), mb_strtoupper($operacao, 'UTF-8'), mb_strtoupper($situacao, 'UTF-8'), $idProduto, $idUsuario, mb_strtoupper($nomeUsuario, 'UTF-8'), mb_strtoupper($codigoPUsuario, 'UTF-8'));
+    $stmtInsert->bind_param("sisssssiss", $numwo, $quantidadeSubtracao, $dataSubtracao, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
     
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosSubtracao.php?erro=Não foi possível inserir os dados na tabela SUBTRACAO. Informe o departamento de TI");
+        header("Location: ../ViewFail/FailCreateInserirDadosSubtracao.php?erro=" . urlencode("Não foi possível inserir os dados na tabela SUBTRACAO. Informe o departamento de TI"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -115,13 +125,13 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeSubtracao, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
     // Verificar se a data de subtração é válida
     if (!datasSaoValidas($dataSubtracao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual à data atual");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=" . urlencode("A data está fora do intervalo permitido. A data deve ser igual à data atual"));
         exit();
     }
 
@@ -130,9 +140,9 @@ try {
 
     // Redirecionar para a página apropriada com base na existência de reservas
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=" . urlencode("O estoque do produto será atualizado após a confirmação das transferências pendentes"));
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=" . urlencode("O estoque do produto foi atualizado com sucesso"));
     }
     exit();
 
@@ -144,7 +154,7 @@ try {
     echo "Erro: " . $e->getMessage();
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente ");
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente "));
     exit(); // Termina a execução do script após redirecionamento
     
 } finally {

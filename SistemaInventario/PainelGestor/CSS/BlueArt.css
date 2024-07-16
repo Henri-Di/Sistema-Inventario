@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  text-rendering: unset;
   font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte para o texto do botão */
   box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho dos elementos */
 }
@@ -56,6 +57,7 @@ body {
   background-size: 50vw; /* Utilizando vw para dimensionamento responsivo */
   background-position: left bottom;
   background-repeat: no-repeat;
+  opacity: 0.8;
   z-index: -1;
   pointer-events: none;
 }
@@ -68,7 +70,6 @@ body {
 
 .well {
   background-color: rgba(255, 255, 255, 0.1); /* Fundo semitransparente para melhor contraste */
-  font-weight: bold; /* Negrito */
   border: none; /* Remove a borda */
   color: #005ce6; /* Cor do texto */
   cursor: context-menu; /* Cursor de contexto */
@@ -94,7 +95,7 @@ body {
   background-size: 14%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: center; /* Alinha a imagem ao centro */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  opacity: 0.9; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
+  opacity: 1.0; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
   mix-blend-mode: multiply; /* Define o modo de mistura */
@@ -326,6 +327,7 @@ img {
   #blue-title-btn-painel {
     text-align: left; /* Alinhamento à esquerda */
     color: #005ce6; /* Cor do texto */
+    font-weight: bold;
     font-size: 13px; /* Tamanho da fonte */
   }
 
@@ -355,7 +357,7 @@ img {
 }
 
 #blue-table-cadastro-auxiliar td {
-  padding: 4px; /* Espaçamento interno */
+  padding: 5px; /* Espaçamento interno */
   overflow: hidden; /* Esconder conteúdo excedente */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
   white-space: nowrap; /* Não quebrar linhas */
@@ -488,6 +490,7 @@ img {
   outline: none; /* Remove a borda de foco padrão */
   cursor: pointer; /* Define o cursor como pointer */
   color: #33334d; /* Define a cor do texto */
+  text-rendering: unset;
   font-size: 10px; /* Define o tamanho da fonte */
   font-weight: bold; /* Define a fonte como negrito */
   border: 1px solid #666699; /* Define a borda */
@@ -616,6 +619,7 @@ img {
 /* Estilo para texto da sessão do usuário */
 #blue-text-session-user {
   float: right; /* Alinha o elemento à direita */
+  font-weight: bold;
   font-size: 12px; /* Define o tamanho da fonte como 12 pixels */
   margin-top: -2px; /* Aplica um deslocamento para cima de 2 pixels */
   margin-right: 10px; /* Define uma margem direita de 10 pixels */
@@ -670,7 +674,7 @@ img {
 
 /* Estilo para o botão de relatório auxiliar azul */
 #blue-btn-relatorio-auxiliar-blue {
-  width: 10%; /* Largura do botão */
+  width: 11%; /* Largura do botão */
   height: auto; /* Altura automática */
   padding: 5px;
   background-color: transparent; /* Define a cor de fundo como branco*/
@@ -678,7 +682,8 @@ img {
   margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
-  font-size: 12px; /* Tamanho da fonte reduzido */
+  font-weight: bold;
+  font-size: 11px; /* Tamanho da fonte reduzido */
   transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
   flex: 1; /* Ocupa espaço igualmente dentro do container flexível */
   max-width: 10%; /* Largura máxima para garantir que 9 botões caibam na mesma linha */
@@ -788,7 +793,7 @@ img {
 }
 
 #blue-title-listar-exibicao {
-  background-color: transparent;
+  background-color:#f0f0f5 /* Cor do fundo do texto */;
   color: #005ce6;
   font-weight: bold;
   border: 1px solid #005ce6;
@@ -812,9 +817,10 @@ img {
 #blue-text-table-exibicao {
   color: #33334d; /* Cor do texto */
   font-weight: bold; /* Texto em negrito */
+  text-rendering: unset;
   text-align: center; /* Alinhamento central do texto */
-  font-size: 0.62em; /* Tamanho da fonte usando uma unidade relativa */
-  padding: 0.4em; /* Espaçamento interno para manter proporção */
+  font-size: 0.60em; /* Tamanho da fonte usando uma unidade relativa */
+  padding: 0.5em; /* Espaçamento interno para manter proporção */
 }
 
 @media (max-width: 768px) {

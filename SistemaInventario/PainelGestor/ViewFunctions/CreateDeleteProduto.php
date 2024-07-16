@@ -1,6 +1,31 @@
 <?php
+// Iniciar sessão se necessário
+session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
+
+// Função para executar query com prepared statement
+function executeQuery($conn, $sql, $params = null) {
+    $stmt = $conn->prepare($sql);
+
+    if ($params !== null) {
+        $stmt->bind_param(...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
+    return $result;
+}
 
 // Obter o ID do parâmetro GET e sanitizar
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
@@ -11,94 +36,57 @@ if (!empty($id)) {
     $conn->begin_transaction();
 
     try {
-        // Construir as consultas SQL para exclusão nas tabelas relacionadas
-        $sqlDeleteEstoque = "DELETE FROM ESTOQUE WHERE IDPRODUTO = '$id'";
-        $sqlDeleteAcrescimo = "DELETE FROM ACRESCIMO WHERE IDPRODUTO = '$id'";
-        $sqlDeleteSubtracao = "DELETE FROM SUBTRACAO WHERE IDPRODUTO = '$id'";
-        $sqlDeleteSobrepor = "DELETE FROM SOBREPOR WHERE IDPRODUTO = '$id'";
-        $sqlDeleteReserva = "DELETE FROM RESERVA WHERE IDPRODUTO = '$id'";
-        $sqlDeleteDevolver = "DELETE FROM DEVOLVER WHERE IDPRODUTO = '$id'";
-        $sqlDeleteInutilizar = "DELETE FROM INUTILIZAR WHERE IDPRODUTO = '$id'";
-        $sqlDeleteTransferir = "DELETE FROM TRANSFERENCIA WHERE IDPRODUTO = '$id'";
-        $sqlDeleteNotaFiscal = "DELETE FROM NOTAFISCAL WHERE IDPRODUTO = '$id'";
+        // Construir as consultas SQL para exclusão nas tabelas relacionadas usando prepared statements
+        $sqlDeleteEstoque = "DELETE FROM ESTOQUE WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteEstoque, ['i', $id]);
 
-        // Executar as consultas SQL para exclusão nas tabelas relacionadas
-        if (!mysqli_query($conn, $sqlDeleteEstoque)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosEstoque.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteAcrescimo = "DELETE FROM ACRESCIMO WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteAcrescimo, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteAcrescimo)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosAcrescimo.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteSubtracao = "DELETE FROM SUBTRACAO WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteSubtracao, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteSubtracao)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosSubtracao.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteSobrepor = "DELETE FROM SOBREPOR WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteSobrepor, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteSobrepor)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosSobrepor.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteReserva = "DELETE FROM RESERVA WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteReserva, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteReserva)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosReserva.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteDevolver = "DELETE FROM DEVOLVER WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteDevolver, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteDevolver)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosDevolver.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteInutilizar = "DELETE FROM INUTILIZAR WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteInutilizar, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteInutilizar)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosInutilizar.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteTransferir = "DELETE FROM TRANSFERENCIA WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteTransferir, ['i', $id]);
 
-        if (!mysqli_query($conn, $sqlDeleteTransferir)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosTransferir.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
-
-        if (!mysqli_query($conn, $sqlDeleteNotaFiscal)) {
-            header("Location: ../ViewFail/FailCreateRemoverDadosNotaFiscal.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteNotaFiscal = "DELETE FROM NOTAFISCAL WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteNotaFiscal, ['i', $id]);
 
         // Construir a consulta SQL para exclusão do produto
-        $sqlDeleteProduto = "DELETE FROM PRODUTO WHERE IDPRODUTO = '$id'";
-
-        // Executar a consulta SQL para exclusão do produto
-        if (!mysqli_query($conn, $sqlDeleteProduto) || mysqli_affected_rows($conn) <= 0) {
-            header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
-            exit(); // Termina a execução do script após redirecionamento
-        } finally {
-        }
+        $sqlDeleteProduto = "DELETE FROM PRODUTO WHERE IDPRODUTO = ?";
+        executeQuery($conn, $sqlDeleteProduto, ['i', $id]);
 
         // Commit da transação se todas as operações foram bem-sucedidas
         $conn->commit();
 
         // Redirecionar para a página de sucesso com o ID do produto excluído
-        header("Location: ../ViewSuccess/SuccessCreateDeleteProduto.php?sucesso=O produto removido com sucesso");
+        header("Location: ../ViewSuccess/SuccessCreateDeleteProduto.php?sucesso=" . urlencode("O produto foi removido com sucesso"));
         exit(); // Termina a execução do script após redirecionamento
-    } catch (Exception $e) {
-        // Em caso de erro, fazer rollback da transação
+    } catch (mysqli_sql_exception $e) {
+        // Em caso de erro específico do MySQL, fazer rollback da transação
         $conn->rollback();
 
-        // Redirecionar para a página de falha com mensagem de erro
-        header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+        // Redirecionar para a página de falha com mensagem de erro específica
+        header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=" . urlencode("Erro no banco de dados: " . $e->getMessage()));
+        exit(); // Termina a execução do script após redirecionamento
+    } catch (Exception $e) {
+        // Em caso de erro genérico, fazer rollback da transação
+        $conn->rollback();
+
+        // Redirecionar para a página de falha com mensagem de erro genérica
+        header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=" . urlencode("Não foi possível remover o produto. Tente novamente"));
         exit(); // Termina a execução do script após redirecionamento
     } finally {
         // Fechar a conexão
@@ -106,7 +94,7 @@ if (!empty($id)) {
     }
 } else {
     // Redirecionar para a página de falha se o ID estiver vazio
-    header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=Não foi possivel realizar a remoção do produto. Tente novamente");
+    header("Location: ../ViewFail/FailCreateDeleteProduto.php?erro=" . urlencode("Não foi possível remover o produto. Tente novamente"));
     exit(); // Termina a execução do script após redirecionamento
 }
 ?>

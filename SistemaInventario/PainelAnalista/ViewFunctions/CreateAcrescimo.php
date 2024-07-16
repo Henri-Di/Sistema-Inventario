@@ -1,11 +1,18 @@
 <?php
 // Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Verificar se o usuário está autenticado
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
-    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
-    exit(); // Termina a execução do script após redirecionamento
+    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=" . urlencode("O usuário não está autenticado. Realize o login novamente"));
+    exit();
 }
 
 // Conexão e consulta ao banco de dados
@@ -43,16 +50,15 @@ $quantidadeAcrescimo = $_POST['Acrescimo'] ?? '';
 $dataAcrescimo = $_POST['DataAcrescimo'] ?? '';
 $observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
 
-
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
-    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=" . urlencode("O campo observação excede o limite de 35 caracteres."));
     exit();
 }
 
-
+// Validar os dados do formulário
 if (empty($idProduto) || !validarQuantidade($quantidadeAcrescimo) || !validarData($dataAcrescimo) || !datasSaoValidas($dataAcrescimo)) {
-    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=" . urlencode("Os dados fornecidos são inválidos. Tente novamente"));
     exit();
 }
 
@@ -67,7 +73,8 @@ $situacao = "ACRESCENTADO";
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+    header("Location: ../ViewFail/FailCreateConexaoBanco.php?erro=" . urlencode("Falha na conexão com o banco de dados. Tente novamente mais tarde."));
+    exit();
 }
 
 // Iniciar transação para garantir consistência
@@ -91,7 +98,7 @@ try {
     $stmtInsert = $conn->prepare($sqlInsertAcrescimo);
     $stmtInsert->bind_param("issssisss", $quantidadeAcrescimo, $dataAcrescimo, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosAcrescimo.php?erro=Não foi possível inserir os dados na tabela ACRESCIMO. Informe o departamento de TI");
+        header("Location: ../ViewFail/FailCreateInserirDadosAcrescimo.php?erro=" . urlencode("Não foi possível inserir os dados na tabela ACRESCIMO. Informe o departamento de TI"));
         exit();
     }
 
@@ -100,7 +107,7 @@ try {
     $stmtUpdate = $conn->prepare($sqlUpdateEstoque);
     $stmtUpdate->bind_param("ii", $quantidadeAcrescimo, $idProduto);
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
         exit();
     }
 
@@ -109,16 +116,17 @@ try {
 
     // Redirecionar para a página apropriada com base na existência de reservas
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=" . urlencode("O estoque do produto será atualizado após a confirmação das transferências pendentes"));
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=" . urlencode("O estoque do produto foi atualizado com sucesso"));
     }
     exit();
     
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação
     $conn->rollback();
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+    error_log("Erro na atualização de estoque: " . $e->getMessage());
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
     exit();
 
 } finally {

@@ -588,7 +588,7 @@ document.oncontextmenu = function() { return false; }
                             <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div>
                         </td>
                         <td id="colun-blue-table">
-                            <p id="blue-title-listar-exibicao">Acrescentar</p>
+                            <p id="blue-title-listar-exibicao">Acréscimo</p>
                             <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/AcrescentarProduto.php?id=<?php echo $row['IDPRODUTO'];?>';"><i class="fa fa-level-up" id="blue-icon-relatorio-produto"></i></div>
                         </td>
                         <td id="colun-blue-table">

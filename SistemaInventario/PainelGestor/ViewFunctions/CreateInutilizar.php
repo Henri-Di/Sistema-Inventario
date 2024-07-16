@@ -1,6 +1,13 @@
 <?php
 // Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -19,13 +26,13 @@ $observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHA
 
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
-    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=" . urlencode("O campo observação excede o limite de 35 caracteres. Refaça a operação e tente novamente"));
     exit();
 }
 
 // Verificar se todos os campos obrigatórios estão presentes
 if (empty($idProduto) || empty($quantidadeInutilizada) || empty($dataInutilizar) || empty($observacao)) {
-    header("Location: ../ViewFail/FailCreateDadosIncompletos.php?erro=Todos os campos são obrigatórios");
+    header("Location: ../ViewFail/FailCreateDadosIncompletos.php?erro=" . urlencode("Todos os campos do formulário são obrigatórios. Refaça a operação e tente novamente"));
     exit();
 }
 
@@ -50,7 +57,7 @@ if ($conn->connect_error) {
 
 // Verificar se a quantidade é negativa
 if ($quantidadeInutilizada <= 0) {
-    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
+    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=" . urlencode("Não é permitido o registro de valores negativos no campo de quantidade"));
     exit(); // Termina a execução do script após redirecionamento
 }
 
@@ -100,7 +107,7 @@ try {
 
     // Verificar se a quantidade inutilizada é maior do que a quantidade atual no estoque
     if ($quantidadeInutilizada > $quantidadeAtual) {
-        header("Location: ../ViewFail/FailCreateQuantidadeExcedeEstoque.php?erro=A quantidade inutilizada é superior à quantidade do estoque atual");
+        header("Location: ../ViewFail/FailCreateQuantidadeExcedeEstoque.php?erro=" . urlencode("A quantidade inutilizada é superior à quantidade do estoque atual"));
         exit();
     }
 
@@ -111,7 +118,7 @@ try {
     $stmtInsert->bind_param("issssiiss", $quantidadeInutilizada, $dataInutilizar, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosInutilizar.php?erro=Não foi possível inserir os dados na tabela INUTILIZAR");
+        header("Location: ../ViewFail/FailCreateInserirDadosInutilizar.php?erro=" . urlencode("Não foi possível inserir os dados na tabela INUTILIZAR. Informe o departamento de TI"));
         exit();
     }
 
@@ -121,13 +128,13 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeInutilizada, $idProduto);
 
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
         exit();
     }
 
     // Verificar se a data de inutilização é válida
     if (!dataSaoValida($dataInutilizar)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=" . urlencode("A data está fora do intervalo permitido, a data deve ser igual a data atual. Refaça a operação e tente novamente"));
         exit();
     }
 
@@ -135,7 +142,7 @@ try {
     $conn->commit();
 
     // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
+    header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=" . urlencode("O estoque do produto foi atualizado com sucesso"));
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação
@@ -145,7 +152,7 @@ try {
     error_log("Erro ao atualizar estoque: " . $e->getMessage());
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque");
+    header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
     exit(); // Termina a execução do script após redirecionamento
 } finally {
     // Fechar os statements

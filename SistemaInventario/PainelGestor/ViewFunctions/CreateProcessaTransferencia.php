@@ -1,13 +1,20 @@
 <?php
 // Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
 // Verificar se os dados do usuário estão disponíveis na sessão
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
-    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
+    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=" . urlencode("O usuário não está autenticado. Realize o login novamente"));
     exit();
 }
 
@@ -18,7 +25,7 @@ $codigoPUsuario = $_SESSION['usuarioCodigoP'];
 
 // Verificar se o ID da transferência foi recebido via POST
 if (!isset($_POST['idTransferencia'])) {
-    header("Location: ../ViewFail/FailCreateLocalizaTransferencia.php?erro=A transferência de produtos indicada não foi encontrada");
+    header("Location: ../ViewFail/FailCreateLocalizaTransferencia.php?erro=" .  urlencode("A transferência de produtos indicada não foi encontrada"));
     exit();
 }
 
@@ -27,7 +34,7 @@ $idTransferencia = $_POST['idTransferencia'];
 
 // Verificar se a ação (aceitar ou recusar) foi enviada via POST
 if (!isset($_POST['Acao']) || ($_POST['Acao'] !== 'Aceitar' && $_POST['Acao'] !== 'Recusar')) {
-    header("Location: ../ViewFail/FailAcaoInvalida.php?erro=Ação inválida especificada");
+    header("Location: ../ViewFail/FailAcaoTransferencia.php?erro=" . urlencode("Não foi possível processar a transferência de produtos. Refaça a operação e tente novamente"));
     exit();
 }
 
@@ -47,7 +54,7 @@ try {
 
     // Verificar se a transferência existe
     if ($stmtSelect->num_rows == 0) {
-        header("Location: ../ViewFail/FailCreateLocalizaTransferencia.php?erro=A transferência de produtos indicada não foi encontrada");
+        header("Location: ../ViewFail/FailCreateLocalizaTransferencia.php?erro=" . urlencode("A transferência de produtos indicada não foi encontrada"));
         exit();
     }
 
@@ -57,13 +64,13 @@ try {
 
     // Verificar se a transferência já foi aceita ou recusada anteriormente
     if ($situacaoTransferencia !== 'PENDENTE') {
-        header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=Essa transferência já foi processada. Tente novamente com uma transferência que esteja com o status pendente");
+        header("Location: ../ViewFail/FailCreateTransferenciaProcessada.php?erro=" . urlencode("Essa transferência já foi processada. Tente novamente com uma transferência que esteja com o status pendente"));
         exit();
     }
 
     // Verificar se o usuário que está tentando aceitar ou recusar é o mesmo que criou a transferência
     if ($idUsuario === $idUsuarioTransferencia) {
-        header("Location: ../ViewFail/FailCreateUsuarioAceitaTransferencia.php?erro=Você não pode aceitar ou recusar uma transferência criada por você mesmo");
+        header("Location: ../ViewFail/FailCreateUsuarioAceitaTransferencia.php?erro=" . urlencode("Você não pode aceitar ou recusar uma transferência criada por você mesmo"));
         exit();
     }
 
@@ -78,7 +85,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdate->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecebida.php?erro=Não foi possível atualizar a situação da transferência para Recebido");
+            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecebida.php?erro=" . urlencode("Não foi possível atualizar a situação da transferência para Recebido"));
             exit();
         }
         $stmtUpdate->close();
@@ -91,7 +98,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdateDestino->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateAtualizaEstoqueDestinoTransferencia.php?erro=Não foi possível atualizar o estoque do produto de destino da transferência");
+            header("Location: ../ViewFail/FailCreateAtualizaEstoqueDestinoTransferencia.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto de destino da transferência"));
             exit();
         }
         $stmtUpdateDestino->close();
@@ -104,7 +111,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdateOrigem->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateAtualizaEstoqueOrigemTransferencia.php?erro=Não foi possível atualizar o estoque do produto de origem da transferência. Tente novamente");
+            header("Location: ../ViewFail/FailCreateAtualizaEstoqueOrigemTransferencia.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto de origem da transferência. Tente novamente"));
             exit();
         }
         $stmtUpdateOrigem->close();
@@ -118,7 +125,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdate->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecusada.php?erro=Não foi possível atualizar a situação da transferência para Recusado. Refaça a operação e tente novamente");
+            header("Location: ../ViewFail/FailCreateSituacaoTransferenciaRecusada.php?erro=" . urlencode("Não foi possível atualizar a situação da transferência para Recusado. Refaça a operação e tente novamente"));
             exit();
         }
         $stmtUpdate->close();
@@ -131,7 +138,7 @@ try {
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmtUpdateOrigem->affected_rows == 0) {
-            header("Location: ../ViewFail/FailCreateQuantidadeEstoqueReservado.php?erro=Não foi possível atualizar a quantidade reservada do produto de origem. Refaça a operação e tente novamente");
+            header("Location: ../ViewFail/FailCreateQuantidadeEstoqueReservado.php?erro=" . urlencode("Não foi possível atualizar a quantidade reservada do produto de origem. Refaça a operação e tente novamente"));
             exit();
         }
         $stmtUpdateOrigem->close();
@@ -168,7 +175,7 @@ try {
     $conn->commit();
 
     // Redirecionar para a página de sucesso
-    header("Location: ../ViewSucess/SucessCreateAcaoTransferencia.php?sucesso=A sua confirmação sobre a transferência foi realizada com sucesso");
+    header("Location: ../ViewSucess/SucessCreateAcaoTransferencia.php?sucesso=" . urlencode("A sua confirmação sobre a transferência foi realizada com sucesso"));
     exit();
 } catch (Exception $e) {
     // Em caso de erro, fazer rollback da transação
@@ -178,7 +185,7 @@ try {
     echo "Erro: " . $e->getMessage();
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateAcaoTransferencia.php?erro=Não foi possível processar a transferência de produtos. Refaça a operação e tente novamente");
+    header("Location: ../ViewFail/FailCreateAcaoTransferencia.php?erro=" . urlencode("Não foi possível processar a transferência de produtos. Refaça a operação e tente novamente"));
     exit();
 } finally {
     // Fechar o statement de seleção

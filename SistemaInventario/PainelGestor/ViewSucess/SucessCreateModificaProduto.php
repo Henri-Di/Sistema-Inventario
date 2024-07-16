@@ -172,7 +172,7 @@ document.oncontextmenu = function() { return false; }
         <!-- Botão de fechar -->
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
         <!-- Mensagem de confirmação -->
-        A alteração no cadastro do produto foi realizada com sucesso <i class='fa fa-check-circle'></i>
+        A alteração foi realizada com sucesso no cadastro do produto <i class='fa fa-check-circle'></i>
     </div>
                     <style>
                     .alerts {

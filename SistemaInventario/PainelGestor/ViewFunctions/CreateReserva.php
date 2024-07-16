@@ -1,9 +1,17 @@
 <?php
+// Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Verificar se os dados do usuário estão disponíveis na sessão
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
-    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
+    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=" . urlencode("O usuário não está autenticado. Realize o login novamente"));
     exit();
 }
 
@@ -37,21 +45,21 @@ function datasSaoValidas($datareserva) {
 }
 
 // Obter e validar os dados do formulário
-$idProduto = $_POST['id'] ?? '';
-$numwo = mb_strtoupper($_POST['NumWo'] ?? '', 'UTF-8');
-$quantidadeReservar = $_POST['Reservar'] ?? '';
-$datareserva = $_POST['DataReserva'] ?? '';
-$observacao = mb_strtoupper($_POST['Observacao'] ?? '', 'UTF-8');
+$idProduto = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+$numwo = mb_strtoupper(filter_input(INPUT_POST, 'NumWo', FILTER_SANITIZE_SPECIAL_CHARS), 'UTF-8');
+$quantidadeReservar = filter_input(INPUT_POST, 'Reservar', FILTER_VALIDATE_INT);
+$datareserva = filter_input(INPUT_POST, 'DataReserva', FILTER_SANITIZE_SPECIAL_CHARS);
+$observacao = mb_strtoupper(filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHARS), 'UTF-8');
 
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
-    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=" . urlencode("O campo observação excede o limite de 35 caracteres. Refaça a operação e tente novamente"));
     exit();
 }
 
 // Validar se os campos obrigatórios foram preenchidos e se os dados são válidos
-if (empty($idProduto) || empty($numwo) || !validarQuantidade($quantidadeReservar) || !validarData($datareserva) || !datasSaoValidas($datareserva)) {
-    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente ");
+if (empty($idProduto) || empty($numwo) || !$quantidadeReservar || !validarQuantidade($quantidadeReservar) || !validarData($datareserva) || !datasSaoValidas($datareserva)) {
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=" . urlencode("Os dados fornecidos são inválidos. Refaça a operação e tente novamente"));
     exit();
 }
 
@@ -91,7 +99,7 @@ try {
     $stmtUpdate->bind_param("ii", $novaQuantidadeEstoque, $idProduto);
 
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -102,7 +110,7 @@ try {
     $stmtInsert->bind_param("sissssiiss", $numwo, $quantidadeReservar, $datareserva, $observacao, $operacao, $situacao, $idProduto, $idUsuario, $nomeUsuario, $codigoPUsuario);
 
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosReserva.php?erro=Não foi possível inserir os dados na tabela RESERVA. Informe o departamento de TI");
+        header("Location: ../ViewFail/FailCreateInserirDadosReserva.php?erro=" . urlencode("Não foi possível inserir os dados na tabela RESERVA. Informe o departamento de TI"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -110,7 +118,7 @@ try {
     $conn->commit();
 
     // Redirecionar para a página de sucesso apropriada
-    header("Location: ../ViewSucess/SucessCreateReserva.php?sucesso=Reserva realizada com sucesso ");
+    header("Location: ../ViewSucess/SucessCreateReserva.php?sucesso=" . urlencode("A reserva do produto foi realizada com sucesso"));
     exit();
 
 } catch (Exception $e) {
@@ -121,7 +129,7 @@ try {
     error_log("Erro: " . $e->getMessage());
 
     // Redirecionar para a página de falha com uma mensagem de erro
-    header("Location: ../ViewFail/FailCreateReserva.php?erro=Não foi possível criar a reserva do produto. Refaça a operação e tente novamente ");
+    header("Location: ../ViewFail/FailCreateReserva.php?erro=" . urlencode("Não foi possível criar a reserva do produto. Refaça a operação e tente novamente"));
     exit();
 
 } finally {

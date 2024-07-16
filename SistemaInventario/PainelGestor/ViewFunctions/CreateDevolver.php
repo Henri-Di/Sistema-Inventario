@@ -1,6 +1,13 @@
 <?php
 // Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -11,7 +18,7 @@ if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset
     exit(); // Termina a execução do script após redirecionamento
 }
 
-// Obter os dados do formulário
+// Obter os dados do formulário e sanitizar
 $idProduto = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 $numwo = filter_input(INPUT_POST, 'NumWo', FILTER_SANITIZE_SPECIAL_CHARS);
 $quantidadeDevolver = filter_input(INPUT_POST, 'Devolvida', FILTER_SANITIZE_NUMBER_INT);
@@ -20,20 +27,19 @@ $observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHA
 
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
-    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=O campo observação excede o limite de 35 caracteres.");
+    header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=" . urlencode ("campo observação excede o limite de 35 caracteres."));
     exit();
 }
 
 // Verificar se os dados obrigatórios estão preenchidos
 if (!$idProduto || !$numwo || !$quantidadeDevolver || !$datadevolucao) {
-    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=Os dados fornecidos são inválidos. Tente novamente");
+    header("Location: ../ViewFail/FailCreateDadosInvalidos.php?erro=" . urlencode("Os dados fornecidos são inválidos. Tente novamente"));
     exit(); // Termina a execução do script após redirecionamento
 }
 
 // Verificar se a quantidade é positiva
 if ($quantidadeDevolver <= 0) {
-    // Se a quantidade for não positiva, redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
+    header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=" . urlencode("Não é permitido o registro de valores negativos no campo de quantidade"));
     exit(); // Termina a execução do script após redirecionamento
 }
 
@@ -70,7 +76,7 @@ try {
 
     // Verificar se a data de devolução é válida
     if (!dataDevolucaoValida($datadevolucao)) {
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data dever ser igual a data atual");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=" . urlencode("A data está fora do intervalo permitido. A data dever ser igual a data atual"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -92,7 +98,7 @@ try {
     $stmtInsert->bind_param("sissisiiss", $numwo, $quantidadeDevolver, $datadevolucao, $observacao, $operacao, $situacao, $idProduto, $_SESSION['usuarioId'], $nomeUsuario, $codigoPUsuario);
     
     if (!$stmtInsert->execute()) {
-        header("Location: ../ViewFail/FailCreateInserirDadosDevolver.php?erro=Não foi possível inserir os dados na tabela DEVOLVER. Informe o departamento de TI");
+        header("Location: ../ViewFail/FailCreateInserirDadosDevolver.php?erro=" . urlencode("Não foi possível inserir os dados na tabela DEVOLVER. Informe o departamento de TI"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -103,7 +109,7 @@ try {
     $stmtUpdate->bind_param("ii", $quantidadeDevolver, $idProduto);
     
     if (!$stmtUpdate->execute()) {
-        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente");
+        header("Location: ../ViewFail/FailCreateAtualizaEstoque.php?erro=" . urlencode("Não foi possível atualizar o estoque do produto. Refaça a operação e tente novamente"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -111,9 +117,9 @@ try {
     $conn->commit();
 
     if ($temReserva) {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=O estoque do produto será atualizado após a confirmação das transferências pendentes");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoqueComTransferencia.php?sucesso=" . urlencode("O estoque do produto será atualizado após a confirmação das transferências pendentes"));
     } else {
-        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=O estoque do produto foi atualizado com sucesso");
+        header("Location: ../ViewSucess/SucessCreateAtualizaEstoque.php?sucesso=" . urlencode("O estoque do produto foi atualizado com sucesso"));
     }
     exit(); // Termina a execução do script após redirecionamento
 } catch (Exception $e) {
@@ -121,7 +127,7 @@ try {
     $conn->rollback();
 
     // Redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateDevolucao.php?erro=Não foi possivel realizar a devolução do produto. Refaça a operação e tente novamente");
+    header("Location: ../ViewFail/FailCreateDevolucao.php?erro=" . urlencode("Não foi possivel realizar a devolução do produto. Refaça a operação e tente novamente"));
     exit(); // Termina a execução do script após redirecionamento
 } finally {
     // Fechar os statements
