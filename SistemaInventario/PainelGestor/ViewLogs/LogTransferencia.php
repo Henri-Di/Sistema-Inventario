@@ -692,7 +692,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
     <p id="blue-title-btn-painel">Log Transferência Saída <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
 </div>
 
-<div class="container-fluid" style="width: 100%; height: 50%; overflow-y: auto; overflow-x: hidden; margin-top: 1%;">
+<div class="container-fluid" style="width: 100%; height:300px; overflow-y: auto; overflow-x: hidden; margin-top: 1%;">
     <br>
 
     <!-- Início do código PHP para consulta de dados -->
@@ -770,7 +770,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                 }
     ?>
                 <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
-                    <tr id="line-blue-table-hover">
+                    <tr>
                         <form method="POST" action="">
 
                             <td id="colun-blue-table">
@@ -823,12 +823,13 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
 
                             <td id="colun-blue-table">
                                 <div id="blue-title-listar">
-                                    DataCenter Origem
+                                    Datacenter Origem
                                 </div>
                                 <!-- Fim do contêiner do título do formulário de entrada -->
                                 <input type="text" id="blue-input-cdst" name="DataCenterOrigem" value="<?php echo $row['NOME_DATACENTER_ORIGEM']; ?> " autocomplete="off" required disabled /><br>
                             </td>
-
+                            </tr>
+                            <tr>
                             <td id="colun-blue-table">
                                 <div id="blue-title-listar">
                                     Datacenter Destino
@@ -895,7 +896,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
     ?>
     <!-- Fim do código PHP -->
 </div>
-<br><br><br><br><br><br><br><br><br><br><br>
+
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->

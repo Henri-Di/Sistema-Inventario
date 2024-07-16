@@ -26,7 +26,7 @@ body::before {
   background-size: 55%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: left; /* Posiciona a imagem à esquerda */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  opacity: 0.3; /* Define a opacidade da imagem de fundo */
+  opacity: 0.9; /* Define a opacidade da imagem de fundo */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do body */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
 }

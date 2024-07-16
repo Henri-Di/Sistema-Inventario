@@ -433,7 +433,7 @@ document.oncontextmenu = function() { return false; }
 </div>
 
 <!-- Container for product list -->
-<div class="container-fluid" style="width:100%;height:542px;overflow-y:auto">
+<div class="container-fluid" style="width:100%;height:550px;overflow-y:auto">
     <br>
 
     <?php

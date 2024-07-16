@@ -107,11 +107,10 @@ document.oncontextmenu = function() { return false; }
 
             <!-- Start menu-link page -->
             <ul class="nav nav-pills nav-stacked">
-                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
             </ul>
             <!-- End menu-link page -->
 
@@ -644,7 +643,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
     <p id="blue-title-btn-painel">Log Acréscimo <i class="fa fa-level-up" id="blue-icon-btn-painel"></i></p>
 </div>
 
-<div class="container-fluid" style="width: 100%; height: 56%; overflow-y: auto; overflow-x: hidden; margin-top: 1%;">
+<div class="container-fluid" style="width: 100%; height: 300px; overflow-y: auto; overflow-x: hidden; margin-top: 1%;">
     <br>
 
     <!-- Loop para exibir os dados de acréscimo -->
@@ -711,7 +710,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
         </table>
     <?php } ?>
 </div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->

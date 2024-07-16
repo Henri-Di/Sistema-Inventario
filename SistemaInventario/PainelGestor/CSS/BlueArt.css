@@ -1,7 +1,8 @@
-/* Reset de margin e padding para todos os elementos */
+/* Reset de margin e padding */
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte para o texto do botão */
   box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho dos elementos */
 }
 
@@ -12,13 +13,13 @@ body {
 
 /* Estilo de fundo para um menu lateral escondido em telas pequenas */
 #blue-sidenav-hidden-xs {
-  background-color: rgba(255, 255, 255, 0.1); /* cor de fundo com opacidade */
+  background-color: transparent;
 }
 
 /* Estilo para um container principal, ajustando margem superior e fundo */
 #blue-col-sm-9 {
   margin-top: -20px;
-  background-color: rgba(255, 255, 255, 0.1); /* cor de fundo com opacidade */
+  background-color: transparent;
 }
 
 /* Estilos para tornar a página responsiva */
@@ -36,27 +37,25 @@ body {
 }
 
 #row-content {
- 
   position: relative;
   z-index: 0;
   image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
-  padding-bottom: 900px; /* Adiciona espaço extra para mover a imagem para baixo */
+  padding-bottom: 895px; /* Adiciona espaço extra para mover a imagem para baixo */
 }
 
 #row-content::before {
   content: "";
   position: absolute;
   top: 0;
-  left: -5%; /* Começa do canto esquerdo da tela */
+  left: -2%; /* Começa do canto esquerdo da tela */
   width: 100%; /* Cobrir toda a largura da tela */
   height: 100%;
   border-radius: 5px;
-  background-image: url('../../Images/ImageMenu2.jpg');
-  background-size: 35vw; /* Utilizando vw para dimensionamento responsivo */
+  background-image: url('../../Images/ImageMenu6.jpg');
+  background-size: 50vw; /* Utilizando vw para dimensionamento responsivo */
   background-position: left bottom;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   z-index: -1;
   pointer-events: none;
 }
@@ -68,7 +67,7 @@ body {
 }
 
 .well {
-  background-color: rgba(255, 255, 255, 0.7); /* Fundo semitransparente para melhor contraste */
+  background-color: rgba(255, 255, 255, 0.1); /* Fundo semitransparente para melhor contraste */
   font-weight: bold; /* Negrito */
   border: none; /* Remove a borda */
   color: #005ce6; /* Cor do texto */
@@ -79,8 +78,8 @@ body {
   margin-top: 3%;
   image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
-  padding-bottom: 2%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
+  padding-bottom: 5%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 .well::before {
@@ -92,10 +91,9 @@ body {
   width: 100%;
   height: 100%;
   background-image: url('../../Images/Caixa.png'); /* Substitua pelo caminho da sua imagem */
-  background-size: 15%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
+  background-size: 14%; /* Ajuste a porcentagem para reduzir a proporção da imagem */
   background-position: center; /* Alinha a imagem ao centro */
   background-repeat: no-repeat; /* Evita repetição da imagem */
-  background-attachment: fixed; /* Mantém a imagem fixa durante a rolagem */
   opacity: 0.9; /* Ajuste o valor para conseguir o efeito de opacidade desejado */
   z-index: -1; /* Coloca a imagem atrás do conteúdo do .well */
   pointer-events: none; /* Garante que a imagem de fundo não interfira com eventos de clique */
@@ -357,11 +355,10 @@ img {
 }
 
 #blue-table-cadastro-auxiliar td {
-  padding: 3.5px; /* Espaçamento interno */
+  padding: 4px; /* Espaçamento interno */
   overflow: hidden; /* Esconder conteúdo excedente */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
-  white-space: wrap; /* Não quebrar linhas */
-  min-width:200px;
+  white-space: nowrap; /* Não quebrar linhas */
 }
 
 /* Media Queries para dispositivos menores */
@@ -504,6 +501,7 @@ img {
   #blue-btn-table-cadastro-produto {
     background-color: transparent; /* Fundo transparente */
     width: 20%; /* Largura */
+    padding: 3px;
     color: #005ce6; /* Cor do texto */
     font-size: 11px; /* Tamanho da fonte */
     font-weight: bold; /* Texto em negrito */
@@ -794,7 +792,7 @@ img {
   color: #005ce6;
   font-weight: bold;
   border: 1px solid #005ce6;
-  font-size: 0.65em; /* Utilizando uma unidade relativa */
+  font-size: 0.75em; /* Utilizando uma unidade relativa */
   margin-top: 1%;
   padding: 0.4em 0.3em; /* Ajustando o padding para manter a proporção */
   border-radius: 5px;
@@ -815,8 +813,8 @@ img {
   color: #33334d; /* Cor do texto */
   font-weight: bold; /* Texto em negrito */
   text-align: center; /* Alinhamento central do texto */
-  font-size: 0.55em; /* Tamanho da fonte usando uma unidade relativa */
-  padding: 0.3em; /* Espaçamento interno para manter proporção */
+  font-size: 0.62em; /* Tamanho da fonte usando uma unidade relativa */
+  padding: 0.4em; /* Espaçamento interno para manter proporção */
 }
 
 @media (max-width: 768px) {
@@ -833,7 +831,6 @@ img {
   border: none; /* Sem borda */
   cursor: pointer; /* Cursor de ponteiro */
   color: #005ce6; /* Cor do texto */
-  font-size: 13px; /* Tamanho da fonte */
   text-align: center; /* Alinhamento central */
   font-weight: bold; /* Texto em negrito */
   font-family: 'Sofia Sans Extra Condensed'; /* Fonte personalizada */
@@ -848,8 +845,8 @@ img {
 
 /* Estilo para o ícone 'Relatório de Produto' */
 #blue-icon-relatorio-produto {
-  margin-left: 1%; /* Margem à esquerda para posicionar o ícone */
-  font-size: 9px; /* Tamanho da fonte do ícone */
+  margin-top: 5px;/* Margem superior para posicionar o ícone */
+  font-size: 10px; /* Tamanho da fonte do ícone */
 }
 
 /* Estilo para o contêiner da tabela auxiliar de cadastro */
@@ -931,7 +928,7 @@ img {
   font-size: 10px; /* Tamanho da fonte */
   color: #005ce6; /* Cor do texto */
   margin-top: 5px; /* Margem superior */
-  margin-left: 30px; /* Margem à esquerda */
+  margin-left: 68px; /* Margem à esquerda */
 }
 
   /* Estilo para container do rodapé da página */
