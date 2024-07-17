@@ -1,5 +1,14 @@
 <?php
+// Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+
 
 // Diretório onde os arquivos estão armazenados
 $uploadDir = '../../Uploads/';
@@ -26,12 +35,12 @@ if (isset($_GET['file']) && !empty($_GET['file'])) {
         exit;
     } else {
         // Redireciona para uma página de erro se o arquivo não existir
-        header("Location: ../ViewFail/FailCreateDownloadNotaFiscal.php?erro=Não foi possível fazer o download do arquivo");
+        header("Location: ../ViewFail/FailCreateDownloadNotaFiscal.php?erro=" . urlencode ("Não foi possível fazer o download do arquivo"));
         exit();
     }
 } else {
     // Redireciona para uma página de erro se o nome do arquivo não for fornecido
-    header("Location: ../ViewFail/FailCreateDownloadNotaFiscal.php?erro=Não foi possível fazer o download do arquivo");
+    header("Location: ../ViewFail/FailCreateDownloadNotaFiscal.php?erro=" . urlencode ("Não foi possível fazer o download do arquivo"));
     exit();
 }
 ?>

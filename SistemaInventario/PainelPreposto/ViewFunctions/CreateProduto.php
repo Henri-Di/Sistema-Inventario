@@ -1,5 +1,13 @@
 <?php
+// Iniciar sessão se necessário
 session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -48,7 +56,7 @@ function getIdOrInsert($conn, $table, $column, $idColumn, $value) {
         if (mysqli_query($conn, $insertSql)) {
             return $conn->insert_id;
         } else {
-            header("Location: ../ViewFail/FailCreateInserirDadosTabela.php?erro=Não foi possível inserir dados nas tabelas do banco de dados. Informe o departamento de TI ");
+            header("Location: ../ViewFail/FailCreateInserirDadosTabela.php?erro=" . urlencode("Não foi possível inserir dados nas tabelas do banco de dados. Informe o departamento de TI "));
             exit(); // Termina a execução do script após redirecionamento
         }
     }
@@ -74,12 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Sanitizar o ID do usuário para evitar injeção de SQL
     $idUsuario = $conn->real_escape_string($idUsuario);
 
-    // Consulta para obter o datacenter do usuário
-    $consultaDatacenter = "SELECT UPPER(DATACENTER) FROM USUARIO WHERE IDUSUARIO = ?";
-    if ($stmt = $conn->prepare($consultaDatacenter)) {
+    // Consulta para obter o datacenter e o nível de acesso do usuário
+    $consultaDatacenterNivelAcesso = "SELECT UPPER(DATACENTER), NIVEL_ACESSO FROM USUARIO WHERE IDUSUARIO = ?";
+    if ($stmt = $conn->prepare($consultaDatacenterNivelAcesso)) {
         $stmt->bind_param("i", $idUsuario);
         $stmt->execute();
-        $stmt->bind_result($datacenterUsuario);
+        $stmt->bind_result($datacenterUsuario, $nivelAcesso);
         $stmt->fetch();
         $stmt->close();
     }
@@ -87,21 +95,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se a quantidade é negativa
     if ($quantidade < 0) {
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=Não é permitido o registro de valores negativos no campo de quantidade");
+        header("Location: ../ViewFail/FailCreateQuantidadeNegativa.php?erro=" . urlencode("Não é permitido o registro de valores negativos no campo de quantidade"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
     // Verificar se a data de cadastro é válida
     if (!datasSaoValidas($datacadastro)) {
         // Redirecionar para a página de falha com mensagem de erro
-        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=A data está fora do intervalo permitido. A data deve ser igual a data atual");
+        header("Location: ../ViewFail/FailCreateDataInvalida.php?erro=" . urlencode("A data está fora do intervalo permitido. A data deve ser igual a data atual"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
-    // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário
-    if (strtoupper($datacenterUsuario) !== strtoupper($datacenterNome)) {
+    // Verificar se o datacenter do usuário é igual ao datacenter recebido pelo formulário, exceto se o nível de acesso for "GESTOR"
+    if (strtoupper($nivelAcesso) !== 'GESTOR' && strtoupper($datacenterUsuario) !== strtoupper($datacenterNome)) {
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreateProdutoDatacenterIncorreto.php?erro=Você não pode cadastrar um produto que seja de outro datacenter");
+        header("Location: ../ViewFail/FailCreateProdutoDatacenterIncorreto.php?erro=" . urlencode("Você não pode cadastrar um produto que seja de outro datacenter"));
         exit(); // Termina a execução do script após redirecionamento
     }
 
@@ -131,14 +139,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (mysqli_num_rows($result) > 0) {
             // Se o produto já existe com os mesmos detalhes (inclusive fornecedor e modelo), redirecionar para a página de falha
-            header("Location: ../ViewFail/FailCreateProdutoExistente.php?erro=Não foi possível realizar o cadastro. Produto já cadastrado");
+            header("Location: ../ViewFail/FailCreateProdutoExistente.php?erro=" . urlencode("Não foi possível realizar o cadastro. Produto já cadastrado"));
             exit(); // Termina a execução do script após redirecionamento
         } else {
             // Inserir dados na tabela PRODUTO
             $sqlInsertProduto = "INSERT INTO PRODUTO (IDMATERIAL, IDCONECTOR, IDMETRAGEM, IDMODELO, IDFORNECEDOR, DATACADASTRO, IDDATACENTER, IDGRUPO, IDLOCALIZACAO) 
                                  VALUES ('$idMaterial', '$idConector', '$idMetragem', '$idModelo', '$idFornecedor', '$datacadastro', '$idDataCenter', '$idGrupo', '$idLocalizacao')";
             if (!mysqli_query($conn, $sqlInsertProduto)) {
-                header("Location: ../ViewFail/FailCreateInserirDadosProduto.php?erro=Não foi possível inserir os dados na tabela PRODUTO");
+                header("Location: ../ViewFail/FailCreateInserirDadosProduto.php?erro=" . urlencode("Não foi possível inserir os dados na tabela PRODUTO"));
                 exit();
             }
 
@@ -149,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sqlInsertEstoque = "INSERT INTO ESTOQUE (IDPRODUTO, QUANTIDADE) 
                                  VALUES ('$idProduto', '$quantidade')";
             if (!mysqli_query($conn, $sqlInsertEstoque)) {
-                header("Location: ../ViewFail/FailCreateInserirDadosEstoque.php?erro=Não foi possível inserir os dados na tabela ESTOQUE");
+                header("Location: ../ViewFail/FailCreateInserirDadosEstoque.php?erro=" . urlencode("Não foi possível inserir os dados na tabela ESTOQUE"));
                 exit();
             }
 
@@ -157,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->commit();
 
             // Redirecionar para a página de sucesso
-            header("Location: ../ViewSucess/SucessCreateProduto.php?sucesso=O cadastro do produto foi realizado com sucesso");
+            header("Location: ../ViewSucess/SucessCreateProduto.php?sucesso=" . urlencode("O cadastro do produto foi realizado com sucesso"));
             exit(); // Termina a execução do script após redirecionamento
         }
     } catch (Exception $e) {
@@ -168,7 +176,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Erro: " . $e->getMessage();
 
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreateProduto.php?erro=Não foi possível realizar o cadastro do produto. Tente novamente");
+        header("Location: ../ViewFail/FailCreateProduto.php?erro=" . urlencode("Não foi possível realizar o cadastro do produto. Tente novamente"));
         exit(); // Termina a execução do script após redirecionamento
     }
 }

@@ -138,23 +138,23 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">ANALISTA - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
                     <style>
                     /* Estilos CSS para o alerta */
                     .alert {
-                    padding: 5px;
+                    padding: 10px;
                     background-color: #00b300;
-                    color: #f0f0f0;
-                    font-size: 14px;
+                    color: #ffffff;
+                    font-size: 18px;
                     }
 
                     /* Estilos para o botão de fechar */
                     .closebtn {
                     margin-left: 15px;
-                    color: #f0f0f0;
+                    color: #ffffff;
                     font-weight: bold;
                     float: right;
                     font-size: 22px;
@@ -164,7 +164,7 @@ document.oncontextmenu = function() { return false; }
                     }
 
                     .closebtn:hover {
-                    color: black;
+                    color: #000000;
                     }
                     </style>
 
@@ -174,7 +174,7 @@ document.oncontextmenu = function() { return false; }
         <!-- Mensagem de confirmação -->
         O cadastro do conector foi realizado com sucesso <i class='fa fa-check-circle'></i>
     </div>
-                    <style>
+    <style>
                     .alerts {
                         padding: 5px;
                         background-color: transparent;
@@ -262,7 +262,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de transferência pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da transferência pendente -->
@@ -307,10 +307,6 @@ document.oncontextmenu = function() { return false; }
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">Observação</div>
                                 <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
-                            </td>
-                            <td id="colun-blue-table-alert">
-                                <div id="blue-title-listar-alert">Analista</div>
-                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
                             </td>
                         </tr>
                     </table>
@@ -383,7 +379,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de reserva pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da reserva pendente -->
@@ -442,10 +438,10 @@ document.oncontextmenu = function() { return false; }
             }
         }
         ?>
-    </div>
+    </div> 
 <!-- Título da seção de cadastros auxiliares -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"  style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -535,7 +531,7 @@ document.oncontextmenu = function() { return false; }
 </table>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"  style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -724,7 +720,7 @@ document.oncontextmenu = function() { return false; }
 </form>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel"  style="font-size:13px;"></i></p>
 </div>
 
 <br>

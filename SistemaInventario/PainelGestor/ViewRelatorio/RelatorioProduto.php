@@ -138,7 +138,7 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">GESTOR - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
@@ -231,7 +231,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de transferência pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da transferência pendente -->
@@ -276,10 +276,6 @@ document.oncontextmenu = function() { return false; }
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">Observação</div>
                                 <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
-                            </td>
-                            <td id="colun-blue-table-alert">
-                                <div id="blue-title-listar-alert">Analista</div>
-                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
                             </td>
                         </tr>
                     </table>
@@ -352,7 +348,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de reserva pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da reserva pendente -->
@@ -411,7 +407,7 @@ document.oncontextmenu = function() { return false; }
             }
         }
         ?>
-</div>
+    </div>
 <!-- Start container search material -->
 <div class="container" id="blue-search">
 
@@ -429,7 +425,7 @@ document.oncontextmenu = function() { return false; }
 
 <!-- Title and button panel -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Relatório Produto <i class="fa fa-cube" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Relatório Produto <i class="fa fa-cube" id="blue-icon-btn-painel" style="font-size:12px"></i></p>
 </div>
 
 <!-- Container for product list -->

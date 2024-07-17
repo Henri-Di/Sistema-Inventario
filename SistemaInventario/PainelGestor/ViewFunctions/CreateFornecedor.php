@@ -15,6 +15,9 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 // Obter os dados do formulário
 $fornecedor = $_POST['Fornecedor'] ?? '';
 
+// Converter o nome do fornecedor para maiúsculo
+$fornecedor_upper = strtoupper($fornecedor);
+
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
@@ -22,7 +25,7 @@ if ($conn->connect_error) {
 
 // Sanitizar os dados de entrada para evitar injeção de SQL usando prepared statement
 $stmt_check = $conn->prepare("SELECT FORNECEDOR FROM FORNECEDOR WHERE FORNECEDOR = ?");
-$stmt_check->bind_param("s", $fornecedor);
+$stmt_check->bind_param("s", $fornecedor_upper);
 $stmt_check->execute();
 $stmt_check->store_result();
 
@@ -33,7 +36,7 @@ if ($stmt_check->num_rows > 0) {
 } else {
     // Construir a consulta SQL para inserção usando prepared statement
     $stmt_insert = $conn->prepare("INSERT INTO FORNECEDOR (FORNECEDOR) VALUES (?)");
-    $stmt_insert->bind_param("s", $fornecedor);
+    $stmt_insert->bind_param("s", $fornecedor_upper);
 
     // Executar a consulta SQL e verificar o resultado
     if ($stmt_insert->execute()) {

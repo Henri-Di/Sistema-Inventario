@@ -15,14 +15,17 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 // Obter os dados do formulário
 $metragem = $_POST['Metragem'] ?? '';
 
+// Converter a metragem para maiúsculo
+$metragem_upper = strtoupper($metragem);
+
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
 
 // Sanitizar os dados de entrada para evitar injeção de SQL usando prepared statement
-$stmt_check = $conn->prepare("SELECT * FROM METRAGEM WHERE UPPER(METRAGEM) = ?");
-$stmt_check->bind_param("s", $metragem);
+$stmt_check = $conn->prepare("SELECT * FROM METRAGEM WHERE METRAGEM = ?");
+$stmt_check->bind_param("s", $metragem_upper);
 $stmt_check->execute();
 $stmt_check->store_result();
 
@@ -33,7 +36,7 @@ if ($stmt_check->num_rows > 0) {
 } else {
     // Se não existe, construir a consulta SQL para inserção usando prepared statement
     $stmt_insert = $conn->prepare("INSERT INTO METRAGEM (METRAGEM) VALUES (?)");
-    $stmt_insert->bind_param("s", $metragem);
+    $stmt_insert->bind_param("s", $metragem_upper);
 
     // Executar a consulta SQL e verificar o resultado
     if ($stmt_insert->execute()) {

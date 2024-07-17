@@ -138,7 +138,7 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">GESTOR - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
@@ -415,7 +415,7 @@ document.oncontextmenu = function() { return false; }
 
 
     <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Modificar Material <i class="fa fa-pencil" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Modificar Material <i class="fa fa-pencil" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
 </div>
 
 <br>

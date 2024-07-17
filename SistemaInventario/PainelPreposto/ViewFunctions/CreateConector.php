@@ -1,4 +1,14 @@
 <?php
+// Iniciar sessão se necessário
+session_start();
+session_regenerate_id(true);
+
+// Adicionar cabeçalhos de segurança
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+
 // Conexão e consulta ao banco de dados
 require_once('../../ViewConnection/ConnectionInventario.php');
 
@@ -13,33 +23,47 @@ if ($conn->connect_error) {
 // Converter o valor para letras maiúsculas, lidando com caracteres acentuados
 $conector = mb_strtoupper($conector, 'UTF-8');
 
-// Sanitizar os dados de entrada para evitar injeção de SQL
-$conector = $conn->real_escape_string($conector);
+// Verificar se o conector está vazio
+if (empty($conector)) {
+    header("Location: ../ViewFail/FailCreateConectorVazio.php?erro=" . urlencode("O campo de conector não pode estar vazio."));
+    exit();
+}
 
-// Verificar se o conector já existe na tabela
-$sql_check = "SELECT CONECTOR FROM CONECTOR WHERE CONECTOR = '$conector'";
-$result_check = mysqli_query($conn, $sql_check);
+// Verificar se o conector já existe na tabela usando prepared statements
+$sql_check = "SELECT CONECTOR FROM CONECTOR WHERE CONECTOR = ?";
+$stmt_check = $conn->prepare($sql_check);
+$stmt_check->bind_param("s", $conector);
+$stmt_check->execute();
+$stmt_check->store_result();
 
-if (mysqli_num_rows($result_check) > 0) {
+if ($stmt_check->num_rows > 0) {
     // Se o conector já existe, redirecionar para a página de falha
-    header("Location: ../ViewFail/FailCreateConectorExistente.php?erro=Não foi possível realizar o cadastro do conector. Conector já cadastrado no sistema");
-    exit(); // Termina a execução do script após redirecionamento
+    header("Location: ../ViewFail/FailCreateConectorExistente.php?erro=" . urlencode("Não foi possível realizar o cadastro do conector. Conector já cadastrado no sistema"));
+    exit();
 } else {
-    // Construir a consulta SQL para inserção
-    $sql = "INSERT INTO CONECTOR (CONECTOR) VALUES ('$conector')";
+    // Construir a consulta SQL para inserção usando prepared statements
+    $sql_insert = "INSERT INTO CONECTOR (CONECTOR) VALUES (?)";
+    $stmt_insert = $conn->prepare($sql_insert);
+    $stmt_insert->bind_param("s", $conector);
 
     // Executar a consulta SQL e verificar o resultado
-    if (mysqli_query($conn, $sql)) {
+    if ($stmt_insert->execute()) {
         // Redirecionar para a página de sucesso
-        header("Location: ../ViewSucess/SucessCreateConector.php?sucesso=O cadastro do conector foi realizado com sucesso");
-        exit(); // Termina a execução do script após redirecionamento
+        header("Location: ../ViewSucess/SucessCreateConector.php?sucesso=" . urlencode("O cadastro do conector foi realizado com sucesso"));
+        exit();
     } else {
+        // Registrar o erro no log
+        error_log("Erro ao cadastrar conector: " . $stmt_insert->error);
         // Redirecionar para a página de falha
-        header("Location: ../ViewFail/FailCreateConector.php?erro=Não foi possivel realizar o cadastro do conector. Tente novamente");
-        exit(); // Termina a execução do script após redirecionamento
+        header("Location: ../ViewFail/FailCreateConector.php?erro=" . urlencode("Não foi possível realizar o cadastro do conector. Tente novamente"));
+        exit();
     }
 }
 
-// Fechar a conexão
+// Fechar os statements e a conexão
+$stmt_check->close();
+if (isset($stmt_insert)) {
+    $stmt_insert->close();
+}
 $conn->close();
 ?>

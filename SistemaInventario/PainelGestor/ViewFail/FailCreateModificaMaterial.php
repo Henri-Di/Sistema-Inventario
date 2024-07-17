@@ -138,7 +138,7 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">GESTOR - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
@@ -146,29 +146,28 @@ document.oncontextmenu = function() { return false; }
                     <style>
                     /* Estilos CSS para o alerta */
                     .alert {
-                        padding: 5px;
-                        background-color: #ff0000; /* Fundo vermelho */
-                        color: #f0f0f0; /* Texto branco */
-                        font-size: 14px;
+                    padding: 10px;
+                    background-color: #ff0000;
+                    color: #ffffff;
+                    font-size: 18px;
                     }
 
                     /* Estilos para o botão de fechar */
                     .closebtn {
-                        margin-left: 15px;
-                        color: #f0f0f0;    
-                        font-weight: bold;
-                        float: right;
-                        font-size: 22px;
-                        line-height: 20px;
-                        cursor: pointer;
-                        transition: 0.3s;
+                    margin-left: 15px;
+                    color: #ffffff;
+                    font-weight: bold;
+                    float: right;
+                    font-size: 22px;
+                    line-height: 20px;
+                    cursor: pointer;
+                    transition: 0.3s;
                     }
 
-                    /* Estilos para o botão de fechar ao passar o mouse */
                     .closebtn:hover {
-                        color: black;
-                     }
-                    </style> 
+                    color: #000000;
+                    }
+                    </style>
     <!-- Alerta de erro -->
     <div class="alert">
         <!-- Botão de fechar -->
@@ -176,7 +175,7 @@ document.oncontextmenu = function() { return false; }
         <!-- Mensagem de erro -->
         Não foi possível realizar a alteração no cadastro do material. Refaça a operação e tente novamente <i class='fa fa-times-circle'></i>
     </div>
-                    <style>
+    <style>
                     .alerts {
                         padding: 5px;
                         background-color: transparent;
@@ -264,7 +263,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de transferência pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da transferência pendente -->
@@ -309,10 +308,6 @@ document.oncontextmenu = function() { return false; }
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">Observação</div>
                                 <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
-                            </td>
-                            <td id="colun-blue-table-alert">
-                                <div id="blue-title-listar-alert">Analista</div>
-                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
                             </td>
                         </tr>
                     </table>
@@ -385,7 +380,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de reserva pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da reserva pendente -->
@@ -447,7 +442,7 @@ document.oncontextmenu = function() { return false; }
     </div>
 <!-- Título da seção de cadastros auxiliares -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -537,7 +532,7 @@ document.oncontextmenu = function() { return false; }
 </table>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -726,7 +721,7 @@ document.oncontextmenu = function() { return false; }
 </form>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -917,7 +912,7 @@ document.oncontextmenu = function() { return false; }
 </form>
 <!-- Título da seção de cadastro de usuário -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>

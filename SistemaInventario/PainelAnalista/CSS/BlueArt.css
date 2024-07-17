@@ -57,6 +57,7 @@ body {
   background-size: 50vw; /* Utilizando vw para dimensionamento responsivo */
   background-position: left bottom;
   background-repeat: no-repeat;
+  opacity: 0.85;
   z-index: -1;
   pointer-events: none;
 }
@@ -79,7 +80,7 @@ body {
   image-rendering: -webkit-optimize-contrast; /* Melhora o contraste em navegadores WebKit */
   object-fit: cover; /* Mantém a proporção da imagem sem distorção */
   padding-bottom: 5%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
 .well::before {
@@ -164,7 +165,7 @@ body {
 
 /* Estilo para os links da barra de navegação */
 #menu-blue {
-  background-color: rgba(255, 255, 255, 0.75); /* Fundo semitransparente para melhor contraste */
+  background-color: #f0f0f5; /* Cor do fundo do texto */
   color: #005ce6; /* Cor do texto */
   width: 85%; /* Largura do link */
   font-weight: bold; /* Negrito */
@@ -279,18 +280,20 @@ img {
   }
 }
 
-  /* Estilo para o título de botão de alerta no painel */
+  /* Estilo para o título de alerta no painel */
   #blue-title-btn-painel-alert {
     text-align: left; /* Alinhamento à esquerda */
     color: #ff6600; /* Cor do texto */
+    font-weight: bold;
     font-size: 13px; /* Tamanho da fonte */
   }
   
 
 /* Estilo para o título de listagem */
 #blue-title-listar-alert {
-  background-color: transparent; /* Fundo transparente */
-  color: #ff6600; /* Cor do texto */
+  padding: 3px;
+  background-color: #f0f0f5; /* Define a cor de fundo  */
+  color: #33334d; /* Cor do texto */
   font-size: 11px; /* Tamanho da fonte */
   text-wrap: wrap;
   font-weight: bold; /* Texto em negrito */
@@ -327,12 +330,12 @@ img {
     text-align: left; /* Alinhamento à esquerda */
     color: #005ce6; /* Cor do texto */
     font-weight: bold;
-    font-size: 13px; /* Tamanho da fonte */
+    font-size: 25px; /* Tamanho da fonte */
   }
 
-    /* Estilo para o ícone dos botões na sessão de reservas do painel administrativo */
-    #blue-icon-btn-painel {
-      font-size: 11px; /* Tamanho da fonte */
+  /* Estilo para o ícone dos botões na sessão do painel administrativo */
+  #blue-icon-btn-painel {
+      font-size: 15px; /* Tamanho da fonte */
     }
 
 /* Estilo para a linha das tabelas com efeito de hover */
@@ -403,7 +406,8 @@ img {
   padding: 5px;
   font-size: 12px; /* Tamanho da fonte reduzido */
   font-weight: bold;
-  background-color: #ffffff; /* Cor de fundo branca */
+  background-color: #f0f0f5; /* Cor do fundo do texto */
+  opacity: 0.8;
   outline: none; /* Sem contorno ao focar */
   margin-left: 1%; /* Margem à esquerda entre os botões */
   border-radius: 3px; /* Borda arredondada */
@@ -414,6 +418,7 @@ img {
   max-width: 18%; /* Largura máxima para garantir que 5 botões caibam na mesma linha */
   text-align: center; /* Centralizar texto */
   margin-top: 1.5%; /*  Ajuste de margem superior */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
 /* Efeito hover para o botão de relatório auxiliar */
@@ -435,8 +440,9 @@ img {
 
 /* Estilo para o título de listagem */
 #blue-title-listar {
-  background-color: transparent; /* Fundo transparente */
-  color: #005ce6; /* Cor do texto */
+  background-color: #f0f0f5; /* Cor do fundo do texto */
+  padding: 2px;
+  color: #33334d; /* Cor do texto */
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
   margin-top: 0.5px; /* Margem superior */
@@ -451,7 +457,7 @@ img {
   outline: none; /* Remove a borda de foco padrão */
   color: #33334d; /* Define a cor do texto */
   text-align: center; /* Centraliza o texto */
-  font-size: 10px; /* Define o tamanho da fonte */
+  font-size: 11px; /* Define o tamanho da fonte */
   font-weight: bold; /* Define a fonte como negrito */
   border: 1px solid; /* Define a borda */
   margin-top: 1%; /* Adiciona uma margem superior de 1% */
@@ -463,7 +469,8 @@ img {
 
 /* Estilo para o botão de cadastro auxiliar */
 #blue-btn-cadastro-auxiliar {
-  background-color: transparent; /* Fundo transparente */
+  background-color: #f0f0f5; /* Fundo transparente */
+  padding: 2px;
   width: 100%; /* Largura total */
   height: auto; /* Altura automática */
   color: #005ce6; /* Cor do texto */
@@ -473,13 +480,13 @@ img {
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
   transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-    
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
   
 /* Efeito hover para o botão de cadastro auxiliar */
 #blue-btn-cadastro-auxiliar:hover {
   background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-  color: #f0f0f0; /* Cor do texto branco */
+  color: #ffffff; /* Cor do texto branco */
   opacity: 0.7; /* Opacidade reduzida */
 }
 
@@ -501,7 +508,7 @@ img {
 
   /* Estilo para o botão de tabela de cadastro de produto */
   #blue-btn-table-cadastro-produto {
-    background-color: transparent; /* Fundo transparente */
+    background-color: #f0f0f5; /* Cor do fundo do texto */
     width: 20%; /* Largura */
     padding: 3px;
     color: #005ce6; /* Cor do texto */
@@ -516,7 +523,7 @@ img {
   /* Efeito hover para o botão de tabela de cadastro de produto */
   #blue-btn-table-cadastro-produto:hover {
     background-color: #005ce6; /* Cor de fundo azul ao passar o mouse */
-    color: #f0f0f0; /* Cor do texto branco */
+    color: #ffffff; /* Cor do texto branco */
     opacity: 0.7; /* Opacidade reduzida */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
   }
@@ -618,6 +625,7 @@ img {
 /* Estilo para texto da sessão do usuário */
 #blue-text-session-user {
   float: right; /* Alinha o elemento à direita */
+  font-weight: bold;
   font-size: 12px; /* Define o tamanho da fonte como 12 pixels */
   margin-top: -2px; /* Aplica um deslocamento para cima de 2 pixels */
   margin-right: 10px; /* Define uma margem direita de 10 pixels */
@@ -644,7 +652,8 @@ img {
 #blue-button-nova-senha {
   width: 20%; /* Largura do botão */
   height: auto; /* Altura automática */
-  background-color: transparent; /* Cor de fundo do botão */
+  background-color:#f0f0f5;
+  opacity: 0.8;
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
   margin-left: -40%; /* Margem à esquerda negativa para reposicionar */
@@ -653,6 +662,7 @@ img {
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida com cor */
   transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave ao redor do elemento */
 }
 
 /* Efeito hover para o botão 'Nova Senha' */
@@ -675,7 +685,7 @@ img {
   width: 11%; /* Largura do botão */
   height: auto; /* Altura automática */
   padding: 5px;
-  background-color: transparent; /* Define a cor de fundo como branco*/
+  background-color: #f0f0f5; /* Cor do fundo do texto */
   outline: none; /* Sem contorno ao focar */
   margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
   border-radius: 3px; /* Borda arredondada */
@@ -791,8 +801,8 @@ img {
 }
 
 #blue-title-listar-exibicao {
-  background-color: transparent;
-  color: #005ce6;
+  background-color:#f0f0f5 /* Cor do fundo do texto */;
+  color: #33334d;
   font-weight: bold;
   border: 1px solid #005ce6;
   font-size: 0.75em; /* Utilizando uma unidade relativa */
@@ -856,7 +866,7 @@ img {
 /* Estilo para o contêiner da tabela auxiliar de cadastro */
 #blue-table-cadastro-auxiliars {
   width: 49%; /* Largura total */
-  margin-top: -1%; /* Margem superior */
+  margin-top: 1%; /* Margem superior */
   margin-left: 1%;
   float: left;
   table-layout: fixed; /* Fixar a largura das células */

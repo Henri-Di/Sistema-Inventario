@@ -137,12 +137,13 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">ANALISTA - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
 
                     <style>
+
                     .alerts {
                         padding: 5px;
                         background-color: transparent;
@@ -230,7 +231,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de transferência pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da transferência pendente -->
@@ -276,10 +277,6 @@ document.oncontextmenu = function() { return false; }
                                 <div id="blue-title-listar-alert">Observação</div>
                                 <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
                             </td>
-                            <td id="colun-blue-table-alert">
-                                <div id="blue-title-listar-alert">Analista</div>
-                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
-                            </td>
                         </tr>
                     </table>
      HTML;
@@ -290,7 +287,127 @@ document.oncontextmenu = function() { return false; }
             }
         }
         ?>
-</div>
+    </div>
+
+    <!-- Container para alertas de reservas pendentes -->
+    <div class="alerts" style="display: none;" id="transferAlerts">
+        <?php
+        // Conexão ao banco de dados
+        require_once('../../ViewConnection/ConnectionInventario.php');
+
+        // Nome do usuário da sessão atual
+        $nomeUsuarioSessao = $_SESSION['usuarioNome'];
+
+        $sql = "SELECT 
+                    R.*, 
+                    DC.NOME AS NOME_DATACENTER,
+                    MAT.MATERIAL AS NOME_MATERIAL,
+                    MET.METRAGEM AS METRAGEM_PRODUTO,
+                    U.NOME AS NOME_USUARIO,
+                    E.QUANTIDADE AS QUANTIDADE_TOTAL,
+                    R.QUANTIDADE AS QUANTIDADE_RESERVADA,
+                    R.OBSERVACAO,
+                    DATE_FORMAT(R.DATARESERVA, '%d/%m/%Y') AS DATA_FORMATADA,
+                    MO.MODELO AS NOME_MODELO
+                FROM 
+                    RESERVA R
+                JOIN 
+                    PRODUTO P ON R.IDPRODUTO = P.IDPRODUTO
+                JOIN 
+                    MATERIAL MAT ON P.IDMATERIAL = MAT.IDMATERIAL
+                JOIN 
+                    METRAGEM MET ON P.IDMETRAGEM = MET.IDMETRAGEM
+                JOIN 
+                    DATACENTER DC ON P.IDDATACENTER = DC.IDDATACENTER
+                JOIN 
+                    USUARIO U ON R.IDUSUARIO = U.IDUSUARIO
+                JOIN 
+                    ESTOQUE E ON P.IDPRODUTO = E.IDPRODUTO
+                JOIN 
+                    MODELO MO ON P.IDMODELO = MO.IDMODELO
+                WHERE 
+                    R.SITUACAO = 'Pendente'
+                    AND U.NOME = '" . $conn->real_escape_string($nomeUsuarioSessao) . "'";
+
+        // Executar consulta
+        $result = $conn->query($sql);
+
+        if ($result === false) {
+            echo "Erro na consulta: " . $conn->error;
+        } else {
+            // Verificar se há resultados
+            if ($result->num_rows > 0) {
+                echo "<script>document.getElementById('transferAlerts').style.display = 'block';</script>";
+
+                // Exibir os resultados
+                while ($row = $result->fetch_assoc()) {
+                    // Imprimir cada reserva pendente
+                    echo <<<HTML
+                    <!-- Botão para fechar alerta -->
+                    <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
+
+                    <!-- Título do alerta de reserva pendente -->
+                    <div id="blue-line-title-btn-painel-alert">
+                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
+                    </div>
+
+                    <!-- Tabela com detalhes da reserva pendente -->
+                    <table class="table table-bordered" id="blue-table-cadastro-auxiliar" style="margin-top:1%;">
+                        <tr id="line-blue-table-alert">
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Código Reserva</div>
+                                <div id="blue-input-cdst-alert">{$row['ID']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Nº WO</div>
+                                <div id="blue-input-cdst-alert">{$row['NUMWO']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Produto</div>
+                                <div id="blue-input-cdst-alert">{$row['NOME_MATERIAL']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Metragem</div>
+                                <div id="blue-input-cdst-alert">{$row['METRAGEM_PRODUTO']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Modelo</div>
+                                <div id="blue-input-cdst-alert">{$row['NOME_MODELO']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Estoque Reservado</div>
+                                <div id="blue-input-cdst-alert">{$row['QUANTIDADE_RESERVADA']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Estoque Total</div>
+                                <div id="blue-input-cdst-alert">{$row['QUANTIDADE_TOTAL']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">DataCenter</div>
+                                <div id="blue-input-cdst-alert">{$row['NOME_DATACENTER']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Data Reserva</div>
+                                <div id="blue-input-cdst-alert">{$row['DATA_FORMATADA']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Observação</div>
+                                <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
+                            </td>
+                            <td id="colun-blue-table-alert">
+                                <div id="blue-title-listar-alert">Analista</div>
+                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
+                            </td>
+                        </tr>
+                    </table>
+        HTML;
+                }
+            } else {
+                echo "Nenhuma reserva pendente encontrada para este usuário.";
+            }
+        }
+        ?>
+    </div> 
 <!-- Início do conteúdo da página -->
 <div id="blue-line-title-btn-painel">
     <!-- Título e ícone para remoção de produto -->

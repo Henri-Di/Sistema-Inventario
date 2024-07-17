@@ -138,7 +138,7 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">GESTOR - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
@@ -231,7 +231,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de transferência pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da transferência pendente -->
@@ -276,10 +276,6 @@ document.oncontextmenu = function() { return false; }
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">Observação</div>
                                 <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
-                            </td>
-                            <td id="colun-blue-table-alert">
-                                <div id="blue-title-listar-alert">Analista</div>
-                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
                             </td>
                         </tr>
                     </table>
@@ -352,7 +348,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de reserva pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da reserva pendente -->
@@ -411,7 +407,7 @@ document.oncontextmenu = function() { return false; }
             }
         }
         ?>
-</div>
+    </div>
 <!-- Início do contêiner de busca de material -->
 <div class="container" id="blue-search">
     <!-- Início do formulário de busca de material -->
@@ -427,7 +423,7 @@ document.oncontextmenu = function() { return false; }
 
 <!-- Início do título da seção de relatório -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Relatório Nota Fiscal <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Relatório Nota Fiscal <i class="fa fa-cart-plus" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
 </div>
 <!-- Fim do título da seção de relatório -->
 
@@ -471,7 +467,7 @@ document.oncontextmenu = function() { return false; }
                 <p id="blue-text-table-exibicao"><?php echo $dado['NUMNOTAFISCAL']; ?></p>
             </td>
             <td id="colun-blue-table">
-                <p id="blue-title-listar-exibicao">Valor Nota Fiscal</p>
+                <p id="blue-title-listar-exibicao">Custo</p>
                 <p id="blue-text-table-exibicao">R$<?php echo $dado['VALORNOTAFISCAL']; ?></p>
             </td>
             <td id="colun-blue-table">
@@ -519,7 +515,7 @@ document.oncontextmenu = function() { return false; }
                 </div>
             </td>
             <td id="colun-blue-table">
-                <div id="blue-title-listar">Download</div>
+                <div id="blue-title-listar-exibicao">Download</div>
                 <a id="blue-optios-config-dados" href='../ViewFunctions/CreateDownloadNotaFiscal.php?file=<?php echo urlencode($dado['FILEPATH']); ?>'>
                     <i class="fa fa-cloud-download" style="margin-left:40%;margin-top:25%;font-size:9px;"></i>
                 </a>

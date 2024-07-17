@@ -46,7 +46,7 @@
             main {
                 width: 100%;
                 margin: 0;
-                padding: 1cm;
+                padding: 0;
             }
             table {
                 border: 1px solid #000;
@@ -63,18 +63,27 @@
     <div class="container-fluid">
         <!-- Conteúdo principal -->
         <main>
-            <br><br><br><br>
-            <!-- Linha de título e botão -->
-            <div id="blue-line-title-btn-painel" style="width:66%;margin-left:17%;">
-                <p id="blue-title-btn-painel">Autorização de Saída - Transferência <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
-            </div>
-            <!-- Fim da linha de título e botão -->
+            <div class="container-fluid" style="display: flex; justify-content: left; align-items: left; margin-top: -15px;margin-left:-1%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 192.756 192.756" style="border:none;">
+            <g fill-rule="evenodd" clip-rule="evenodd">
+                <path fill="#fff" d="M0 0h192.756v192.756H0V0z"/>
+                <path d="M64.466 90.115l-4.258 10.61h5.891L64.485 90.07l-.019.045zM41.91 114.469l17.467-35.957h13.202l7.366 35.957H68.35l-.852-4.791H56.25l-2.588 4.791H41.91zm43.522 0l5.06-35.957h11.682l-5.059 35.957H85.432zm77.691-24.399l-4.275 10.655h5.891l-1.616-10.655zm-22.574 24.399l17.467-35.957h13.201l7.365 35.957h-11.594l-.852-4.791h-11.248l-2.588 4.791h-11.751zM114.725 97.656h14.636l10.03 16.612h-14.639l-10.027-16.612z" fill="#0d6fab"/>
+                <path fill="#db8135" d="M116.246 95.104h15.129l13.139-16.54h-15.129l-13.139 16.54zM101.117 114.369h15.129l13.139-16.744h-15.129l-13.139 16.744z"/>
+                <path fill="#0d6fab" d="M106.572 78.362h14.121l9.674 16.742h-14.121l-9.674-16.742zM42.257 79.8l-1.124 10.575c-4.306-5.939-14.284-1.841-15.068 5.558-.996 9.392 8.608 11.583 13.835 6.052l-1.127 10.6c-1.56.768-3.085 1.361-4.59 1.764a18.783 18.783 0 0 1-4.487.648c-1.872.039-3.567-.158-5.096-.588a12.436 12.436 0 0 1-4.134-2.002c-2.36-1.725-4.066-3.918-5.118-6.588-1.05-2.678-1.397-5.699-1.038-9.076.288-2.713.973-5.188 2.062-7.432 1.08-2.244 2.576-4.281 4.481-6.129 1.801-1.763 3.762-3.092 5.885-3.996 2.113-.895 4.421-1.373 6.915-1.425a17.085 17.085 0 0 1 4.37.46c1.425.341 2.831.873 4.234 1.579z"/>
+            </g>
+        </svg>
+    </div>
+         
+    <div class="container-fuid" style="float:right;margin-right:1%;border:0.5px solid #33334d;padding:10px;font-size:12px;font-weight:bold;margin-top:4%;">Grau de Sigilo<br>#CONFIDENCIAL 05</div>
 
             <!-- Container fluid secundário -->
-            <div class="container-fluid" style="margin-top:1%;margin-left:16%;">
-                <p style="text-align:left;">Confirmo a saída do produto citado abaixo, para realização de transferência entre datacenters.</p>
+            <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
+                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Sáida de Material</p>
                 <br>
-                
+                <input type="checkbox" name="Entrada" style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;">Entrada</p>
+                <input type="checkbox" name="Entrada" style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
+                <br>
+                <p style="font-size:20px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
                 <!-- PHP para conexão e consulta ao banco de dados -->
                 <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -150,68 +159,49 @@
                 ?>
                             <!-- Tabela de exibição dos dados -->
                             <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
-                                <tr>
+                                <tr id="line-blue-table-print">
                                     <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Código Saída</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['ID']; ?>" />
+                                        <div id="blue-title-listar-print">Material</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_MATERIAL_ORIGEM']; ?>" />
                                     </td>
                                     <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Produto Origem</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['NOME_MATERIAL_ORIGEM']; ?>" />
+                                        <div id="blue-title-listar-print">Metragem</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['METRAGEM_PRODUTO_DESTINO']; ?>" />
                                     </td>
                                     <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Produto Destino</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['NOME_MATERIAL_DESTINO']; ?>" />
+                                        <div id="blue-title-listar-print">Modelo</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['MODELO_PRODUTO_ORIGEM']; ?>" />
                                     </td>
                                     <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Metragem</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['METRAGEM_PRODUTO_DESTINO']; ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Modelo</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['MODELO_PRODUTO_ORIGEM']; ?>" />
+                                        <div id="blue-title-listar-print">Quantidade</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['QUANTIDADE']; ?>" />
                                     </td>
                                     <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Fornecedor</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['FORNECEDOR_PRODUTO_ORIGEM']; ?>" />
+                                        <div id="blue-title-listar-print">Data de Emissão</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $dateformated; ?>" />
                                     </td>
                                     <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Grupo</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['NOME_GRUPO_ORIGEM']; ?>" />
-                                    </td>
-                                    <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Localização</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['NOME_LOCALIZACAO_ORIGEM']; ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Data de Emissão</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $dateformated; ?>" />
-                                    </td>
-                                    <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Datacenter de Origem</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['NOME_DATACENTER_ORIGEM']; ?>" />
-                                    </td>
-                                    <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Datacenter de Destino</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['NOME_DATACENTER_DESTINO']; ?>" />
-                                    </td>
-                                    <td id="colun-blue-table">
-                                        <div id="blue-title-listar">Quantidade</div>
-                                        <input type="text" id="blue-input-cdst" value="<?php echo $row['QUANTIDADE']; ?>" />
+                                        <div id="blue-title-listar-print">Destino</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_DATACENTER_DESTINO']; ?>" />
                                     </td>
                                 </tr>
                             </table>
+                            <p style="color:#33334d;font-weight:bold;">Observação: Inutilizar os espações em branco após preenchimento.</p>
+                            <div class="container-fluid">
+                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
+                            <p style="font-weight:bold;color:#33334d;float:right;margin-top:18%;margin-right:-35%;">Assinatura do empregado sob carimbo</p>
+                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;margin-right:10%;"/>
+                            <p style="font-weight:bold;color:#33334d;float:right;margin-top:0%;margin-right:65%;">Assinatura e indentificação do portador</p>
+                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
+                            <p style="font-weight:bold;color:#33334d;float:right;margin-top:18%;margin-right:-35%;">Assinatura e matricula do vigilante</p>
+                            </div>
                             <!-- Fim da tabela de exibição dos dados -->
-
                             <!-- Botão para impressão -->
                             <div style="margin-left:5%;margin-top:10%;">
-                                <button class="btn btn-info" style="font-size: 16pt;width:20%;" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
+                                <button  id="blue-btn-print" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
                             </div>
                             <!-- Fim do botão para impressão -->
+                            <br><br>
                 <?php
                         }
                     } else {

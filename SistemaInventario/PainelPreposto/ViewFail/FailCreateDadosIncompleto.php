@@ -107,13 +107,13 @@ document.oncontextmenu = function() { return false; }
 
             <!-- Start menu-link page -->
             <ul class="nav nav-pills nav-stacked">
-                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAnalista.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelPreposto.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
             </ul>
             <!-- End menu-link page -->
-
             <br>
             <!-- End menu-link page -->
 
@@ -137,7 +137,7 @@ document.oncontextmenu = function() { return false; }
                         <!-- Botão de sair -->
                         <button id="blue-btn-sign-out" onclick="window.location.href='../../ViewLogout/LogoutSistema.php';"><i class="fa fa-sign-out"></i></button>
                         <!-- Nome do usuário -->
-                        <p id="blue-text-session-user">BEM-VINDO, <?php echo $_SESSION['usuarioNome']; ?></p>
+                        <p id="blue-text-session-user">PREPOSTO - <?php echo $_SESSION['usuarioNome']; ?></p>
                     </div>
 
                     <br>
@@ -145,37 +145,36 @@ document.oncontextmenu = function() { return false; }
                     <style>
                     /* Estilos CSS para o alerta */
                     .alert {
-                        padding: 5px;
-                        background-color: #ff0000; /* Fundo vermelho */
-                        color: #f0f0f0; /* Texto branco */
-                        font-size: 14px;
+                    padding: 10px;
+                    background-color: #ff0000;
+                    color: #ffffff;
+                    font-size: 18px;
                     }
 
                     /* Estilos para o botão de fechar */
                     .closebtn {
-                        margin-left: 15px;
-                        color: #f0f0f0;    
-                        font-weight: bold;
-                        float: right;
-                        font-size: 22px;
-                        line-height: 20px;
-                        cursor: pointer;
-                        transition: 0.3s;
+                    margin-left: 15px;
+                    color: #ffffff;
+                    font-weight: bold;
+                    float: right;
+                    font-size: 22px;
+                    line-height: 20px;
+                    cursor: pointer;
+                    transition: 0.3s;
                     }
 
-                    /* Estilos para o botão de fechar ao passar o mouse */
                     .closebtn:hover {
-                        color: black;
-                     }
-                    </style> 
+                    color: #000000;
+                    }
+                    </style>
     <!-- Alerta de erro -->
     <div class="alert">
         <!-- Botão de fechar -->
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
         <!-- Mensagem de erro -->
-        Não foi possível realizar o download do arquivo. Informe o departamento de TI  <i class='fa fa-times-circle'></i>
+        Todos os campos do formulário são obrigatórios. Refaça a operação e tente novamente <i class='fa fa-times-circle'></i>
     </div>
-                    <style>
+    <style>
                     .alerts {
                         padding: 5px;
                         background-color: transparent;
@@ -263,7 +262,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de transferência pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Transferência Pendente <i class="fa fa-retweet" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da transferência pendente -->
@@ -308,10 +307,6 @@ document.oncontextmenu = function() { return false; }
                             <td id="colun-blue-table-alert">
                                 <div id="blue-title-listar-alert">Observação</div>
                                 <div id="blue-input-cdst-alert">{$row['OBSERVACAO']}</div>
-                            </td>
-                            <td id="colun-blue-table-alert">
-                                <div id="blue-title-listar-alert">Analista</div>
-                                <div id="blue-input-cdst-alert">{$row['NOME_USUARIO']}</div>
                             </td>
                         </tr>
                     </table>
@@ -384,7 +379,7 @@ document.oncontextmenu = function() { return false; }
 
                     <!-- Título do alerta de reserva pendente -->
                     <div id="blue-line-title-btn-painel-alert">
-                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel"></i></p>
+                        <p id="blue-title-btn-painel-alert">Reserva Pendente <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
                     </div>
 
                     <!-- Tabela com detalhes da reserva pendente -->
@@ -446,7 +441,7 @@ document.oncontextmenu = function() { return false; }
     </div>
 <!-- Título da seção de cadastros auxiliares -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -536,7 +531,7 @@ document.oncontextmenu = function() { return false; }
 </table>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -725,7 +720,7 @@ document.oncontextmenu = function() { return false; }
 </form>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -914,7 +909,76 @@ document.oncontextmenu = function() { return false; }
     <!-- Botão de submit -->
     <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Nota Fiscal <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></button>
 </form>
-<br><br><br><br><br><br><br><br><br><br>
+<!-- Título da seção de cadastro de usuário -->
+<div id="blue-line-title-btn-painel">
+    <p id="blue-title-btn-painel">Cadastro de Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
+</div>
+
+<br>
+
+<!-- Tabela para formulário de cadastro -->
+<table class="table table-bordered" id="blue-table-cadastro-auxiliar">
+    <form method="POST" action="../ViewFunctions/CreateNovoUsuario.php">
+
+        <!-- Linha da tabela -->
+        <tr id="line-blue-table">
+            <!-- Coluna 1: Nome do Usuário -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">Nome Usuário</div>
+                <input type="text" id="blue-input-cdst" name="NomeUsuario" value="" autocomplete="off" required />
+            </td>
+
+            <!-- Coluna 2: Código do Usuário -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">Código Usuário</div>
+                <input type="text" id="blue-input-cdst" name="CodigoUsuario" value="" autocomplete="off" required />
+            </td>
+
+            <!-- Coluna 3: Senha do Usuário -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">Senha</div>
+                <input type="password" id="blue-input-cdst" name="SenhaUsuario" value="" autocomplete="off" required />
+            </td>
+
+            <!-- Coluna 4: E-mail do Usuário -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">E-mail</div>
+                <input type="email" id="blue-input-cdst" name="EmailUsuario" value="" autocomplete="off" required />
+            </td>
+
+            <!-- Coluna 5: Data Center -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">DataCenter</div>
+                <select id="select-form" name="DataCenter">
+                    <option value="CTC">CTC</option>
+                    <option value="DTC">DTC</option>
+                </select>
+            </td>
+
+            <!-- Coluna 6: Nível de Acesso -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">Nível de Acesso</div>
+                <select id="select-form" name="NiveldeAcesso">
+                    <option value="GESTOR">Gestor</option>
+                    <option value="PREPOSTO">Preposto</option>
+                    <option value="ANALISTA">Analista</option>
+                    <option value="TÉCNICO">Técnico</option>
+                </select>
+            </td>
+
+            <!-- Coluna 7: Data de Cadastro -->
+            <td id="colun-blue-table">
+                <div id="blue-title-listar">Data Cadastro</div>
+                <input type="date" id="blue-input-cdst" name="DataCadastro" value="" autocomplete="off" required />
+            </td>
+        </tr>
+    </table>
+
+    <!-- Botão de submit -->
+    <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Usuário <i class="fa fa-user-plus" id="blue-icon-btn-painel"></i></button>
+
+</form>
+<br><br>
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->
