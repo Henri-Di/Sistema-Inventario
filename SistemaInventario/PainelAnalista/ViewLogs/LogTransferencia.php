@@ -883,6 +883,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                         </form>
                     </tr>
                 </table>
+                <br>
     <?php
             }
         }

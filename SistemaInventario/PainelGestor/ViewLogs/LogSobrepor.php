@@ -708,7 +708,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
     <?php } ?>
     <!-- Fim do loop PHP para exibir dados de sobreposição -->
 </div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->

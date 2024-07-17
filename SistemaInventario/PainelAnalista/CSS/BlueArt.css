@@ -71,7 +71,6 @@ body {
 .well {
   background-color: rgba(255, 255, 255, 0.1); /* Fundo semitransparente para melhor contraste */
   border: none; /* Remove a borda */
-  color: #005ce6; /* Cor do texto */
   cursor: context-menu; /* Cursor de contexto */
   text-align: center; /* Centraliza o texto */
   position: relative; /* Necessário para o uso do pseudo-elemento */
@@ -258,7 +257,7 @@ img {
   outline: none; /* Remove a borda de foco padrão */
   color: #33334d; /* Define a cor do texto */
   text-align: center; /* Centraliza o texto */
-  font-size: 9px; /* Ajuste o tamanho da fonte para dispositivos móveis */
+  font-size: 9.5px; /* Ajuste o tamanho da fonte para dispositivos móveis */
   font-weight: bold; /* Define a fonte como negrito */
   border: 1px solid; /* Define a borda */
   margin-top: 1%; /* Adiciona uma margem superior de 1% */
@@ -285,7 +284,7 @@ img {
     text-align: left; /* Alinhamento à esquerda */
     color: #ff6600; /* Cor do texto */
     font-weight: bold;
-    font-size: 13px; /* Tamanho da fonte */
+    font-size: 11px; /* Tamanho da fonte */
   }
   
 
@@ -294,7 +293,7 @@ img {
   padding: 3px;
   background-color: #f0f0f5; /* Define a cor de fundo  */
   color: #33334d; /* Cor do texto */
-  font-size: 11px; /* Tamanho da fonte */
+  font-size: 12px; /* Tamanho da fonte */
   text-wrap: wrap;
   font-weight: bold; /* Texto em negrito */
   border: 1px solid #ff6600; /* Borda sólida */
@@ -330,7 +329,7 @@ img {
     text-align: left; /* Alinhamento à esquerda */
     color: #005ce6; /* Cor do texto */
     font-weight: bold;
-    font-size: 25px; /* Tamanho da fonte */
+    font-size: 16px; /* Tamanho da fonte */
   }
 
   /* Estilo para o ícone dos botões na sessão do painel administrativo */
@@ -359,7 +358,7 @@ img {
 }
 
 #blue-table-cadastro-auxiliar td {
-  padding: 5px; /* Espaçamento interno */
+  padding:5px; /* Espaçamento interno */
   overflow: hidden; /* Esconder conteúdo excedente */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
   white-space: nowrap; /* Não quebrar linhas */
@@ -404,6 +403,7 @@ img {
   width: 13%; /* Largura do botão */
   height: auto; /* Altura automática */
   padding: 5px;
+  color:#005ce6;
   font-size: 12px; /* Tamanho da fonte reduzido */
   font-weight: bold;
   background-color: #f0f0f5; /* Cor do fundo do texto */
@@ -626,6 +626,7 @@ img {
 #blue-text-session-user {
   float: right; /* Alinha o elemento à direita */
   font-weight: bold;
+  color:#005ce6;
   font-size: 12px; /* Define o tamanho da fonte como 12 pixels */
   margin-top: -2px; /* Aplica um deslocamento para cima de 2 pixels */
   margin-right: 10px; /* Define uma margem direita de 10 pixels */
@@ -685,6 +686,7 @@ img {
   width: 11%; /* Largura do botão */
   height: auto; /* Altura automática */
   padding: 5px;
+  color:#005ce6;
   background-color: #f0f0f5; /* Cor do fundo do texto */
   outline: none; /* Sem contorno ao focar */
   margin: 0.5% 0.2%; /* Margem entre os botões (vertical horizontal) */
@@ -914,16 +916,103 @@ img {
     }
   }
 
+/* Estilo para o contêiner da tabela auxiliar de cadastro */
+#blue-table-cadastro-auxiliar-print {
+  width: 100%; /* Largura total */
+  margin-top: 1%; /* Margem superior */
+  margin-left: 0%;
+  border: 1px solid #33334d;
+  table-layout: auto; /* Permitir que a largura das células seja ajustada automaticamente */
+}
+
+/* Estilo para as células da tabela */
+#blue-table-cadastro-auxiliar-print td {
+  padding: 10px; /* Espaçamento interno */
+  overflow: hidden; /* Esconder conteúdo excedente */
+  text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
+  white-space: nowrap; /* Não quebrar linhas */
+}
+
+/* Media Queries para dispositivos menores */
+@media (max-width: 1200px) {
+  #blue-table-cadastro-auxiliar-print {
+    table-layout: auto; /* Permitir que a largura das células seja ajustada automaticamente */
+  }
+  #blue-table-cadastro-auxiliar-print td {
+    width: auto; /* Largura automática para cada célula em telas menores */
+  }
+}
+
+@media (max-width: 992px) {
+  #blue-table-cadastro-auxiliar-print td {
+    width: auto; /* Largura automática para cada célula em telas pequenas */
+    display: table-cell; /* Exibir cada célula como célula de tabela */
+  }
+}
+
+@media (max-width: 768px) {
+  #blue-table-cadastro-auxiliar-print td {
+    width: auto; /* Largura automática para cada célula em telas muito pequenas */
+    display: table-cell; /* Exibir cada célula como célula de tabela */
+    padding: 5px; /* Espaçamento interno menor */
+  }
+}
+
+@media (max-width: 576px) {
+  #blue-table-cadastro-auxiliar-print td {
+    width: auto; /* Largura automática para cada célula em telas muito pequenas */
+    display: table-cell; /* Exibir cada célula como célula de tabela */
+    padding: 5px; /* Espaçamento interno menor */
+    font-size: 12px; /* Tamanho de fonte menor */
+  }
+}
+
+#line-blue-table-print{
+border: 1px solid #33334d;  
+  }
+
+  #colun-blue-table-print{
+border: 1px solid #33334d;
+  }
+
+#blue-title-listar-print{
+  background-color: #f0f0f5; /* Cor do fundo do texto */
+  padding: 5px;
+  color: #33334d; /* Cor do texto */
+  font-size: 15px; /* Tamanho da fonte */
+  font-weight: bold; /* Texto em negrito */
+  margin-top: 0.5px; /* Margem superior */
+  border: 1px solid #33334d; /* Borda sólida */
+  text-align: center; /* Alinhamento central do texto */
+}
+
+#blue-input-cdst-print{
+  width: 100%; /* Define a largura como 100% do contêiner */
+  padding: 5px;
+  background-color: transparent; /* Define o fundo como transparente */
+  outline: none; /* Remove a borda de foco padrão */
+  color: #33334d; /* Define a cor do texto */
+  text-align: center; /* Centraliza o texto */
+  font-size: 14px; /* Define o tamanho da fonte */
+  font-weight: bold; /* Define a fonte como negrito */
+  border: 1px solid; /* Define a borda */
+  margin-top: 2%; /* Adiciona uma margem superior de 1% */
+  border-top-color: transparent; /* Remove a cor da borda superior */
+  border-left-color: transparent; /* Remove a cor da borda esquerda */
+  border-right-color: transparent; /* Remove a cor da borda direita */
+  border-bottom-color: #666699; /* Define a cor da borda inferior */
+}
+
 
 /* Estilo para o botão de impressão */
 #blue-btn-print {
-  margin-left: 0%; /* Margem à esquerda */
-  width: 10%; /* Largura do botão */
+  margin-left: 40%; /* Margem à esquerda */
+  width: 15%; /* Largura do botão */
   outline: none; /* Remover contorno ao focar */
   color: #005ce6; /* Cor do texto */
   border: 1px solid #005ce6; /* Borda sólida */
   background-color: #ffffff; /* Cor de fundo */
-  font-size: 11px; /* Tamanho da fonte */
+  font-size: 13pt; /* Tamanho da fonte */
   font-weight: bold; /* Negrito */
   transition: background-color ease 0.7s; /* Transição suave de cor de fundo */
 }

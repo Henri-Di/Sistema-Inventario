@@ -83,7 +83,7 @@
                 <input type="checkbox" name="Entrada" style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;">Entrada</p>
                 <input type="checkbox" name="Entrada" style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
                 <br>
-                <p style="font-size:20px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
+                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
                 <!-- PHP para conexão e consulta ao banco de dados -->
                 <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');

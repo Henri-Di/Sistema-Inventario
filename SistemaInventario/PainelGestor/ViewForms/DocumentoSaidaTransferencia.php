@@ -83,7 +83,7 @@
                 <input type="checkbox" name="Entrada" style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;">Entrada</p>
                 <input type="checkbox" name="Entrada" style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
                 <br>
-                <p style="font-size:20px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
+                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
                 <!-- PHP para conexão e consulta ao banco de dados -->
                 <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -110,7 +110,8 @@
                             G.GRUPO AS NOME_GRUPO_ORIGEM,
                             L.LOCALIZACAO AS NOME_LOCALIZACAO_ORIGEM,
                             T.QUANTIDADE,
-                            T.SITUACAO
+                            T.SITUACAO,
+                            T.NUMWO
                         FROM 
                             TRANSFERENCIA T
                         JOIN 
@@ -160,6 +161,10 @@
                             <!-- Tabela de exibição dos dados -->
                             <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
                                 <tr id="line-blue-table-print">
+                                <td id="colun-blue-table">
+                                        <div id="blue-title-listar-print">WO</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NUMWO']; ?>" />
+                                    </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Material</div>
                                         <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_MATERIAL_ORIGEM']; ?>" />

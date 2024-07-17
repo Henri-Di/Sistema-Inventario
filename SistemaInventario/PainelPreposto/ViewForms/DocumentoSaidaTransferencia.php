@@ -78,7 +78,7 @@
 
             <!-- Container fluid secundário -->
             <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
-                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Sáida de Material</p>
+                <p style="font-size:15px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Sáida de Material</p>
                 <br>
                 <input type="checkbox" name="Entrada" style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;">Entrada</p>
                 <input type="checkbox" name="Entrada" style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>

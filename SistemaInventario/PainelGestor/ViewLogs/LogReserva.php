@@ -697,7 +697,6 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                         <div id="blue-title-listar">Quantidade Reservada</div>
                         <input type="text" id="blue-input-cdst" name="QuantidadeReserva" value="<?php echo $dado['QUANTIDADE']; ?> " autocomplete="off" disabled />
                     </td>
-
                     <td id="colun-blue-table">
                         <div id="blue-title-listar">Data Reserva</div>
                         <input type="text" id="blue-input-cdst" name="DataReserva" value="<?php echo $dateformatedReserva; ?> " autocomplete="off" disabled />
@@ -707,7 +706,8 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                         <div id="blue-title-listar">Observações</div>
                         <input type="text" id="blue-input-cdst" name="ObservacaoReserva" value="<?php echo $dado['OBSERVACAO']; ?> " autocomplete="off" disabled />
                     </td>
-
+                    </tr>
+                    <tr>
                     <td id="colun-blue-table">
                         <div id="blue-title-listar">Status</div>
                         <input type="text" id="blue-input-cdst" name="Situacao" value="<?php echo $dado['SITUACAO']; ?>" autocomplete="off" style="color: <?php echo $color; ?>;" disabled />
@@ -738,11 +738,11 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                 </form>
             </tr>
         </table>
-
+        <br>
     <?php } ?>
     <!-- Fim do loop PHP para exibir dados de reserva -->
 </div>
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->
