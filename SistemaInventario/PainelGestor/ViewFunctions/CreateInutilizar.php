@@ -14,41 +14,43 @@ require_once('../../ViewConnection/ConnectionInventario.php');
 
 // Verificar se os dados do usuário estão disponíveis na sessão
 if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
-    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=O usuário não está autenticado. Realize o login novamente");
+    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=" . urlencode("O usuário não está autenticado. Realize o login novamente"));
     exit(); // Termina a execução do script após redirecionamento
 }
 
-// Obter os dados do formulário e sanitizar
-$idProduto = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-$quantidadeInutilizada = filter_input(INPUT_POST, 'Inutilizar', FILTER_SANITIZE_NUMBER_INT);
-$dataInutilizar = filter_input(INPUT_POST, 'DataInutilizar', FILTER_SANITIZE_SPECIAL_CHARS);
-$observacao = filter_input(INPUT_POST, 'Observacao', FILTER_SANITIZE_SPECIAL_CHARS);
+// Função para sanitizar os dados
+function sanitizeData($conn, $data) {
+    // Remove espaços em branco no início e no fim
+    $data = trim($data);
+    // Remove barras invertidas adicionadas automaticamente
+    $data = stripslashes($data);
+    // Escapa caracteres especiais para evitar SQL Injection
+    $data = $conn->real_escape_string($data);
+    // Converte para maiúsculas
+    $data = mb_strtoupper($data, 'UTF-8');
+    return $data;
+}
+
+// Obter os dados do formulário e sanitizá-los
+$idProduto = isset($_POST['id']) ? sanitizeData($conn, $_POST['id']) : '';
+$quantidadeInutilizada = isset($_POST['Inutilizar']) ? sanitizeData($conn, $_POST['Inutilizar']) : '';
+$dataInutilizar = isset($_POST['DataInutilizar']) ? sanitizeData($conn, $_POST['DataInutilizar']) : '';
+$observacao = isset($_POST['Observacao']) ? sanitizeData($conn, $_POST['Observacao']) : '';
+
+// Obter os dados do usuário da sessão e sanitizá-los
+$idUsuario = sanitizeData($conn, $_SESSION['usuarioId']);
+$nomeUsuario = sanitizeData($conn, $_SESSION['usuarioNome']);
+$codigoPUsuario = sanitizeData($conn, $_SESSION['usuarioCodigoP']);
+
+// Definir valores fixos
+$operacao = "INUTILIZAR";
+$situacao = "INUTILIZADO";
 
 // Verificar se o campo observação excede 35 caracteres
 if (mb_strlen($observacao, 'UTF-8') > 35) {
     header("Location: ../ViewFail/FailCreateObservacaoInvalida.php?erro=" . urlencode("O campo observação excede o limite de 35 caracteres. Refaça a operação e tente novamente"));
     exit();
 }
-
-// Verificar se todos os campos obrigatórios estão presentes
-if (empty($idProduto) || empty($quantidadeInutilizada) || empty($dataInutilizar) || empty($observacao)) {
-    header("Location: ../ViewFail/FailCreateDadosIncompletos.php?erro=" . urlencode("Todos os campos do formulário são obrigatórios. Refaça a operação e tente novamente"));
-    exit();
-}
-
-// Obter os dados do usuário da sessão
-$idUsuario = $_SESSION['usuarioId'];
-$nomeUsuario = $_SESSION['usuarioNome'];
-$codigoPUsuario = $_SESSION['usuarioCodigoP'];
-
-// Definir valores fixos
-$operacao = "Inutilizar";
-$situacao = "Inutilizado";
-
-// Converter observação, operação e situação para letras maiúsculas usando mb_strtoupper
-$observacao = mb_strtoupper($observacao, 'UTF-8');
-$operacao = mb_strtoupper($operacao, 'UTF-8');
-$situacao = mb_strtoupper($situacao, 'UTF-8');
 
 // Verificar a conexão com o banco de dados
 if ($conn->connect_error) {
@@ -86,14 +88,14 @@ $conn->begin_transaction();
 
 try {
     // Verificar se há reservas para o produto
-    $sqlVerificaReserva = "SELECT RESERVADO FROM ESTOQUE WHERE IDPRODUTO = ?";
+    $sqlVerificaReserva = "SELECT RESERVADO_TRANSFERENCIA FROM ESTOQUE WHERE IDPRODUTO = ?";
     $stmtVerificaReserva = $conn->prepare($sqlVerificaReserva);
     $stmtVerificaReserva->bind_param("i", $idProduto);
     $stmtVerificaReserva->execute();
     $stmtVerificaReserva->bind_result($reservado);
     $stmtVerificaReserva->fetch();
     $stmtVerificaReserva->close();
-
+    
     $temReserva = $reservado > 0;
 
     // Consulta para obter a quantidade atual no estoque

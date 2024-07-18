@@ -639,7 +639,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
     <p id="blue-title-btn-painel">Log Reserva <i class="fa fa-star" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
 </div>
 
-<div class="container-fluid" style="width: 100%; height: 150px; overflow-y: auto; overflow-x: hidden; margin-top: 1%;">
+<div class="container-fluid" style="width: 100%; height: 300px; overflow-y: auto; overflow-x: hidden; margin-top: 1%;">
     <br>
 
     <!-- Início do código PHP para consultar dados de reserva -->

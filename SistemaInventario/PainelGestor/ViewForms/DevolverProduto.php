@@ -589,9 +589,7 @@ if ($resultado->num_rows === 0) {
     <!-- Fim do loop PHP para repetição de dados do material -->
 <?php } ?>
 <br>
-<!-- Start formulario sobrepor material -->
 <form method="POST" action="../ViewFunctions/CreateDevolver.php">
-
     <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
         <tr id="line-blue-table">
             <td id="colun-blue-table">
@@ -600,13 +598,12 @@ if ($resultado->num_rows === 0) {
             </td>
 
             <?php
-            // Conexão e consulta ao banco de dados
+            // Código PHP para conectar e obter dados do produto
             require_once('../../ViewConnection/ConnectionInventario.php');
 
-            // Obter o ID do produto da URL e filtrar como número inteiro
             $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-            // Preparar a consulta SQL usando prepared statement
+            // Consulta SQL para obter dados do produto
             $consulta = "SELECT 
                             p.IDPRODUTO, 
                             m.MATERIAL, 
@@ -638,40 +635,35 @@ if ($resultado->num_rows === 0) {
                         ORDER BY 
                             p.IDPRODUTO";
 
-            // Inicializar o statement
             $stmt = $conn->prepare($consulta);
 
-            // Verificar se o statement foi preparado com sucesso
             if ($stmt === false) {
                 die('Erro na preparação da consulta: ' . $conn->error);
             }
 
-            // Bind do parâmetro IDPRODUTO
             $stmt->bind_param('i', $id);
-
-            // Executar o statement
             $stmt->execute();
-
-            // Obter o resultado da consulta
             $resultado = $stmt->get_result();
 
-            // Verificar se a consulta retornou resultados
             if ($resultado->num_rows === 0) {
                 echo "Nenhum produto encontrado com o ID: $id";
-            } else { ?>
-                <!-- Start código PHP para repetição de listagem -->
-                <?php while ($dado = $resultado->fetch_assoc()) { ?>
+            } else {
+                while ($dado = $resultado->fetch_assoc()) {
+                    ?>
+                    <input type="hidden" name="id" value="<?php echo $dado['IDPRODUTO']; ?>"/>
                     <td id="colun-blue-table">
-                        <input id="blue-input-cdst" name="id" type="hidden" value="<?php echo $dado['IDPRODUTO']; ?>"/>
                         <p id="blue-title-listar">Estoque Atual</p>
-                        <input id="blue-input-cdst" type="text" value="<?php echo $dado['QUANTIDADE']; ?>" name="Quantidade" disabled/>
+                        <input type="text" id="blue-input-cdst" value="<?php echo $dado['QUANTIDADE']; ?>" name="Quantidade" disabled/>
                     </td>
-                <?php } ?>
-            <?php } ?>
+                    <?php
+                }
+            }
+            $stmt->close();
+            ?>
 
             <td id="colun-blue-table">
                 <p id="blue-title-listar">Estoque Desejado</p>
-                <input id="blue-input-cdst" type="number" value="" name="Devolver" autocomplete="off" required/>
+                <input id="blue-input-cdst" type="number" value="" name="Devolucao" autocomplete="off" required/>
             </td>
 
             <td id="colun-blue-table">
@@ -687,7 +679,6 @@ if ($resultado->num_rows === 0) {
     </table>
 
     <button type="submit" id="blue-btn-table-cadastro-produto">Devolver Produto <i class="fa fa-exchange" id="blue-icon-btn-painel"></i></button>
-
 </form>
 <!-- Espaços adicionais -->
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
