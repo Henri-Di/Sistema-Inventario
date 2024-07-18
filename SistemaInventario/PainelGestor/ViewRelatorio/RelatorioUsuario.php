@@ -497,12 +497,12 @@ if ($resultado = $conn->query($consulta)) {
         
         <td id="colun-blue-table">
             <p id="blue-title-listar-exibicao">Modificar</p> 
-            <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarProduto.php?id=<?php echo $row['IDUSUARIO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
+            <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarUsuario.php?id=<?php echo $row['IDUSUARIO'];?>';"><i class="fa fa-pencil" id="blue-icon-relatorio-produto" ></i></div> 
         </td>
 
         <td id="colun-blue-table">
             <p id="blue-title-listar-exibicao">Remover</p> 
-            <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteProduto.php?id=<?php echo $row['IDUSUARIO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
+            <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteUsuario.php?id=<?php echo $row['IDUSUARIO'];?>';"><i class="fa fa-trash" id="blue-icon-relatorio-produto"></i></div> 
         </td>
     </tr>
 </table>

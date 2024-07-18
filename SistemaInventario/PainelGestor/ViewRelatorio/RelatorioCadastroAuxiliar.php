@@ -425,9 +425,9 @@ document.oncontextmenu = function() { return false; }
     
     <button type="submit" id="blue-btn-relatorio-auxiliar" onclick="window.location.href='../ViewRelatorio/RelatorioFornecedor.php';">Fornecedor <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
 
-    <button type="submit" id="blue-btn-relatorio-auxiliar" onclick="window.location.href='../ViewRelatorio/RelatorioFornecedor.php';">Grupo <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    <button type="submit" id="blue-btn-relatorio-auxiliar" onclick="window.location.href='../ViewRelatorio/RelatorioGrupo.php';">Grupo <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
 
-    <button type="submit" id="blue-btn-relatorio-auxiliar" onclick="window.location.href='../ViewRelatorio/RelatorioFornecedor.php';">Localização <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
+    <button type="submit" id="blue-btn-relatorio-auxiliar" onclick="window.location.href='../ViewRelatorio/RelatorioLocalizacao.php';">Localização <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"></i></button>
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <!-- Rodapé da página -->

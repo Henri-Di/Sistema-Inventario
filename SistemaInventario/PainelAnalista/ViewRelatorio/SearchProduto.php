@@ -620,7 +620,7 @@ if ($stmt = $conn->prepare($consulta)) {
         <!-- Coluna com opção de remover o produto -->
         <td id="colun-blue-table">
             <p id="blue-title-listar-exibicao">Remover</p>
-            <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteProduto.php?id=<?php echo $row['IDPRODUTO']; ?>';">
+            <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $row['IDPRODUTO']; ?>';">
                 <i class="fa fa-trash" id="blue-icon-relatorio-produto"></i>
             </div>
         </td>

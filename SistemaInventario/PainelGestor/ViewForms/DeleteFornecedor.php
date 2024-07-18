@@ -580,7 +580,7 @@ document.oncontextmenu = function() { return false; }
         
     </table>
 
-    <button type="submit" id="blue-button-nova-senha" onclick="window.location.href='../ViewFunctions/CreateDeleteFornecedor.php?id=<?php echo $dado['IDFORNECEDOR'];?>';">Remover Fornecedor <i class="fa fa-trash"></i></button>
+    <button type="submit" id="blue-btn-table-cadastro-produto" onclick="window.location.href='../ViewFunctions/CreateDeleteFornecedor.php?id=<?php echo $dado['IDFORNECEDOR'];?>';">Remover Fornecedor <i class="fa fa-trash"></i></button>
     </form>
 </div>
 

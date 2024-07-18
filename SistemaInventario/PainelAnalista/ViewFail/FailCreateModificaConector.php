@@ -111,6 +111,7 @@ document.oncontextmenu = function() { return false; }
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
                 <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
             </ul>
             <!-- End menu-link page -->
 
@@ -166,7 +167,7 @@ document.oncontextmenu = function() { return false; }
                     .closebtn:hover {
                     color: #000000;
                     }
-                    </style> 
+                    </style>
     <!-- Alerta de erro -->
     <div class="alert">
         <!-- Botão de fechar -->
@@ -438,10 +439,10 @@ document.oncontextmenu = function() { return false; }
             }
         }
         ?>
-    </div> 
+    </div>
 <!-- Título da seção de cadastros auxiliares -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel"  style="font-size:13px;"></i></p>
+    <p id="blue-title-btn-painel">Cadastros Auxiliares <i class="fa fa-puzzle-piece" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -531,7 +532,7 @@ document.oncontextmenu = function() { return false; }
 </table>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel"  style="font-size:13px;"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Produto <i class="fa fa-plus-circle" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -720,7 +721,7 @@ document.oncontextmenu = function() { return false; }
 </form>
 <!-- Título da seção de cadastro de produto -->
 <div id="blue-line-title-btn-painel">
-    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel"  style="font-size:13px;"></i></p>
+    <p id="blue-title-btn-painel">Cadastro de Nota Fiscal  <i class="fa fa-cart-plus" id="blue-icon-btn-painel" style="font-size:13px;"></i></p>
 </div>
 
 <br>
@@ -909,7 +910,7 @@ document.oncontextmenu = function() { return false; }
     <!-- Botão de submit -->
     <button type="submit" id="blue-btn-table-cadastro-produto">Cadastrar Nota Fiscal <i class="fa fa-cart-plus" id="blue-icon-btn-painel"></i></button>
 </form>
-<br><br><br><br><br><br><br><br><br><br>
+<br><br>
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->

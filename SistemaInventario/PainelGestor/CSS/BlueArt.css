@@ -654,6 +654,7 @@ img {
   width: 20%; /* Largura do botão */
   height: auto; /* Altura automática */
   background-color:#f0f0f5;
+  color: #005ce6;
   opacity: 0.8;
   font-size: 12px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */

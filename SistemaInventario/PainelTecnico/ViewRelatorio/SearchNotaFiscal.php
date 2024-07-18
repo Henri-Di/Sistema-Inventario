@@ -526,13 +526,13 @@ document.oncontextmenu = function() { return false; }
                     </td>
                     <td id="colun-blue-table">
                         <p id="blue-title-listar-exibicao">Modificar</p> 
-                        <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/ModificarNotaFiscal.php?id=<?php echo $rows_search['ID'];?>';">
+                        <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $rows_search['ID'];?>';">
                             <i class="fa fa-pencil" id="blue-icon-relatorio-produto"></i>
                         </div> 
                     </td>
                     <td id="colun-blue-table">
                         <p id="blue-title-listar-exibicao">Remover</p> 
-                        <div id="blue-optios-config-dados" onclick="window.location.href='../ViewForms/DeleteNotaFiscal.php?id=<?php echo $rows_search['ID'];?>';">
+                        <div id="blue-optios-config-dados" onclick="window.location.href='../ViewFail/FailCreateSemPermissao.php?id=<?php echo $rows_search['ID'];?>';">
                             <i class="fa fa-trash" id="blue-icon-relatorio-produto"></i>
                         </div> 
                     </td>
