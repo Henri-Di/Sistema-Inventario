@@ -22,6 +22,9 @@ function redirecionarPorNivelAcesso($nivelAcesso) {
     }elseif ($nivelAcesso == 'ANALISTA') {
         header("Location: ../PainelAnalista/ViewForms/PainelAnalista.php");
         exit();
+    }elseif ($nivelAcesso == 'TÉCNICO') {
+        header("Location: ../PainelTecnico/ViewForms/PainelTecnico.php");
+        exit();
     }
     exit(); // Termina a execução do script após o redirecionamento
 }

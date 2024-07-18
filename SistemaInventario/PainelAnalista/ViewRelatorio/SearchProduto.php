@@ -141,6 +141,7 @@ document.oncontextmenu = function() { return false; }
                     </div>
 
                     <br>
+
                     <style>
                     .alerts {
                         padding: 5px;
@@ -405,13 +406,13 @@ document.oncontextmenu = function() { return false; }
             }
         }
         ?>
-    </div>   
+    </div> 
 <!-- Start container search material -->
 <div class="container" id="blue-search">
 <!-- Start form search material -->
 <form class="example" method="POST" action="../ViewRelatorio/SearchProduto.php">
 
-    <input type="text" id="input-blue-search" name="search" autocomplete="off">
+    <input type="search" id="input-blue-search" name="search" autocomplete="off">
 
     <button type="submit" id="icon-search-blue"><i class="fa fa-search"></i></button>
 
@@ -425,7 +426,7 @@ document.oncontextmenu = function() { return false; }
 
 <div id="blue-line-title-btn-painel">
 
-<p id="blue-title-btn-painel">Resultado Relatório Produto <i class="fa fa-cube" id="blue-icon-btn-painel"></i></p>
+<p id="blue-title-btn-painel">Resultado Relatório Produto <i class="fa fa-cube" id="blue-icon-btn-painel" style="font-size:12px;"></i></p>
 
 </div>
 
@@ -518,14 +519,28 @@ if ($stmt = $conn->prepare($consulta)) {
         while ($row = $resultado->fetch_assoc()) {
             // Verificar se o produto está em transferência pendente ou reserva
             $idProduto = $row['IDPRODUTO'];
-            $query_verifica_pendencia = "SELECT COUNT(*) AS pendencias FROM TRANSFERENCIA WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
-            $stmt_pendencia = $conn->prepare($query_verifica_pendencia);
-            $stmt_pendencia->bind_param("i", $idProduto);
-            $stmt_pendencia->execute();
-            $result_pendencia = $stmt_pendencia->get_result();
-            $row_pendencia = $result_pendencia->fetch_assoc();
-            $pendencias_transferencia = $row_pendencia['pendencias'];
 
+            // Verificar pendências de transferência para o produto de origem
+            $query_verifica_pendencia_origem = "SELECT COUNT(*) AS pendencias FROM TRANSFERENCIA WHERE IDPRODUTO_ORIGEM = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_pendencia_origem = $conn->prepare($query_verifica_pendencia_origem);
+            $stmt_pendencia_origem->bind_param("i", $idProduto);
+            $stmt_pendencia_origem->execute();
+            $result_pendencia_origem = $stmt_pendencia_origem->get_result();
+            $row_pendencia_origem = $result_pendencia_origem->fetch_assoc();
+            $pendencias_transferencia_origem = $row_pendencia_origem['pendencias'];
+            $stmt_pendencia_origem->close();
+
+            // Verificar pendências de transferência para o produto de destino
+            $query_verifica_pendencia_destino = "SELECT COUNT(*) AS pendencias FROM TRANSFERENCIA WHERE IDPRODUTO_DESTINO = ? AND SITUACAO = 'PENDENTE'";
+            $stmt_pendencia_destino = $conn->prepare($query_verifica_pendencia_destino);
+            $stmt_pendencia_destino->bind_param("i", $idProduto);
+            $stmt_pendencia_destino->execute();
+            $result_pendencia_destino = $stmt_pendencia_destino->get_result();
+            $row_pendencia_destino = $result_pendencia_destino->fetch_assoc();
+            $pendencias_transferencia_destino = $row_pendencia_destino['pendencias'];
+            $stmt_pendencia_destino->close();
+
+            // Verificar reservas pendentes para o produto
             $query_verifica_reserva = "SELECT COUNT(*) AS reservas FROM RESERVA WHERE IDPRODUTO = ? AND SITUACAO = 'PENDENTE'";
             $stmt_reserva = $conn->prepare($query_verifica_reserva);
             $stmt_reserva->bind_param("i", $idProduto);
@@ -533,11 +548,12 @@ if ($stmt = $conn->prepare($consulta)) {
             $result_reserva = $stmt_reserva->get_result();
             $row_reserva = $result_reserva->fetch_assoc();
             $reservas_pendentes = $row_reserva['reservas'];
+            $stmt_reserva->close();
 
             // Definir a cor do texto com base na quantidade e nas pendências
-            $quantidadeCor = '#ffa500'; // Laranja por padrão
+            $quantidadeCor = '#ff6600'; // Laranja por padrão
             if ($row['QUANTIDADE'] > 0) {
-                if ($pendencias_transferencia > 0 || $reservas_pendentes > 0) {
+                if ($pendencias_transferencia_origem > 0 || $pendencias_transferencia_destino > 0 || $reservas_pendentes > 0) {
                     $quantidadeCor = '#ff6600'; // Laranja se houver pendências
                 } else {
                     $quantidadeCor = '#009900'; // Verde se não houver pendências
@@ -545,7 +561,7 @@ if ($stmt = $conn->prepare($consulta)) {
             } else {
                 $quantidadeCor = '#ff0000'; // Vermelho se a quantidade for zero
             }
-?>        
+?>    
 <!-- Tabela para exibir os resultados da consulta -->
 <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
     <tr id="line-blue-table-hover">
@@ -670,7 +686,6 @@ if ($stmt = $conn->prepare($consulta)) {
 <?php } ?>
 <?php } ?>
 </div>
-<br><br>
 <!-- Rodapé da página -->
 <div class="container-fluid" id="footer-page">
     <!-- Texto do rodapé -->

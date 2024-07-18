@@ -1,6 +1,12 @@
 <?php
 // Iniciar sessão
 session_start();
+session_regenerate_id(true);
+
+header("Content-Security-Policy: default-src 'self'");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
 
 // Incluir o arquivo de conexão com o banco de dados
 require_once("../ViewConnection/ConnectionInventario.php");
@@ -15,6 +21,9 @@ function redirecionarPorNivelAcesso($nivelAcesso) {
         exit();
     } elseif ($nivelAcesso == 'ANALISTA') {
         header("Location: ../PainelAnalista/ViewForms/PainelAnalista.php");
+        exit();
+    }elseif ($nivelAcesso == 'TÉCNICO') {
+        header("Location: ../PainelTecnico/ViewForms/PainelTecnico.php");
         exit();
     }
     exit(); // Termina a execução do script após o redirecionamento
