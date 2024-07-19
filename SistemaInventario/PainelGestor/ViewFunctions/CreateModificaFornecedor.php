@@ -1,56 +1,123 @@
 <?php
-// Iniciar sessão se necessário
+// Iniciar sessão
 session_start();
-session_regenerate_id(true);
+session_regenerate_id(true); // Regenera o ID da sessão para aumentar a segurança
 
-// Adicionar cabeçalhos de segurança
-header("Content-Security-Policy: default-src 'self'");
+// Configurações de segurança da sessão
+ini_set('session.cookie_secure', '1'); // Apenas HTTPS
+ini_set('session.cookie_httponly', '1'); // Apenas HTTP
+ini_set('session.use_strict_mode', '1'); // Modo restrito de sessão
+ini_set('session.cookie_samesite', 'Strict'); // Protege contra CSRF
+ini_set('session.cookie_lifetime', '0'); // Cookie expira com a sessão
+ini_set('display_errors', '0'); // Desativar exibição de erros em produção
+
+// Verificar se o usuário está autenticado
+if (!isset($_SESSION['usuarioId']) || !isset($_SESSION['usuarioNome']) || !isset($_SESSION['usuarioCodigoP'])) {
+    // Se as informações do usuário não estiverem disponíveis na sessão, redireciona para a página de erro de autenticação
+    header("Location: ../ViewFail/FailCreateUsuarioNaoAutenticado.php?erro=" . urlencode("O usuário não está autenticado. Realize o login novamente"));
+    exit(); // Interrompe a execução do script para evitar que o código subsequente seja executado
+}
+
+// Adiciona cabeçalhos de segurança para proteger a página contra ataques
+
+header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';");
+// 'Content-Security-Policy' (CSP) define uma política de segurança de conteúdo que ajuda a prevenir a execução de scripts maliciosos e a proteger contra ataques como Cross-Site Scripting (XSS).
+// - 'default-src 'self'': Permite que recursos (scripts, estilos, etc.) sejam carregados apenas do mesmo domínio da página.
+// - 'script-src 'self'': Permite apenas scripts provenientes do mesmo domínio.
+// - 'style-src 'self'': Permite apenas estilos provenientes do mesmo domínio.
+// - 'img-src 'self' data:': Permite imagens do mesmo domínio e também imagens embutidas em base64 (data URIs).
+// - 'font-src 'self'': Permite fontes do mesmo domínio.
+// - 'connect-src 'self'': Permite conexões de dados (como AJAX) apenas para o mesmo domínio.
+// - 'frame-ancestors 'none'': Impede que a página seja exibida em frames ou iframes de outros sites, prevenindo ataques de clickjacking.
+
 header("X-Content-Type-Options: nosniff");
-header("X-Frame-Options: DENY");
-header("X-XSS-Protection: 1; mode=block");
+// 'X-Content-Type-Options' impede que o navegador "adivinhe" o tipo MIME dos arquivos. Garante que o navegador interprete o tipo de conteúdo conforme declarado pelo servidor, prevenindo ataques baseados na interpretação incorreta de tipos MIME.
 
-// Conexão e consulta ao banco de dados
-require_once('../../ViewConnection/ConnectionInventario.php');
+header("X-Frame-Options: DENY");
+// 'X-Frame-Options' impede que a página seja exibida em frames ou iframes de outros sites, ajudando a prevenir ataques de clickjacking. O valor 'DENY' bloqueia totalmente a exibição da página em frames.
+
+header("X-XSS-Protection: 1; mode=block");
+// 'X-XSS-Protection' ativa a proteção contra ataques de Cross-Site Scripting (XSS). No modo 'block', o navegador bloqueia qualquer script que pareça ser um ataque XSS, em vez de tentar escapar o código.
+
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
+// 'Strict-Transport-Security' (HSTS) instrui o navegador a usar apenas conexões HTTPS para o site por um período especificado. 
+// - 'max-age=31536000': Define o tempo que o navegador deve lembrar da política como um ano (31536000 segundos).
+// - 'includeSubDomains': Aplica a política a todos os subdomínios do domínio principal.
+
+header("Referrer-Policy: no-referrer");
+// 'Referrer-Policy' controla o envio de informações de referência ao fazer solicitações para outros sites.
+// - 'no-referrer': Impede o envio de informações de referência, aumentando a privacidade do usuário.
+
+header("Feature-Policy: vibrate 'none'; camera 'none'; microphone 'none'; geolocation 'self';");
+// 'Feature-Policy' permite controlar o acesso a APIs específicas e recursos do navegador.
+// - 'vibrate 'none'': Desativa o acesso à API de vibração.
+// - 'camera 'none'': Desativa o acesso à câmera.
+// - 'microphone 'none'': Desativa o acesso ao microfone.
+// - 'geolocation 'self'': Permite o acesso à localização apenas para o mesmo domínio.
+
+
+header("X-Permitted-Cross-Domain-Policies: none");
+// 'X-Permitted-Cross-Domain-Policies' controla o acesso a políticas de domínio cruzado. 
+// - 'none': Impede que agentes externos leiam informações da página, protegendo contra ataques onde agentes externos tentam acessar dados restritos.
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+// 'Cache-Control' controla como e por quanto tempo a página deve ser armazenada em cache pelos navegadores.
+// - 'no-store' e 'no-cache': Garantem que a página não seja armazenada em cache.
+// - 'must-revalidate': Indica que o navegador deve revalidar a página com o servidor antes de usá-la.
+// - 'max-age=0': Define o tempo máximo que a página pode ser armazenada como zero.
+
+header("Expect-CT: max-age=86400, enforce");
+// 'Expect-CT' protege contra certificados SSL inválidos ou expirados.
+// - 'max-age=86400': Define o tempo de cache como 24 horas (86400 segundos).
+// - 'enforce': Aplica a política de Expect-CT, exigindo que o certificado seja verificado conforme as regras.
+
+header("Access-Control-Allow-Origin: https://example.com");
+// 'Access-Control-Allow-Origin' controla quais domínios têm permissão para acessar os recursos do seu servidor.
+// - 'https://example.com': Substitua pelo domínio específico que deve ter acesso. Isso ajuda a evitar o acesso não autorizado de outros domínios.
+
+
+// Incluir o arquivo de conexão com o banco de dados
+require_once('../../ViewConnection/ConnectionInventario.php'); // Inclui o arquivo que estabelece a conexão com o banco de dados
 
 // Obter o ID do parâmetro GET e sanitizar
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT); // Obtém e sanitiza o ID passado na URL para evitar injeção de código
 
 // Verificar se o ID não está vazio e se os dados foram enviados via POST
 if (!empty($id) && isset($_POST['Fornecedor'])) {
-    // Sanitizar o valor do fornecedor
-    $fornecedor = $conn->real_escape_string($_POST['Fornecedor']);
+    // Sanitizar o valor do fornecedor usando real_escape_string para prevenir injeção de SQL
+    $fornecedor = $conn->real_escape_string($_POST['Fornecedor']); // Escapa caracteres especiais para evitar SQL Injection
 
     // Construir a consulta SQL preparada para atualização
-    $sql = "UPDATE FORNECEDOR SET FORNECEDOR = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
+    $sql = "UPDATE FORNECEDOR SET FORNECEDOR = ? WHERE id = ?"; // SQL para atualizar o valor do fornecedor baseado no ID
+    $stmt = $conn->prepare($sql); // Prepara a consulta SQL
 
     // Verificar se a preparação da consulta foi bem-sucedida
     if ($stmt) {
         // Bind dos parâmetros e execução da consulta preparada
-        $stmt->bind_param("si", $fornecedor, $id);
-        $stmt->execute();
+        $stmt->bind_param("si", $fornecedor, $id); // Associa os parâmetros à consulta SQL: o primeiro parâmetro é o valor do fornecedor e o segundo é o ID
+        $stmt->execute(); // Executa a consulta SQL
 
         // Verificar se a atualização foi bem-sucedida
         if ($stmt->affected_rows > 0) {
-            // Redirecionar para a página de sucesso se a atualização foi bem-sucedida
+            // Se o número de linhas afetadas for maior que 0, a atualização foi bem-sucedida
             header("Location: ../ViewSucess/SucessCreateModificaFornecedor.php?sucesso=" . urlencode("A alteração no cadastro do fornecedor foi realizada com sucesso"));
-            exit(); // Termina a execução do script após o redirecionamento
+            exit(); // Interrompe a execução do script após o redirecionamento
         } else {
-            // Redirecionar para a página de falha se nenhum registro foi atualizado
+            // Se nenhuma linha foi afetada, isso pode significar que o ID não corresponde a nenhum registro existente
             header("Location: ../ViewFail/FailCreateModificaFornecedor.php?erro=" . urlencode("Não foi possível realizar a alteração no cadastro do fornecedor. Refaça a operação e tente novamente"));
-            exit(); // Termina a execução do script após o redirecionamento
+            exit(); // Interrompe a execução do script após o redirecionamento
         }
     } else {
-        // Redirecionar para a página de falha se houver erro na preparação da consulta
+        // Se a preparação da consulta falhar, redirecionar para a página de erro
         header("Location: ../ViewFail/FailCreateModificaFornecedor.php?erro=" . urlencode("Não foi possível realizar a alteração no cadastro do fornecedor. Refaça a operação e tente novamente"));
-        exit(); // Termina a execução do script após o redirecionamento
+        exit(); // Interrompe a execução do script após o redirecionamento
     }
 } else {
-    // Redirecionar para a página de falha se o ID estiver vazio ou se o campo Fornecedor não foi enviado via POST
+    // Se o ID estiver vazio ou o campo Fornecedor não for enviado, redirecionar para a página de erro
     header("Location: ../ViewFail/FailCreateModificaFornecedor.php?erro=" . urlencode("Não foi possível realizar a alteração no cadastro do fornecedor. Refaça a operação e tente novamente"));
-    exit(); // Termina a execução do script após o redirecionamento
+    exit(); // Interrompe a execução do script após o redirecionamento
 }
 
-// Fechar a conexão
-$conn->close();
+// Fechar a conexão com o banco de dados
+$conn->close(); // Fecha a conexão com o banco de dados para liberar os recursos
 ?>
