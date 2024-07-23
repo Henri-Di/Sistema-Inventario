@@ -1,10 +1,23 @@
 /* Reset de margin e padding */
 * {
-  margin: 0;
-  padding: 0;
-  text-rendering: unset;
-  font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte para o texto do botão */
-  box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho dos elementos */
+  margin: 0; /* Remove as margens de todos os elementos */
+  padding: 0; /* Remove os espaçamentos internos de todos os elementos */
+  font-family: 'Sofia Sans Extra Condensed'; /* Define a fonte padrão */
+  box-sizing: border-box; /* Inclui padding e border no tamanho total dos elementos */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #005ce6; /* Define a cor do fundo da trilha do scrollbar */
+}
+::-webkit-scrollbar {
+  width: 3px; /* Define a largura do scrollbar vertical */
+  height: 3px; /* Define a altura do scrollbar horizontal */
+  background: #005ce6; /* Define a cor do fundo do scrollbar */
+  opacity: 0.7; /* Define a opacidade do scrollbar */
+}
+::-webkit-scrollbar-thumb {
+  background: #005ce6; /* Define a cor da "thumb" do scrollbar (a parte que se move) */
+  opacity: 0.7; /* Define a opacidade da "thumb" do scrollbar */
 }
 
 /* Estilo de fundo para o corpo da página */
@@ -164,16 +177,21 @@ body {
 
 /* Estilo para os links da barra de navegação */
 #menu-blue {
-  background-color: #f0f0f5; /* Cor do fundo do texto */
+  background-color: #f0f0f5; /* Fundo transparente */
   color: #005ce6; /* Cor do texto */
-  width: 85%; /* Largura do link */
+  width: 85.5%; /* Largura do link */
+  height: auto;
+  padding: 10px;
   font-weight: bold; /* Negrito */
-  font-size: 12px; /* Tamanho da fonte */
-  border: 1px solid #005ce6; /* Borda ao redor do link */
-  text-align: center; /* Centraliza o texto */
-  margin-left: 4%; /* Espaçamento à esquerda */
+  font-size: 14px; /* Tamanho da fonte */
+  border: 1px linear #005ce6; /* Borda ao redor do link */
+  text-align: left center; /* Centraliza o texto */
+  border: 1px solid #005ce6;
+  display: inline-block;
+  margin-left: 5%; /* Espaçamento à esquerda */
+  overflow: hidden;
   transition: background-color ease 0.7s; /* Transição suave para a cor de fundo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave ao redor do elemento */
 }
 
 /* Efeito hover para os links da barra de navegação */
@@ -181,7 +199,7 @@ body {
   background-color: #005ce6; /* Cor de fundo ao passar o mouse */
   color: #ffffff; /* Cor do texto ao passar o mouse */
   font-weight: bold; /* Negrito */
-  opacity: 0.7; /* Transparência ao passar o mouse */
+  opacity: 0.8; /* Transparência ao passar o mouse */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
 }
 
@@ -284,7 +302,7 @@ img {
     text-align: left; /* Alinhamento à esquerda */
     color: #ff6600; /* Cor do texto */
     font-weight: bold;
-    font-size: 11px; /* Tamanho da fonte */
+    font-size: 14px; /* Tamanho da fonte */
   }
   
 
@@ -329,13 +347,8 @@ img {
     text-align: left; /* Alinhamento à esquerda */
     color: #005ce6; /* Cor do texto */
     font-weight: bold;
-    font-size: 16px; /* Tamanho da fonte */
+    font-size: 14px; /* Tamanho da fonte */
   }
-
-  /* Estilo para o ícone dos botões na sessão do painel administrativo */
-  #blue-icon-btn-painel {
-      font-size: 15px; /* Tamanho da fonte */
-    }
 
 /* Estilo para a linha das tabelas com efeito de hover */
 #line-blue-table-hover {
@@ -358,11 +371,11 @@ img {
 }
 
 #blue-table-cadastro-auxiliar td {
-  padding:5px; /* Espaçamento interno */
-  overflow: hidden; /* Esconder conteúdo excedente */
+  padding:6px; /* Espaçamento interno */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
   white-space: nowrap; /* Não quebrar linhas */
 }
+
 
 /* Media Queries para dispositivos menores */
 @media (max-width: 1200px) {
@@ -480,7 +493,7 @@ img {
   border-radius: 3px; /* Borda arredondada */
   border: 1px solid #005ce6; /* Borda sólida azul */
   transition: background-color ease 0.5s; /* Transição suave de cor de fundo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave ao redor do elemento */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave ao redor do elemento */
 }
   
 /* Efeito hover para o botão de cadastro auxiliar */
@@ -512,7 +525,7 @@ img {
     width: 20%; /* Largura */
     padding: 3px;
     color: #005ce6; /* Cor do texto */
-    font-size: 11px; /* Tamanho da fonte */
+    font-size: 13px; /* Tamanho da fonte */
     font-weight: bold; /* Texto em negrito */
     border-radius: 3px; /* Borda arredondada */
     border: 1px solid #005ce6; /* Borda sólida azul */
@@ -637,16 +650,9 @@ img {
     border-bottom: 1px solid #005ce6; /* Linha sólida azul abaixo do título */
   }
   
-  /* Estilo para o título de botão da pagina acrescentar,dimiuir,sobrepor,reservar e etc */
-  #blue-title-btn-painel {
-    text-align: left; /* Alinhamento à esquerda */
-    color: #005ce6; /* Cor do texto */
-    font-size: 13px; /* Tamanho da fonte */
-  }
-
   /* Estilo para o ícone dos botões da pagina acrescentar,dimiuir,sobrepor,reservar e etc */
   #blue-icon-btn-painel {
-    font-size: 9px; /* Tamanho da fonte */
+    font-size: 12px; /* Tamanho da fonte */
   }
 
 /* Estilo para o botão 'Nova Senha' */
@@ -830,7 +836,7 @@ img {
   font-weight: bold; /* Texto em negrito */
   text-rendering: unset;
   text-align: center; /* Alinhamento central do texto */
-  font-size: 0.60em; /* Tamanho da fonte usando uma unidade relativa */
+  font-size: 0.55em; /* Tamanho da fonte usando uma unidade relativa */
   padding: 0.5em; /* Espaçamento interno para manter proporção */
 }
 
@@ -922,13 +928,13 @@ img {
   width: 100%; /* Largura total */
   margin-top: 1%; /* Margem superior */
   margin-left: 0%;
-  border: 1px solid #33334d;
+  border: 1px solid #000000;
   table-layout: auto; /* Permitir que a largura das células seja ajustada automaticamente */
 }
 
 /* Estilo para as células da tabela */
 #blue-table-cadastro-auxiliar-print td {
-  padding: 10px; /* Espaçamento interno */
+  padding: 7px; /* Espaçamento interno */
   overflow: hidden; /* Esconder conteúdo excedente */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
   white-space: nowrap; /* Não quebrar linhas */
@@ -969,11 +975,11 @@ img {
 }
 
 #line-blue-table-print{
-border: 1px solid #33334d;  
+border: 1px solid #000000;  
   }
 
-  #colun-blue-table-print{
-border: 1px solid #33334d;
+#colun-blue-table-print{
+border: 1px solid #000000;
   }
 
 #blue-title-listar-print{
@@ -983,7 +989,7 @@ border: 1px solid #33334d;
   font-size: 15px; /* Tamanho da fonte */
   font-weight: bold; /* Texto em negrito */
   margin-top: 0.5px; /* Margem superior */
-  border: 1px solid #33334d; /* Borda sólida */
+  border: 1px solid #000000; /* Borda sólida */
   text-align: center; /* Alinhamento central do texto */
 }
 
@@ -1001,7 +1007,7 @@ border: 1px solid #33334d;
   border-top-color: transparent; /* Remove a cor da borda superior */
   border-left-color: transparent; /* Remove a cor da borda esquerda */
   border-right-color: transparent; /* Remove a cor da borda direita */
-  border-bottom-color: #666699; /* Define a cor da borda inferior */
+  border-bottom-color: #000000; /* Define a cor da borda inferior */
 }
 
 

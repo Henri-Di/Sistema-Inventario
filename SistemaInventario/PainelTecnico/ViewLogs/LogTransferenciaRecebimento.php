@@ -106,11 +106,13 @@ document.oncontextmenu = function() { return false; }
             </div>
 
             <!-- Start menu-link page -->
+            <nav>
             <ul class="nav nav-pills nav-stacked">
-                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelTecnico.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelTecnico.php"><i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;margin-right:1%;font-size:15px;"></i> Painel Administrativo</a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php"><i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;margin-right:1%;font-size:15px;"></i>Relatório Produto</a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php"><i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;margin-right:1%;font-size:15px;"></i>Relatório Nota Fiscal</a></li><br>
             </ul>
+            </nav>
             <!-- End menu-link page -->
 
             <br>

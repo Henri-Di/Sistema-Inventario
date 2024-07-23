@@ -106,13 +106,15 @@ document.oncontextmenu = function() { return false; }
             </div>
 
             <!-- Start menu-link page -->
+            <nav>
             <ul class="nav nav-pills nav-stacked">
-                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php">Painel Administrativo<i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php">Relatório Cadastro Auxiliar<i class="fa fa-puzzle-piece " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php">Relatório Produto<i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php">Relatório Nota Fiscal<i class="fa fa-cart-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
-                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php">Relatório Usuário<i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;"></i></a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewForms/PainelAdministrativo.php"><i class="fa fa-user " id="blue-icon-btn-painel" style="margin-left:1%;margin-right:1%;font-size:15px;"></i> Painel Administrativo</a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioCadastroAuxiliar.php"><i class="fa fa-puzzle-piece " id="blue-icon-btn-painel"style="margin-left:1%;margin-right:1%;font-size:15px;"></i>Relatório Cadastro Auxiliar</a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioProduto.php"><i class="fa fa-cube " id="blue-icon-btn-painel" style="margin-left:1%;margin-right:1%;font-size:15px;"></i>Relatório Produto</a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioNotaFiscal.php"><i class="fa fa-cart-plus " id="blue-icon-btn-painel"style="margin-left:1%;margin-right:1%;font-size:15px;"></i>Relatório Nota Fiscal</a></li><br>
+                <li id="list-blue"><a id="menu-blue" href="../ViewRelatorio/RelatorioUsuario.php"><i class="fa fa-user-plus " id="blue-icon-btn-painel" style="margin-left:1%;margin-right:1%;font-size:15px;"></i>Relatório Usuário</a></li><br>
             </ul>
+            </nav>
             <!-- End menu-link page -->
 
             <br>
@@ -878,7 +880,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                                     Imprimir Saída
                                 </div>
                                 <!-- Fim do contêiner do título do formulário de entrada -->
-                                <button type="button" id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/DocumentoSaidaTransferencia.php?id=<?php echo $row['ID']; ?>';"><i class="fa fa-print"></i></button><br>
+                                <button type="button" id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/DocumentoSaidaTransferencia2.php?id=<?php echo $row['ID']; ?>';"><i class="fa fa-print"></i></button><br>
                             </td>
 
                         </form>

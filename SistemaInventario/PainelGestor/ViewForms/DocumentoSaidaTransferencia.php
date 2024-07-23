@@ -1,4 +1,4 @@
-  <!-- Início da sessão PHP -->
+<!-- Início da sessão PHP -->
 <?php session_start(); ?>
 
 <!-- Início do documento HTML -->
@@ -78,12 +78,12 @@
 
             <!-- Container fluid secundário -->
             <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
-                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Sáida de Material</p>
+                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Saída de Material</p>
                 <br>
                 <input type="checkbox" name="Entrada" disabled style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;" disabled>Entrada</p>
                 <input type="checkbox" name="Saida" disabled style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
                 <br>
-                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
+                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Saída</p>
                 <!-- PHP para conexão e consulta ao banco de dados -->
                 <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
