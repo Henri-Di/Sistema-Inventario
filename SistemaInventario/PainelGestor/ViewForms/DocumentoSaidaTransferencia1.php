@@ -47,25 +47,145 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
             /* Ajustar tamanho do conteúdo */
             main {
                 width: 100%;
-                margin: 0;
-                padding: 0;
+                margin-top: 20px;
             }
-            table {
-                border: 1px solid #000;
-            }
+        }
+
+        #logo-print{
+                display: flex; 
+                justify-content: left; 
+                align-items: left; 
+        }
+
+        #box-blue-right{
+                float: right;
+                width: 12vh;
+                border: 1px solid #000000;
+                padding: 10px;
+                text-align: left;
+                font-size: 1.5vh;
+                font-weight: bold;
+        }
+
+        #blue-box-print{
+                margin: 50px 0px 0px;
+        }
+
+        #blue-title-print-2{
+                font-size:  20px;
+                font-weight:  bold;
+                text-align:  center;
+                color:  #000000;
+        }
+
+        #blue-checkbox{
+                padding:  5px;
+                float:  left;
+        }
+
+
+        #blue-checkbox-2{
+                padding:  5px;
+                float:  left;
+                margin:  4px 3px 0px;
+        }
+
+
+        #blue-text-ckeckbox{
+                font-size: 18px;
+                float: left;
+                margin: 0px 5px 0px;
+                color: #000000;
+        }
+
+        #blue-text-checkbox-2{
+                font-size: 18px;
+                float: left;
+                margin: 0px 5px 0px;
+                color: #000000;
+        }
+
+        #blue-sub-title{
+                font-size:  15px;
+                font-weight:  bold;
+                text-align:  left;
+                color:  #000000;
+        }
+
+        #blue-obs{
+                color:#000000;
+                font-weight:bold;
+        }
+
+        #blue-assinatura-1{
+                border-top:  none; 
+                border-left:  none;
+                border-right:  none;
+                border-bottom:  1px solid #33334d;
+                outline:  none;
+                width:  45%;
+                color:  #000000;
+                margin-top:  15%;
+                float:  right;
+        }
+
+        #blue-text-assinatura-1{
+                font-weight:  bold;
+                color:  #000000;
+                float:  right;
+                margin-top:  18%;
+                margin-right:  -35%;
+        }
+
+        #blue-assinatura-2{
+                border-top:  none;
+                border-left:  none;
+                border-right:  none;
+                border-bottom:  1px solid #000000;
+                outline:  none;
+                width:  45%;
+                color:  #000000;
+                margin-top: 15%;
+                float:  right;
+                margin-right:  10%;
+        }
+
+        #blue-text-assinatura-2{
+                font-weight:  bold;
+                color:  #000000;
+                float:  right;
+                margin-right:  65%;
+        }
+
+        #blue-assinatura-3{
+                border-top:  none;
+                border-left:  none;
+                border-right:  none;
+                border-bottom:  1px solid #000000;
+                outline:  none;
+                width:  45%;
+                color:  #000000;
+                margin-top:  15%;
+                float:  right;
+        }
+
+        #blue-text-assinatura-3{
+                font-weight:  bold;
+                color:  #000000;
+                float:  right;
+                margin-top:  18%;
+                margin-right:  -35%;
         }
     </style>
 </head>
 <!-- Fim do cabeçalho da página -->
 
-<!-- Corpo da página -->
-<body id="blue-body-documento-transferencia" style="font-family:'Sofia Sans Extra Condensed';">
-
-    <!-- Container fluid principal -->
-    <div class="container-fluid">
+<body id="blue-body-transferencia">
+            <!-- Container fluid principal -->
+    <div class="container">
         <!-- Conteúdo principal -->
         <main>
-            <div class="container-fluid" style="display: flex; justify-content: left; align-items: left; margin-top: -15px;margin-left:-1%;">
+            <div class="container"  id="logo-print">
         <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 192.756 192.756" style="border:none;">
             <g fill-rule="evenodd" clip-rule="evenodd">
                 <path fill="#fff" d="M0 0h192.756v192.756H0V0z"/>
@@ -75,19 +195,21 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
             </g>
         </svg>
     </div>
-         
-    <div class="container-fuid" style="float:right;margin-right:1%;border:0.5px solid #33334d;padding:10px;font-size:12px;font-weight:bold;margin-top:4%;">Grau de Sigilo<br>#CONFIDENCIAL 05</div>
+    
+    <div class="container" id="box-blue-right">Grau de Sigilo #CONFIDENCIAL 05</div>
+    
+    <br>
 
-            <!-- Container fluid secundário -->
-            <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
-                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Saída de Material</p>
-                <br>
-                <input type="checkbox" name="Entrada" disabled style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;" disabled>Entrada</p>
-                <input type="checkbox" name="Saida" disabled style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
-                <br>
-                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Saída</p>
-                <!-- PHP para conexão e consulta ao banco de dados -->
-                <?php
+    <!-- Container fluid secundário -->
+    <div class="container" id="blue-box-print">
+        <p id="blue-title-print-2">Autorização de Entrada/Saída de Material</p>
+            <br>
+                <input type="checkbox" name="Entrada" id="blue-checkbox" disabled><p id="blue-text-ckeckbox">Entrada</p>
+                <input type="checkbox" name="Saida"  id="blue-checkbox-2" disabled checked><p id="blue-text-checkbox-2">Saída</p>
+            <br><br>
+
+    <!-- PHP para conexão e consulta ao banco de dados -->
+    <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
 
                 // Verifica a conexão com o banco de dados
@@ -193,14 +315,19 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                                     </td>
                                 </tr>
                             </table>
-                            <p style="color:#33334d;font-weight:bold;">Observação: Inutilizar os espações em branco após preenchimento.</p>
-                            <div class="container-fluid">
-                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" disabled  style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
-                            <p style="font-weight:bold;color:#33334d;float:right;margin-top:18%;margin-right:-35%;">Assinatura do empregado sob carimbo</p>
-                            <input type="text" name="AssinaturaIdentificacaoPortador" disabled  style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;margin-right:10%;"/>
-                            <p style="font-weight:bold;color:#33334d;float:right;margin-top:0%;margin-right:65%;">Assinatura e indentificação do portador</p>
-                            <input type="text" name="AssinaturaMatriculaVigilante" disabled  style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
-                            <p style="font-weight:bold;color:#33334d;float:right;margin-top:18%;margin-right:-35%;">Assinatura e matricula do vigilante</p>
+
+                            <p id="blue-obs">Observação: Inutilizar os espações em branco após preenchimento.</p>
+                           
+                            <div class="container">
+
+                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" id="blue-assinatura-1" disabled/>
+                            <p id="blue-text-assinatura-1">Assinatura do empregado sob carimbo</p>
+                            
+                            <input type="text" name="AssinaturaIdentificacaoPortador" id="blue-assinatura-2" disabled/>
+                            <p id="blue-text-assinatura-2">Assinatura e indentificação do portador</p>
+                            
+                            <input type="text" name="AssinaturaMatriculaVigilante" id="blue-assinatura-3" disabled/>
+                            <p id="blue-text-assinatura-3">Assinatura e matricula do vigilante</p>
                             </div>
                             <!-- Fim da tabela de exibição dos dados -->
                             <!-- Botão para impressão -->
@@ -226,11 +353,8 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                 ?>
                 <!-- Fim do PHP para conexão e consulta ao banco de dados -->
             </div>
-            <!-- Fim do container fluid secundário -->
         </main>
         <!-- Fim do conteúdo principal -->
-    </div>
-    <!-- Fim do container fluid principal -->
 </body>
 <!-- Fim do corpo da página -->
 

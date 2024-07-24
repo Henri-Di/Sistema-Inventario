@@ -44,21 +44,27 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 // Definindo qual documento será apresentado
                 if ($nome_datacenter == 'CTC') {
                     // Documento 1 para CTC
-                    header('Location: DocumentoSaidaTransferencia1.php?id_transferencia=' . $id_transferencia);
+                    header('Location: ../ViewForms/DocumentoSaidaTransferencia1.php?id_transferencia=' . $id_transferencia);
+                    exit();
                 } elseif ($nome_datacenter == 'DTC') {
                     // Documento 2 para DTC
-                    header('Location: DocumentoSaidaTransferencia2.php?id_transferencia=' . $id_transferencia);
+                    header('Location: ../ViewForms/DocumentoSaidaTransferencia2.php?id_transferencia=' . $id_transferencia);
+                    exit();
                 } else {
-                    echo "Datacenter de origem não identificado.";
+                    header("Location: ../ViewFail/FailCreateDataCenterNaoIdentificadoImpressao.php?erro=" . urlencode("O datacenter de origem da transferência não foi identificado. Tente novamente"));
+                    exit();
                 }
             } else {
-                echo "Nome do datacenter de origem não encontrado.";
+                header("Location: ../ViewFail/FailCreateNomeDataCenterOrigemNaoIdentificadoImpressao.php?erro=" . urlencode("O nome do datacenter de origem não foi identificado. Tente novamente"));
+                    exit();
             }
         } else {
-            echo "Datacenter do produto de origem não encontrado.";
+            header("Location: ../ViewFail/FailCreateProdutoDataCenterOrigemNaoIdentificadoImpressao.php?erro=" . urlencode("O datacenter do produto de origem não foi identificado. Tente novamente"));
+            exit();
         }
     } else {
-        echo "Transferência não encontrada.";
+        header("Location: ../ViewFail/FailCreateTransferenciaNaoIdentificadaImpressao.php?erro=" . urlencode("A transferência não foi localizada para gerar o documento de saída. Tente novamente"));
+        exit();
     }
 
     // Fechando as conexões e a declaração
@@ -67,6 +73,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $stmt_nome_datacenter->close();
     $conn->close();
 } else {
-    echo "ID da transferência inválido ou não fornecido.";
+    header("Location: ../ViewFail/FailCreateCodigoTransferenciaNaoIdentificadaImpressao.php?erro=" . urlencode("O código da transferência é invalído. Tente novamente"));
+    exit();
 }
 ?>
