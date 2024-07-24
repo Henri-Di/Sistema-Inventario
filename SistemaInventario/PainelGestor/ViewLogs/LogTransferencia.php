@@ -769,7 +769,6 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                 <table class="table table-bordered" id="blue-table-cadastro-auxiliar">
                     <tr>
                         <form method="POST" action="">
-
                             <td id="colun-blue-table">
                                 <div id="blue-title-listar">
                                     N° WO
@@ -880,7 +879,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                                     Imprimir Saída
                                 </div>
                                 <!-- Fim do contêiner do título do formulário de entrada -->
-                                <button type="button" id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/DocumentoSaidaTransferencia2.php?id=<?php echo $row['ID']; ?>';"><i class="fa fa-print"></i></button><br>
+                                <button type="button" id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/ImpressaoTransferencia.php?id=<?php echo $row['ID']; ?>';"><i class="fa fa-print"></i></button><br>
                             </td>
 
                         </form>

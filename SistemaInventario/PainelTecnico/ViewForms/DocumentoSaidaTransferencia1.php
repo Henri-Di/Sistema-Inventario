@@ -1,6 +1,8 @@
-<!-- Início da sessão PHP -->
-<?php session_start(); ?>
-
+<?php
+// Iniciar sessão
+session_start();
+session_regenerate_id(true); // Regenera o ID da sessão para aumentar a segurança 
+?>
 <!-- Início do documento HTML -->
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -94,7 +96,7 @@
                 }
 
                 // Obtém o ID da transferência a partir da requisição
-                $id = $_GET['id'] ?? '';
+                $id = $_GET['id_transferencia'] ?? '';
 
                 // Prepara a consulta SQL usando prepared statements
                 $sql = "SELECT 

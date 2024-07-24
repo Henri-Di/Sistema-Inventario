@@ -1,6 +1,8 @@
-  <!-- Início da sessão PHP -->
-<?php session_start(); ?>
-
+<?php
+// Iniciar sessão
+session_start();
+session_regenerate_id(true); // Regenera o ID da sessão para aumentar a segurança 
+?>
 <!-- Início do documento HTML -->
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -78,12 +80,12 @@
 
             <!-- Container fluid secundário -->
             <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
-                <p style="font-size:15px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Sáida de Material</p>
+                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Saída de Material</p>
                 <br>
-                <input type="checkbox" name="Entrada" style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;">Entrada</p>
-                <input type="checkbox" name="Entrada" style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
+                <input type="checkbox" name="Entrada" disabled style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;" disabled>Entrada</p>
+                <input type="checkbox" name="Saida" disabled style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
                 <br>
-                <p style="font-size:20px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
+                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Saída</p>
                 <!-- PHP para conexão e consulta ao banco de dados -->
                 <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -94,7 +96,7 @@
                 }
 
                 // Obtém o ID da transferência a partir da requisição
-                $id = $_GET['id'] ?? '';
+                $id = $_GET['id_transferencia'] ?? '';
 
                 // Prepara a consulta SQL usando prepared statements
                 $sql = "SELECT 
@@ -110,7 +112,8 @@
                             G.GRUPO AS NOME_GRUPO_ORIGEM,
                             L.LOCALIZACAO AS NOME_LOCALIZACAO_ORIGEM,
                             T.QUANTIDADE,
-                            T.SITUACAO
+                            T.SITUACAO,
+                            T.NUMWO
                         FROM 
                             TRANSFERENCIA T
                         JOIN 
@@ -160,39 +163,43 @@
                             <!-- Tabela de exibição dos dados -->
                             <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
                                 <tr id="line-blue-table-print">
+                                <td id="colun-blue-table">
+                                        <div id="blue-title-listar-print">WO</div>
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NUMWO']; ?>" disabled />
+                                    </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Material</div>
-                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_MATERIAL_ORIGEM']; ?>" />
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_MATERIAL_ORIGEM']; ?>" disabled />
                                     </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Metragem</div>
-                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['METRAGEM_PRODUTO_DESTINO']; ?>" />
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['METRAGEM_PRODUTO_DESTINO']; ?>" disabled />
                                     </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Modelo</div>
-                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['MODELO_PRODUTO_ORIGEM']; ?>" />
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['MODELO_PRODUTO_ORIGEM']; ?>" disabled />
                                     </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Quantidade</div>
-                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['QUANTIDADE']; ?>" />
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['QUANTIDADE']; ?>" disabled />
                                     </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Data de Emissão</div>
-                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $dateformated; ?>" />
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $dateformated; ?>" disabled/>
                                     </td>
                                     <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">Destino</div>
-                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_DATACENTER_DESTINO']; ?>" />
+                                        <input type="text" id="blue-input-cdst-print" value="<?php echo $row['NOME_DATACENTER_DESTINO']; ?>"  disabled/>
                                     </td>
                                 </tr>
                             </table>
                             <p style="color:#33334d;font-weight:bold;">Observação: Inutilizar os espações em branco após preenchimento.</p>
                             <div class="container-fluid">
-                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
+                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" disabled  style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
                             <p style="font-weight:bold;color:#33334d;float:right;margin-top:18%;margin-right:-35%;">Assinatura do empregado sob carimbo</p>
-                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;margin-right:10%;"/>
+                            <input type="text" name="AssinaturaIdentificacaoPortador" disabled  style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;margin-right:10%;"/>
                             <p style="font-weight:bold;color:#33334d;float:right;margin-top:0%;margin-right:65%;">Assinatura e indentificação do portador</p>
-                            <input type="text" name="AssinaturaEmpregadoSobCarimbo" style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
+                            <input type="text" name="AssinaturaMatriculaVigilante" disabled  style="border-top:none;border-left:none;border-right:none;border-bottom:1px solid #33334d;outline:none;width:45%;color:#33334d;margin-top:15%;float:right;"/>
                             <p style="font-weight:bold;color:#33334d;float:right;margin-top:18%;margin-right:-35%;">Assinatura e matricula do vigilante</p>
                             </div>
                             <!-- Fim da tabela de exibição dos dados -->

@@ -926,15 +926,14 @@ img {
 /* Estilo para o contêiner da tabela auxiliar de cadastro */
 #blue-table-cadastro-auxiliar-print {
   width: 100%; /* Largura total */
-  margin-top: 1%; /* Margem superior */
-  margin-left: 0%;
+  height: auto;
   border: 1px solid #000000;
   table-layout: auto; /* Permitir que a largura das células seja ajustada automaticamente */
 }
 
 /* Estilo para as células da tabela */
 #blue-table-cadastro-auxiliar-print td {
-  padding: 7px; /* Espaçamento interno */
+  padding: 5px; /* Espaçamento interno */
   overflow: hidden; /* Esconder conteúdo excedente */
   text-overflow: ellipsis; /* Adicionar elipses (...) para textos longos */
   white-space: nowrap; /* Não quebrar linhas */

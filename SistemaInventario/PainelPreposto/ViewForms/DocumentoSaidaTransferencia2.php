@@ -34,54 +34,9 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap">
     <!-- Título da página -->
     <title>Sistema de Inventário - Impressão Documento de Saída</title>
+    <!-- Estilos específicos para impressão -->
     <style>
-        .blue-body-transferencia{
-            padding: 0;
-            margin: 0;    
-        }
-
-        main {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            margin-top: 20px;
-        }
-        
-        .row{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .col{
-            float:left;
-            width: 100%;
-            height: auto;
-            margin: 0px 50px 0px;
-            justify-content: center;
-            align-items: center;
-            background-color: transparent;
-        }
-
-        #title-print{
-            width: 100%;
-            height: auto;
-        }
-
-        #title-document{
-            width: 100%;
-            height: auto;
-            padding: 0.5vh;
-            font-weight: bold;
-            font-size: 16px;
-            color: #000000;
-            text-align: center;
-            border:1px solid #000000
-        }
-
-         @media print {
+        @media print {
             /* Ocultar o botão de impressão */
             button {
                 display: none;
@@ -90,28 +45,33 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
             header, footer {
                 display: none;
             }
+            /* Ajustar tamanho do conteúdo */
+            main {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
         }
     </style>
 </head>
-<body class="blue-body-transferencia">
+<!-- Fim do cabeçalho da página -->
+
+<!-- Corpo da página -->
+<body id="blue-body-documento-transferencia" style="font-family:'Sofia Sans Extra Condensed';">
+
     <!-- Container fluid principal -->
-    <div class="container-fluid" class="print-only">
+    <div class="container-fluid">
         <!-- Conteúdo principal -->
         <main>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <span>
-                        <img src="../../Images/BancoBrasil.png" style="width: 50%; height: auto; padding: 0px;" />
-                    </span>
-                </div> 
-                <div class="col">
-                    <span>
-                        <img src="../../Images/GBT.jpg" style="width: 60%; height: auto; padding: 0px;" />
-                    </span>
-                </div>
-                <div class="col">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 192.756 192.756" style="border:none;">
+            <div class="container-fluid" style="display: flex; justify-content: right; align-items: right; margin-top: 0px;margin-left:-1%;">
+            <div  style="margin-top: 2.5%; margin-left: 2%;">
+            <img src="../../Images/BancoBrasil.png" style="width: 120px;height: 120px;padding: 0px;" />         
+            </div>
+            <div class="container-fluid" style="margin-top: -6%; margin-left: 12%;">
+            <img src="../../Images/GBT.jpg" style="width: 245px;height: 237px;padding: 75px;" />         
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 192.756 192.756" style="border:none;">
             <g fill-rule="evenodd" clip-rule="evenodd">
                 <path fill="#fff" d="M0 0h192.756v192.756H0V0z"/>
                 <path d="M64.466 90.115l-4.258 10.61h5.891L64.485 90.07l-.019.045zM41.91 114.469l17.467-35.957h13.202l7.366 35.957H68.35l-.852-4.791H56.25l-2.588 4.791H41.91zm43.522 0l5.06-35.957h11.682l-5.059 35.957H85.432zm77.691-24.399l-4.275 10.655h5.891l-1.616-10.655zm-22.574 24.399l17.467-35.957h13.201l7.365 35.957h-11.594l-.852-4.791h-11.248l-2.588 4.791h-11.751zM114.725 97.656h14.636l10.03 16.612h-14.639l-10.027-16.612z" fill="#0d6fab"/>
@@ -119,20 +79,18 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                 <path fill="#0d6fab" d="M106.572 78.362h14.121l9.674 16.742h-14.121l-9.674-16.742zM42.257 79.8l-1.124 10.575c-4.306-5.939-14.284-1.841-15.068 5.558-.996 9.392 8.608 11.583 13.835 6.052l-1.127 10.6c-1.56.768-3.085 1.361-4.59 1.764a18.783 18.783 0 0 1-4.487.648c-1.872.039-3.567-.158-5.096-.588a12.436 12.436 0 0 1-4.134-2.002c-2.36-1.725-4.066-3.918-5.118-6.588-1.05-2.678-1.397-5.699-1.038-9.076.288-2.713.973-5.188 2.062-7.432 1.08-2.244 2.576-4.281 4.481-6.129 1.801-1.763 3.762-3.092 5.885-3.996 2.113-.895 4.421-1.373 6.915-1.425a17.085 17.085 0 0 1 4.37.46c1.425.341 2.831.873 4.234 1.579z"/>
             </g>
         </svg>
-    </div>   
-            </div>
-        </div>
+    </div>
 
-        <!-- Container fluid secundário -->
-        <div class="container" class="title-print">
-                <p id="title-document">GESTÃO DATACENTER</p>
-                <p id="title-document">CONTROLE DE MOVIMENTAÇÃO DE MÓVEIS E EQUIPAMENTOS</p>
-                <p id="title-document">AUTORIZAÇÃO DE SAÍDA DE MATERIAIS E EQUIPAMENTOS</p>
-        </div>
-
-    <div class="container">
-    <!-- PHP para conexão e consulta ao banco de dados -->
-    <?php
+            <!-- Container fluid secundário -->
+            <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
+                <p style="font-size:16px;font-weight:bold;text-align:center;color:#33334d;border:1px solid #000;padding: 2px;">GESTÃO DATACENTER</p>
+    
+                <p style="font-size:16px;font-weight:bold;text-align:center;color:#33334d;border:1px solid #000;padding: 2px;">CONTROLE DE MOVIMENTAÇÃO DE MÓVEIS E EQUIPAMENTOS</p>
+                
+                <p style="font-size:16px;font-weight:bold;text-align:center;color:#33334d;border:1px solid #000;padding: 2px;">AUTORIZAÇÃO DE SAÍDA DE MATERIAIS E EQUIPAMENTOS</p>
+        
+                <!-- PHP para conexão e consulta ao banco de dados -->
+                <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
 
                 // Verifica a conexão com o banco de dados
@@ -204,9 +162,9 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                             // Formata a data
                             $date = strtotime($row['DATA_TRANSFERENCIA']);
                             $dateformated = date("d/m/Y", $date);
-    ?>
+                ?>
                             <!-- Tabela de exibição dos dados -->
-                            <table class="table" id="blue-table-cadastro-auxiliar-print">
+                            <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
                                 <tr id="line-blue-table-print">
                                 <td id="colun-blue-table">
                                         <div id="blue-title-listar-print">WO</div>
@@ -233,12 +191,10 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                                         <input type="text" id="blue-input-cdst-print" value="<?php echo $dateformated; ?>" disabled/>
                                     </td>
                                 </tr>
-                        </table>
-                    <!-- Fim da tabela de exibição dos dados -->
-    </div>
-
-    <div class="container">
-                        <!-- Tabela de exibição dos dados -->
+                            </table>
+                            <!-- Fim da tabela de exibição dos dados -->
+                            
+                            <!-- Tabela de exibição dos dados -->
                             <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
                                 <tr id="line-blue-table-print">
                                 <td id="colun-blue-table">
@@ -249,23 +205,23 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                                     <td id="colun-blue-table">
                                     <p style="color: #000000;font-weight:bold;">
                                     ORIGEM: 
-                                    <span style="margin-left: 120px;">BANCO DO BRASIL</span> 
-                                        (<span style="padding: 0 10px;"></span>) 
-                                    <span style="margin-left: 120px;">CAIXA</span> 
-                                        (<span style="padding: 0 10px;"></span>) 
-                                    <span style="margin-left: 120px;">GBT</span> 
-                                        (<span style="padding: 0 10px;"></span>)
+                                    <span style="margin-left: 100px;">BANCO DO BRASIL</span> 
+                                    (<span style="padding: 0 10px;"></span>) 
+                                    <span style="margin-left: 100px;">CAIXA</span> 
+                                    (<span style="padding: 0 10px;"></span>) 
+                                    <span style="margin-left: 100px;">GBT</span> 
+                                    (<span style="padding: 0 10px;"></span>)
                                     </p>
                                     </td>
                                     </tr>
                                     <tr id="line-blue-table-print">
                                     <td id="colun-blue-table">
-                                    <p style="color: #000000;font-weight:bold;">LOCAL DE ORIGEM: DATACENTER - GRANJA DO TORTO</p>
+                                    <p style="color: #000000;font-weight:bold;">LOCAL DE ORIGEM: DATACENTER, GRANJA DO TORTO</p>
                                     </td>
                                     </tr>
                                     <tr id="line-blue-table-print">
                                     <td id="colun-blue-table">
-                                    <p style="color: #000000;font-weight:bold;">LOCAL DE DESTINO: DATACENTER - CTC</p>
+                                    <p style="color: #000000;font-weight:bold;">LOCAL DE DESTINO: DATACENTER, CTC</p>
                                     </td>
                                     </tr>
                                     <tr id="line-blue-table-print">
@@ -281,11 +237,9 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                                 </tr>
                             </table>
                             <!-- Fim da tabela de exibição dos dados -->
-    </div>
 
-    <div class="container">
-         <!-- Tabela de exibição dos dados -->
-         <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
+                              <!-- Tabela de exibição dos dados -->
+                            <table class="table table-bordered" id="blue-table-cadastro-auxiliar-print">
                                 <tr id="line-blue-table-print">
                                 <td id="colun-blue-table">
                                     <div id="blue-title-listar-print">IDENTIFICAÇÃO DO RESPONSÁVEL PELA AUTORIZAÇÃO</div>
@@ -339,11 +293,11 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                                     </tr>
                             </table>
                             <!-- Botão para impressão -->
-                            <div style="margin-left:5%;margin-top:5%;">
+                            <div style="margin-left:5%;margin-top:10%;">
                                 <button  id="blue-btn-print" onclick="window.print()"><i class="fa fa-print"></i> Imprimir</button>
                             </div>
-                            <br><br><br>
-                            <!-- Fim do botão para impressão -->   
+                            <!-- Fim do botão para impressão -->
+                            <br><br>
                 <?php
                         }
                     } else {
@@ -360,15 +314,14 @@ session_regenerate_id(true); // Regenera o ID da sessão para aumentar a seguran
                 $conn->close();
                 ?>
                 <!-- Fim do PHP para conexão e consulta ao banco de dados -->
-                </div>
-
             </div>
             <!-- Fim do container fluid secundário -->
         </main>
         <!-- Fim do conteúdo principal -->
     </div>
     <!-- Fim do container fluid principal -->
-        </main>
-    </div>
 </body>
-</hmtl>
+<!-- Fim do corpo da página -->
+
+</html>
+<!-- Fim do documento HTML -->

@@ -1,6 +1,8 @@
-  <!-- Início da sessão PHP -->
-  <?php session_start(); ?>
-
+<?php
+// Iniciar sessão
+session_start();
+session_regenerate_id(true); // Regenera o ID da sessão para aumentar a segurança 
+?>
 <!-- Início do documento HTML -->
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -78,12 +80,12 @@
 
             <!-- Container fluid secundário -->
             <div class="container-fluid" style="margin-top:0%;margin-left:0%;">
-                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Sáida de Material</p>
+                <p style="font-size:20px;font-weight:bold;text-align:center;color:#33334d;">Autorização de Entrada/Saída de Material</p>
                 <br>
                 <input type="checkbox" name="Entrada" disabled style="padding:5px"><p style="font-size:18px;float:rigth;margin-left:20px;margin-top:-25px;color:#33334d;" disabled>Entrada</p>
                 <input type="checkbox" name="Saida" disabled style="padding:5px;float:left;margin-left:100px;margin-top:-30px" checked><p style="font-size:18px;float:left;margin-left:122px;margin-top:-36px;color:#33334d;">Saída</p>
                 <br>
-                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Sáida</p>
+                <p style="font-size:15px;font-weight:bold;text-align:left;color:#33334d;">1 - Autorização de Saída</p>
                 <!-- PHP para conexão e consulta ao banco de dados -->
                 <?php
                 require_once('../../ViewConnection/ConnectionInventario.php');
@@ -94,7 +96,7 @@
                 }
 
                 // Obtém o ID da transferência a partir da requisição
-                $id = $_GET['id'] ?? '';
+                $id = $_GET['id_transferencia'] ?? '';
 
                 // Prepara a consulta SQL usando prepared statements
                 $sql = "SELECT 

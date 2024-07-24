@@ -879,7 +879,7 @@ $con = mysqli_query($conn, $consulta) or die(mysqli_error($conn));
                                     Imprimir Saída
                                 </div>
                                 <!-- Fim do contêiner do título do formulário de entrada -->
-                                <button type="button" id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/DocumentoSaidaTransferencia.php?id=<?php echo $row['ID']; ?>';"><i class="fa fa-print"></i></button><br>
+                                <button type="button" id="btn-blue-print-log-transferencia" onclick="window.location.href='../ViewForms/ImpressaoTransferencia.php?id=<?php echo $row['ID']; ?>';"><i class="fa fa-print"></i></button><br>
                             </td>
 
                         </form>
